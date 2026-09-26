@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Tech News Podcast — ScribNet</title>
+  <meta name="description" content="Listen to the latest Daily Tech News podcast episode.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .player-wrap { min-height: 82vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+    .player-card { max-width: 34rem; width: 100%; text-align: center; }
+    .player-card .pill { margin-bottom: 1rem; }
+    audio { width: 100%; margin: 1.5rem 0 0.5rem; }
+    .ep-title { font-size: 1.35rem; font-weight: 700; margin-top: 0.75rem; }
+    .ep-date { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
+    .player-links { margin-top: 1.75rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <div class="player-wrap">
+    <div class="player-card">
+      <div class="pill"><span class="dot"></span>scribnet.io</div>
+      <div class="eyebrow">Podcast</div>
+      <h1>Daily Tech News <span class="grad">Podcast</span></h1>
+      <p class="ep-title" id="ep-title">Loading today's episode…</p>
+      <p class="ep-date" id="ep-date"></p>
+      <audio id="player" controls preload="none"></audio>
+      <p class="subtitle">A 5-minute AI-hosted tech briefing with Alex &amp; Jordan, published every weekday morning.</p>
+      <div class="player-links">
+        <a class="btn ghost" href="https://scribnet.io/">← scribnet.io</a>
+        <a class="btn ghost" href="https://muse.ai/podcasts/feed/1274343602436775/ac976877-8cb9-4172-82c1-4d6fe1ec508d">RSS feed →</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    fetch('latest-episode.json', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(d => {
+        document.getElementById('ep-title').textContent = d.title;
+        document.getElementById('ep-date').textContent = d.date || '';
+        document.getElementById('player').src = d.url;
+      })
+      .catch(() => { document.getElementById('ep-title').textContent = 'Episode unavailable — check back soon.'; });
+  </script>
+</body>
+</html>
