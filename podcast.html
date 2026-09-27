@@ -14,13 +14,16 @@
     .player-card { max-width: 34rem; width: 100%; text-align: center; }
     .player-card .pill { margin-bottom: 1rem; }
     audio { width: 100%; margin: 1.5rem 0 0.5rem; }
-    .ep-title { font-size: 1.35rem; font-weight: 700; margin-top: 0.75rem; }
+    .ep-div { width: 2.75rem; height: 3px; border-radius: 2px; background: var(--grad); margin: 1.4rem auto 0; }
+    .ep-kicker { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); margin: 1.5rem 0 0.4rem; }
+    .ep-title { font-size: 1.35rem; font-weight: 700; margin-top: 0; }
     .ep-date { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
     .player-links { margin-top: 1.75rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
     .ep-filter { margin-top: 1.25rem; }
     .ep-filter label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--violet); margin-bottom: 0.5rem; }
     .ep-filter select { width: 100%; padding: 0.65rem 0.8rem; font: inherit; font-size: 0.95rem; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 0.6rem; cursor: pointer; }
     .ep-filter select:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+    .ep-filter select option { background-color: #0b0f18; color: #f2f5fa; }
   </style>
 </head>
 <body>
@@ -28,7 +31,9 @@
     <div class="player-card">
       <div class="pill"><span class="dot"></span>scribnet.io</div>
       <div class="eyebrow">Podcast</div>
-      <h1>Daily Tech News <span class="grad">Podcast</span></h1>
+      <h1>Daily <span class="grad">Tech News</span></h1>
+      <div class="ep-div"></div>
+      <p class="ep-kicker">Latest episode</p>
       <p class="ep-title" id="ep-title">Loading today's episode…</p>
       <p class="ep-date" id="ep-date"></p>
       <audio id="player" controls preload="none"></audio>
