@@ -17,6 +17,10 @@
     .ep-title { font-size: 1.35rem; font-weight: 700; margin-top: 0.75rem; }
     .ep-date { color: var(--muted); font-size: 0.9rem; margin-top: 0.25rem; }
     .player-links { margin-top: 1.75rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .ep-filter { margin-top: 1.25rem; }
+    .ep-filter label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--violet); margin-bottom: 0.5rem; }
+    .ep-filter select { width: 100%; padding: 0.65rem 0.8rem; font: inherit; font-size: 0.95rem; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 0.6rem; cursor: pointer; }
+    .ep-filter select:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
   </style>
 </head>
 <body>
@@ -28,6 +32,10 @@
       <p class="ep-title" id="ep-title">Loading today's episode…</p>
       <p class="ep-date" id="ep-date"></p>
       <audio id="player" controls preload="none"></audio>
+      <div class="ep-filter">
+        <label for="ep-select">Previous episodes</label>
+        <select id="ep-select"></select>
+      </div>
       <p class="subtitle">A 5-minute AI-hosted tech briefing with Alex &amp; Jordan, published every weekday morning.</p>
       <div class="player-links">
         <a class="btn ghost" href="https://scribnet.io/">← scribnet.io</a>
@@ -36,14 +44,29 @@
     </div>
   </div>
   <script>
-    fetch('latest-episode.json', { cache: 'no-store' })
+    const titleEl = document.getElementById('ep-title');
+    const dateEl = document.getElementById('ep-date');
+    const player = document.getElementById('player');
+    const select = document.getElementById('ep-select');
+    function loadEpisode(ep) {
+      titleEl.textContent = ep.title;
+      dateEl.textContent = ep.date || '';
+      player.src = ep.url;
+      player.load();
+    }
+    fetch('episodes.json', { cache: 'no-store' })
       .then(r => r.json())
-      .then(d => {
-        document.getElementById('ep-title').textContent = d.title;
-        document.getElementById('ep-date').textContent = d.date || '';
-        document.getElementById('player').src = d.url;
+      .then(eps => {
+        eps.forEach((ep, i) => {
+          const opt = document.createElement('option');
+          opt.value = i;
+          opt.textContent = ep.title;
+          select.appendChild(opt);
+        });
+        select.addEventListener('change', () => loadEpisode(eps[select.value]));
+        loadEpisode(eps[0]);
       })
-      .catch(() => { document.getElementById('ep-title').textContent = 'Episode unavailable — check back soon.'; });
+      .catch(() => { titleEl.textContent = 'Episodes unavailable — check back soon.'; });
   </script>
 </body>
 </html>
