@@ -1,6 +1,7 @@
 /* scribnet.io — personal landing page. Same design language as the SE Command Center. */
 
 :root {
+  color-scheme: dark;
   --bg: #05070c;
   --surface: rgba(255, 255, 255, 0.032);
   --surface-strong: rgba(255, 255, 255, 0.06);
