@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Workflow Prompts — ScribNet</title>
-  <meta name="description" content="Copy-paste prompts that install real workflows into your AI assistant — briefing generator, podcast pipeline, song picks. No accounts, no setup.">
+  <meta name="description" content="Copy-paste prompts that install real workflows into your AI assistant — daily briefing, podcast script studio, music discovery. Each opens with a setup interview. No accounts, no setup.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -88,82 +88,135 @@
     </header>
     <div class="eyebrow">Copy-paste workflows</div>
     <h1>Install a workflow with <span class="grad">one paste.</span></h1>
-    <p class="lede">Each prompt below installs a real workflow into any AI assistant — the same ones running this site's daily pipeline. No accounts, no API keys, no setup docs. Every prompt is tested: paste it into a fresh chat and it works. Every prompt ships with its safety checklist, stated up front.</p>
-    <p class="section-note">The standard is simple — tested prompts, and safety checks that are real.</p>
+    <p class="lede">Each prompt below installs a real workflow into any AI assistant — no accounts, no API keys, no setup docs. Every prompt opens with a short setup interview (up to five questions, one at a time), so the workflow configures itself to <em>your</em> world: your topics, your show, your taste in music. Every prompt is tested from a fresh chat, and every prompt ships with its safety checklist, stated up front.</p>
+    <p class="section-note">The standard is simple — tested prompts, setup that adapts to you, and safety checks that are real.</p>
 
       <section class="prompt-pack reveal" id="workflow-01">
         <div class="eyebrow">Workflow 01</div>
-        <h2>Daily SE Briefing</h2>
-        <p class="what">The workflow behind the SE Command Center's morning briefing: research seven vendors overnight, keep only what's usable in a customer conversation, format it for a presales engineer, and flag what's unverified.</p>
+        <h2>Daily Briefing</h2>
+        <p class="what">Your morning briefing, on your beat. Tell it your topics, companies, or industries — it researches the last 24 hours, keeps only what you can actually use, and flags what's unverified.</p>
         <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-1">Install the &quot;Daily SE Briefing&quot; workflow in this chat.
+        <div class="prompt-block" id="prompt-1">Install the &quot;Daily Briefing&quot; workflow in this chat.
 
-Each run:
-1. Research the last 24 hours of news for: Dell, Cisco, CrowdStrike, VMware/Broadcom, Cohesity, Palo Alto Networks, Nutanix.
-2. Keep only what a presales systems engineer can use in a customer conversation: product launches, CVEs, competitive moves, pricing/licensing changes. No filler, no press-release rewrites.
-3. Format each item as: headline, 2-3 sentence summary, &quot;why it matters&quot; (one line for a customer call), source link.
-4. End with an &quot;Honest caveats&quot; block: what wasn&#x27;t verified, what&#x27;s vendor-claimed vs independently confirmed.
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What should the briefing cover? (topics, companies, or industries — up to 7; e.g. &quot;electric vehicles, Tesla, Rivian, battery tech&quot;)
+2. What do you do, and what makes a story useful to you? (so I keep signal, not trivia)
+3. How long should it be — a 5-minute scan or a 15-minute read?
+4. Anything to always leave out? (e.g. funding rounds, rumors, press-release rewrites)
 
-SAFETY CHECK — before the first run, confirm:
-- You will only read public sources. You won&#x27;t touch my accounts, inbox, or files.
+EACH RUN:
+1. Research the last 24 hours across the topics above. First, say whether you can access current web sources in this chat. If you cannot, say so plainly — run it from background knowledge and label every item &quot;unverified in this session&quot;.
+2. Keep only what the person in setup Q2 can actually use. Cut filler.
+3. Format each item: headline, 2-3 sentence summary, one line on &quot;why it matters to you&quot;, source link.
+4. End with &quot;Honest caveats&quot;: what&#x27;s single-sourced, what&#x27;s vendor-claimed vs independently confirmed, what you couldn&#x27;t verify.
+
+HARD RULES:
+- Mark anything you cannot find as NOT FOUND instead of guessing.
+- Never invent citations, quotes, statistics, or dates.
+- Keep every summary under 60 words.
+
+SAFETY CHECK — confirm before the first run:
+- You will only read public sources. You will not touch my accounts, inbox, or files.
 - If any step needs credentials or private data, stop and ask me first.</div>
         <button class="copy-btn" data-target="prompt-1">Copy install prompt</button>
         <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>First-run setup</h3>
+        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+        <ul class="safety-check">
+            <li>What should the briefing cover? (topics, companies, industries — up to 7)</li>
+            <li>What do you do, and what makes a story useful to you?</li>
+            <li>A 5-minute scan or a 15-minute read?</li>
+            <li>Anything to always leave out?</li>
+        </ul>
         <h3>Safety check</h3>
         <ul class="safety-check">
-            <li>('<b>Public sources only.</b> The workflow reads the open web — never your accounts, inbox, or files.', '<b>Stop on credentials.</b> If any step needs a login, API key, or private data, it asks you first instead of improvising.', '<b>Caveats are mandatory.</b> Every briefing ends with an honest-caveats block: vendor-claimed vs independently confirmed.')</li>
+            <li>('<b>Public sources only.</b> It reads the open web — never your accounts, inbox, or files.', '<b>Stop on credentials.</b> Anything needing a login or private data stops and asks you first.', "<b>NOT FOUND over invented.</b> It marks what it can't verify instead of guessing, and every briefing ends with an honest-caveats block.")</li>
         </ul>
         <h3>How to use</h3>
-        <p class="howto"><b>1.</b> Copy the prompt, paste it into a fresh chat with your AI assistant, and confirm the safety check. It runs the briefing from there.</p>
+        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
       </section>
       <section class="prompt-pack reveal" id="workflow-02">
         <div class="eyebrow">Workflow 02</div>
-        <h2>Daily Tech News Podcast</h2>
-        <p class="what">The pipeline behind the Daily Tech News podcast: pick the 4–5 stories that matter, write a two-host script for Alex and Jordan, keep it tight, and mark rumor vs confirmed.</p>
+        <h2>Podcast Script Studio</h2>
+        <p class="what">A two-host show from yesterday's news. You define the topic, the hosts, and their personalities — it picks the stories, writes a conversational script that actually sounds like them, and marks rumor vs confirmed.</p>
         <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-2">Install the &quot;Daily Tech News Podcast&quot; workflow in this chat.
+        <div class="prompt-block" id="prompt-2">Install the &quot;Podcast Script Studio&quot; workflow in this chat.
 
-Each run:
-1. Pick the 4-5 most interesting tech stories from the last 24 hours — datacenter, AI, and infrastructure first.
-2. Write a conversational two-host script (Alex: warm and curious, Jordan: dry and technical). Vary the cold open every day — never ship formulaic, interchangeable episodes.
-3. Keep it to about 8 minutes of spoken audio. End with one takeaway per story.
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What&#x27;s the show about, and who&#x27;s listening? (topic focus + target audience)
+2. Who are the hosts? Two names, one-line personality each (e.g. &quot;Maya: warm and curious; Dev: dry and technical&quot;).
+3. How long is an episode? (e.g. &quot;about 8 minutes of spoken audio&quot;)
+4. Tone guardrails — anything off-limits or must-avoid?
+
+EACH RUN:
+1. Pick the 4-5 most interesting stories in the show&#x27;s focus from the last 24 hours.
+2. Write a conversational two-host script with the hosts from setup. Vary the cold open and segment order every run — never ship formulaic, interchangeable episodes.
+3. Fit the episode length from setup. End each story with one takeaway.
 4. Append &quot;Honest caveats&quot;: which stories are single-sourced, what&#x27;s rumor vs confirmed.
 
-SAFETY CHECK — before the first run, confirm:
-- You won&#x27;t publish or upload anything. Script only; I handle recording and posting.
+HARD RULES:
+- Every line must sound like its speaker — if a line could come from either host, rewrite it.
+- Never invent quotes or statistics. Flag unverified claims in the caveats block.
+
+SAFETY CHECK — confirm before the first run:
+- Script only. You will not publish, upload, or schedule anything — I handle recording and posting.
 - If a story involves a security vulnerability, include the vendor&#x27;s patch guidance, not exploit detail.</div>
         <button class="copy-btn" data-target="prompt-2">Copy install prompt</button>
         <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>First-run setup</h3>
+        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+        <ul class="safety-check">
+            <li>What&#x27;s the show about, and who&#x27;s listening?</li>
+            <li>Who are the hosts? (two names, one-line personality each)</li>
+            <li>How long is an episode?</li>
+            <li>Tone guardrails — anything off-limits?</li>
+        </ul>
         <h3>Safety check</h3>
         <ul class="safety-check">
-            <li>('<b>Script only, never publish.</b> The workflow writes the script — recording, uploading, and posting stay in human hands.', "<b>No exploit detail.</b> Vulnerability stories get the vendor's patch guidance, not how-tos.", '<b>Fresh every day.</b> The cold open and segment order vary per episode — no formulaic, interchangeable output.')</li>
+            <li>('<b>Script only, never publish.</b> It writes the script — recording, uploading, and posting stay in human hands.', "<b>No exploit detail.</b> Vulnerability stories get the vendor's patch guidance, not how-tos.", '<b>Fresh every run.</b> The cold open and segment order vary — no formulaic, interchangeable episodes.')</li>
         </ul>
         <h3>How to use</h3>
-        <p class="howto"><b>1.</b> Copy the prompt, paste it into a fresh chat with your AI assistant, and confirm the safety check. It drafts the episode from there.</p>
+        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
       </section>
       <section class="prompt-pack reveal" id="workflow-03">
         <div class="eyebrow">Workflow 03</div>
-        <h2>Daily Song Picks</h2>
-        <p class="what">The morning music routine: three new songs in the Bilmuri / A Day To Remember lane, one line on why each fits, and what to listen for — without ever touching your existing playlists.</p>
+        <h2>Music Discovery</h2>
+        <p class="what">New songs in your lane, on repeat. Name your reference artists or describe the sound — it hunts down tracks you haven't heard, tells you why each fits, and what to listen for.</p>
         <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-3">Install the &quot;Daily Song Picks&quot; workflow in this chat.
+        <div class="prompt-block" id="prompt-3">Install the &quot;Music Discovery&quot; workflow in this chat.
 
-Each run:
-1. Find 3 new songs I haven&#x27;t heard. Lean into my lane: Bilmuri / A Day To Remember territory — pop-punk-infused metalcore, emo, genre-fluid heavy pop — at least 1-2 of the 3. The third can be heavier straight metalcore.
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What&#x27;s your lane? Name up to 3 reference artists, or describe the sound (e.g. &quot;pop-punk-infused metalcore, emo&quot;).
+2. What are you hunting — brand-new releases, deep cuts you missed, or both?
+3. How many picks per run? (default: 3)
+
+EACH RUN:
+1. Find N songs the listener likely hasn&#x27;t heard, anchored in the lane from setup.
 2. For each: song — artist, one line on why it fits, and what to listen for (a riff, a drum fill, a vocal moment).
-3. Skip anything already on my Muse playlists. No repeats across days.
+3. No repeats: keep a running list in this chat of everything recommended and never repeat an item.
 
-SAFETY CHECK — before the first run, confirm:
-- You&#x27;ll never delete songs from my existing playlists — only add to the Muse-created ones.
-- Recommendations only. You won&#x27;t play, buy, or stream anything.</div>
+HARD RULES:
+- Do not invent song titles, artists, albums, or release years. Omit anything you cannot verify.
+- If you can&#x27;t verify a track exists, drop it and pick another — never pad the list.
+
+SAFETY CHECK — confirm before the first run:
+- Recommendations only. You will not play, buy, or stream anything.
+- You will never modify any playlist — you suggest; the listener adds.</div>
         <button class="copy-btn" data-target="prompt-3">Copy install prompt</button>
         <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>First-run setup</h3>
+        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+        <ul class="safety-check">
+            <li>What&#x27;s your lane? (up to 3 reference artists, or describe the sound)</li>
+            <li>New releases, deep cuts, or both?</li>
+            <li>How many picks per run?</li>
+        </ul>
         <h3>Safety check</h3>
         <ul class="safety-check">
-            <li>('<b>Your playlists are read-only.</b> The workflow never deletes from existing playlists — it only suggests additions for the Muse-created ones.', "<b>Recommendations only.</b> It won't play, buy, or stream anything on your behalf.", '<b>No repeats.</b> It skips anything already on your Muse playlists and avoids repeating itself across days.')</li>
+            <li>("<b>Recommendations only.</b> It won't play, buy, or stream anything on your behalf.", '<b>Your playlists are read-only.</b> It suggests; you add. Nothing gets modified.', "<b>No invented tracks.</b> If it can't verify a song exists, it drops it and picks another — never pads the list.")</li>
         </ul>
         <h3>How to use</h3>
-        <p class="howto"><b>1.</b> Copy the prompt, paste it into a fresh chat with your AI assistant, and confirm the safety check. Tell it your lane if yours differs.</p>
+        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
       </section>
   </main>
   <footer>

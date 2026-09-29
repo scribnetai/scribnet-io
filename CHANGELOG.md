@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 — Prompts page rebuilt as general-purpose install prompts
+
+- Rewrote all three install prompts (`/prompts.html`) from author-specific to stranger-ready: Daily Briefing, Podcast Script Studio, Music Discovery — no more hardcoded vendors, hosts, or music lanes.
+- Every prompt now opens with a bounded first-run setup interview (max 5 questions, one at a time, "skip" escape hatch, assumptions stated aloud) so the workflow configures itself to the user's world.
+- Added checkable "HARD RULES" blocks: NOT FOUND instead of guessing, never invent citations/tracks/stats, capability honesty up front ("say whether you can access current web sources").
+- New "First-run setup" section per workflow lists the interview questions before you paste. Page copy, meta description, and safety checklists updated to match.
 ## 2026-09-29 — Removed third-party attribution from site pages
 
 - Scrubbed all third-party brand mentions from `/prompts.html`, the homepage "Five rules" section, and `/lab.html` — the borrowed-patterns framing stays, unattributed.
