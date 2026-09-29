@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-09-29 — Sitemap: added /prompts.html
+
+- Added `https://scribnet.io/prompts.html` to `sitemap.xml` (priority 0.9, weekly) so it's included ahead of the Google Search Console sitemap submission.
 ## 2026-09-29 — Prompts page rebuilt as general-purpose install prompts
 
 - Rewrote all three install prompts (`/prompts.html`) from author-specific to stranger-ready: Daily Briefing, Podcast Script Studio, Music Discovery — no more hardcoded vendors, hosts, or music lanes.
