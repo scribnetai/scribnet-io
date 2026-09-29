@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-28 — Podcast page redesign (launcher theme)
+
+- Rebuilt podcast.html in the app-launcher design language: hero, now-playing card with cover art + play/pause overlay, searchable episode tile grid (3D tilt, cursor spotlight, shine sweep), episode count, shared footer, and the fleet feedback widget (previously missing here).
+- Added `podcast-cover.webp` — AI-generated show art (play button + sound-wave pulse, violet-to-cyan aurora).
+- Episode tiles load into the now-playing card on click (scroll + autoplay attempt); Copy MP3 link button; latest episode auto-loads; honors prefers-reduced-motion.
 ## 2026-09-28 — Build log expander + faster typewriter
 
 - Build log now shows the latest 4 entries with a "Show all N" ghost button that expands the rest with a staggered fade-in (frozen under prefers-reduced-motion).
