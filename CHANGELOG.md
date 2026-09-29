@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 — Fleet SEO pass: canonicals, social tags, structured data
+
+- All 9 app subdomains now ship full SEO head tags: canonical URL, meta description (trimmed to ~155 chars), Open Graph + Twitter Card tags, and `WebApplication` JSON-LD.
+- scribnet.io: every page now carries a self-referencing canonical; regenerated Apps, Lab, Prompts, Guides, and all four book pages from the current homepage head (correct per-page og:url/og:title/canonical, inherited Organization+WebSite JSON-LD).
+- Podcast, Uses, Homelab: added canonical + `WebPage` JSON-LD; promoted the hero heading to `<h1>` on Uses and Homelab (visuals unchanged).
+- Sitemap now includes `/prompts.html`.
 ## 2026-09-29 — Sitemap: added /prompts.html
 
 - Added `https://scribnet.io/prompts.html` to `sitemap.xml` (priority 0.9, weekly) so it's included ahead of the Google Search Console sitemap submission.
