@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-29 — Workflow prompts page + five rules on homepage
+
+- New `/prompts.html`: copy-paste workflow install prompts as a standalone page (ebook-style, confined for iteration) — briefing generator, podcast pipeline, song picks. Each workflow ships with a one-click copy button, a visible safety checklist, and how-to-use; prompts are tested to install from a fresh chat. Linked in topnav + footer site-wide.
+- Homepage: new "Five rules I build by" section — the five daily-agent lessons, each mapped to this fleet's pipeline (battlecard updater discipline, deployed-bytes rule, single-commit deploys, dated changelogs, midnight QA), linking through to the prompts page.
+- `styles.css`: new lesson-card and prompt-pack component styles (cache-buster bumped to `?v=prompts1`).
 ## 2026-09-29 — Lab page: four borrowed patterns as live demos
 
 - New "Steal-worthy patterns, on trial" section on the unlinked `/lab.html`: four patterns borrowed from Skill Harbor (theskillharbor.com), rebuilt as working demos to evaluate live before anything ships to the real pages.

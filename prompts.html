@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ScribNet: Building AI in Public</title>
-  <meta name="description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
+  <title>Workflow Prompts — ScribNet</title>
+  <meta name="description" content="Copy-paste prompts that install real workflows into your AI assistant — briefing generator, podcast pipeline, song picks. No accounts, no setup.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -38,16 +38,16 @@
   </style>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ScribNet">
-  <meta property="og:title" content="ScribNet: Building AI in Public">
+  <meta property="og:title" content="Workflow Prompts — ScribNet">
   <meta property="og:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
-  <meta property="og:url" content="https://scribnet.io/">
-  <meta property="og:image" content="https://scribnet.io/og/og-home.png">
+  <meta property="og:url" content="https://scribnet.io/prompts.html">
+  <meta property="og:image" content="https://scribnet.io/og/og-apps.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ScribNet: Building AI in Public">
+  <meta name="twitter:title" content="Workflow Prompts — ScribNet">
   <meta name="twitter:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
-  <meta name="twitter:image" content="https://scribnet.io/og/og-home.png">
+  <meta name="twitter:image" content="https://scribnet.io/og/og-apps.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -72,179 +72,100 @@
   </script>
 </head>
 <body>
-  <div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
-  <!-- ============ HERO ============ -->
-  <header>
-    <div class="header-inner">
-      <div class="pill"><span class="dot"></span>scribnet.io</div>
-      <h1>Presales by day.<br><span class="grad">Building with <span id="rotator">AI</span><span class="caret" aria-hidden="true"></span></span> by night.</h1>
-      <p class="subtitle">I'm ScribNet — a Presales Systems Engineer working in datacenter infrastructure: storage, HCI compute, and security. This site is the public record of my AI experiments. Real projects, shipped in public.</p>
-      <div class="cta-row">
-        <a class="btn primary" href="https://se-command-center.scribnet.io/">SE Command Center</a>
-        <a class="btn ghost" href="https://scribnet.io/apps.html">App Launcher</a>
-        <a id="daily-podcast-btn" class="btn ghost" href="https://scribnet.io/podcast.html">Daily Tech News Podcast</a>
-      </div>
-      <div class="stats">
-        <div class="stat"><strong>11</strong><span>sites live</span></div>
-        <div class="stat"><strong>173</strong><span>changes shipped</span></div>
-        <div class="stat"><strong>5</strong><span>podcast episodes</span></div>
-        <div class="stat"><strong>∞</strong><span>experiments queued</span></div>
-      </div>
-    </div>
-  </header>
-
   <main>
-    <!-- ============ PROJECTS ============ -->
-    <section id="projects">
-      <div class="eyebrow">What I'm building</div>
-      <h2>Projects</h2>
-      <p class="section-note">Everything below is real and running — or honestly labeled when it isn't.</p>
-      <div class="cards">
+    <header class="topnav">
+      <a class="topnav-brand" href="/" aria-label="ScribNet home">
+        <span class="topnav-badge">S</span><span>scribnet.io</span>
+      </a>
+      <nav class="topnav-links" aria-label="Site">
+      <a href="/apps.html">Apps</a>
+      <a href="/podcast.html">Podcast</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/prompts.html" aria-current="page">Prompts</a>
+      <a href="/uses.html">Uses</a>
+      <a href="/homelab.html">Homelab</a>
+      </nav>
+    </header>
+    <div class="eyebrow">Copy-paste workflows</div>
+    <h1>Install a workflow with <span class="grad">one paste.</span></h1>
+    <p class="lede">Each prompt below installs a real workflow into any AI assistant — the same ones running this site's daily pipeline. No accounts, no API keys, no setup docs. Every prompt is tested: paste it into a fresh chat and it works. Every prompt ships with its safety checklist, stated up front.</p>
+    <p class="section-note">The pattern is borrowed from <a href="https://theskillharbor.com">Skill Harbor</a>; the bar is higher here — tested prompts, and safety checks that are real.</p>
 
-        <article class="card reveal">
-          <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">Dashboard</span></div>
-          <h3>SE Command Center</h3>
-          <p>My morning vendor-intel dashboard. An AI agent researches 14 vendors before I wake up, then publishes the briefing, a prompt of the day, and a changelog straight to the page. Zero code changes, every day.</p>
-          <a class="card-link" href="https://se-command-center.scribnet.io/">Open the dashboard →</a>
-        </article>
+      <section class="prompt-pack reveal" id="workflow-01">
+        <div class="eyebrow">Workflow 01</div>
+        <h2>Daily SE Briefing</h2>
+        <p class="what">The workflow behind the SE Command Center's morning briefing: research seven vendors overnight, keep only what's usable in a customer conversation, format it for a presales engineer, and flag what's unverified.</p>
+        <h3>The install prompt</h3>
+        <div class="prompt-block" id="prompt-1">Install the &quot;Daily SE Briefing&quot; workflow in this chat.
 
-        <article class="card reveal">
-          <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">Podcast</span></div>
-          <h3>Daily Tech News</h3>
-          <p>A 5-minute AI-hosted tech briefing with Alex &amp; Jordan, published every weekday morning. Subscribe in any podcast app.</p>
-          <a class="card-link" href="https://muse.ai/podcasts/feed/1274343602436775/ac976877-8cb9-4172-82c1-4d6fe1ec508d">RSS feed →</a>
-        </article>
+Each run:
+1. Research the last 24 hours of news for: Dell, Cisco, CrowdStrike, VMware/Broadcom, Cohesity, Palo Alto Networks, Nutanix.
+2. Keep only what a presales systems engineer can use in a customer conversation: product launches, CVEs, competitive moves, pricing/licensing changes. No filler, no press-release rewrites.
+3. Format each item as: headline, 2-3 sentence summary, &quot;why it matters&quot; (one line for a customer call), source link.
+4. End with an &quot;Honest caveats&quot; block: what wasn&#x27;t verified, what&#x27;s vendor-claimed vs independently confirmed.
 
-        <article class="card reveal">
-          <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">Music</span></div>
-          <h3>AI Band EP</h3>
-          <p>Five original metalcore tracks in the ADTR vein — written with AI, generated in Suno. Stream them:</p>
-          <ul class="tracklist">
-            <li><a href="https://suno.com/song/5e5282c5-26c2-4263-adfc-4e31ee3618bc">▶ Unbroken</a></li>
-            <li><a href="https://suno.com/song/72932756-0251-4166-92bd-ab137c93f">▶ Undertow</a></li>
-            <li><a href="https://suno.com/song/785e0df1-3eb4-4288-b0cd-1310ea9d62a6">▶ Idle</a></li>
-            <li><a href="https://suno.com/song/9006c8e0-3516-42ac-8dec-9c3a09b4743a">▶ Aftershock</a></li>
-            <li><a href="https://suno.com/song/4784ac28-31cf-40e2-af7f-3b9c40b3e54d">▶ The Factory Must Grow</a></li>
-          </ul>
-        </article>
+SAFETY CHECK — before the first run, confirm:
+- You will only read public sources. You won&#x27;t touch my accounts, inbox, or files.
+- If any step needs credentials or private data, stop and ask me first.</div>
+        <button class="copy-btn" data-target="prompt-1">Copy install prompt</button>
+        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>Safety check</h3>
+        <ul class="safety-check">
+            <li>('<b>Public sources only.</b> The workflow reads the open web — never your accounts, inbox, or files.', '<b>Stop on credentials.</b> If any step needs a login, API key, or private data, it asks you first instead of improvising.', '<b>Caveats are mandatory.</b> Every briefing ends with an honest-caveats block: vendor-claimed vs independently confirmed.')</li>
+        </ul>
+        <h3>How to use</h3>
+        <p class="howto"><b>1.</b> Copy the prompt, paste it into a fresh chat with your AI assistant, and confirm the safety check. It runs the briefing from there.</p>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-02">
+        <div class="eyebrow">Workflow 02</div>
+        <h2>Daily Tech News Podcast</h2>
+        <p class="what">The pipeline behind the Daily Tech News podcast: pick the 4–5 stories that matter, write a two-host script for Alex and Jordan, keep it tight, and mark rumor vs confirmed.</p>
+        <h3>The install prompt</h3>
+        <div class="prompt-block" id="prompt-2">Install the &quot;Daily Tech News Podcast&quot; workflow in this chat.
 
-        <article class="card reveal">
-          <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">Game</span></div>
-          <h3>Cargo Foundry</h3>
-          <p>A Factorio-style browser game: belts, miners, furnaces, assemblers, shipment orders. Built with AI, fully playable — my first real coding project.</p>
-          <a class="card-link" href="https://cargo-foundry.scribnet.io/">Play it now →</a>
-        </article>
+Each run:
+1. Pick the 4-5 most interesting tech stories from the last 24 hours — datacenter, AI, and infrastructure first.
+2. Write a conversational two-host script (Alex: warm and curious, Jordan: dry and technical). Vary the cold open every day — never ship formulaic, interchangeable episodes.
+3. Keep it to about 8 minutes of spoken audio. End with one takeaway per story.
+4. Append &quot;Honest caveats&quot;: which stories are single-sourced, what&#x27;s rumor vs confirmed.
 
-        <article class="card reveal">
-          <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">Playlist</span></div>
-          <h3>Muse Picks</h3>
-          <p>Three new song recommendations added to a Spotify playlist every morning — metalcore, post-hardcore, and whatever the algorithm should have found.</p>
-          <a class="card-link" href="https://open.spotify.com/playlist/4zLFopF03G5zXqaUc79E4p">Listen on Spotify →</a>
-        </article>
+SAFETY CHECK — before the first run, confirm:
+- You won&#x27;t publish or upload anything. Script only; I handle recording and posting.
+- If a story involves a security vulnerability, include the vendor&#x27;s patch guidance, not exploit detail.</div>
+        <button class="copy-btn" data-target="prompt-2">Copy install prompt</button>
+        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>Safety check</h3>
+        <ul class="safety-check">
+            <li>('<b>Script only, never publish.</b> The workflow writes the script — recording, uploading, and posting stay in human hands.', "<b>No exploit detail.</b> Vulnerability stories get the vendor's patch guidance, not how-tos.", '<b>Fresh every day.</b> The cold open and segment order vary per episode — no formulaic, interchangeable output.')</li>
+        </ul>
+        <h3>How to use</h3>
+        <p class="howto"><b>1.</b> Copy the prompt, paste it into a fresh chat with your AI assistant, and confirm the safety check. It drafts the episode from there.</p>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-03">
+        <div class="eyebrow">Workflow 03</div>
+        <h2>Daily Song Picks</h2>
+        <p class="what">The morning music routine: three new songs in the Bilmuri / A Day To Remember lane, one line on why each fits, and what to listen for — without ever touching your existing playlists.</p>
+        <h3>The install prompt</h3>
+        <div class="prompt-block" id="prompt-3">Install the &quot;Daily Song Picks&quot; workflow in this chat.
 
-        <article class="card reveal">
-          <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">Guides</span></div>
-          <h3>Zero to Dangerous</h3>
-          <p>Beginner books on the stuff I'm learning in public: Kubernetes, Terraform, APIs, and GitHub. Six chapters each, zero dumb questions.</p>
-          <a class="card-link" href="/guides.html">Start reading →</a>
-        </article>
+Each run:
+1. Find 3 new songs I haven&#x27;t heard. Lean into my lane: Bilmuri / A Day To Remember territory — pop-punk-infused metalcore, emo, genre-fluid heavy pop — at least 1-2 of the 3. The third can be heavier straight metalcore.
+2. For each: song — artist, one line on why it fits, and what to listen for (a riff, a drum fill, a vocal moment).
+3. Skip anything already on my Muse playlists. No repeats across days.
 
-        <article class="card reveal">
-          <div class="card-top"><span class="status paused">● Paused</span><span class="card-kicker">Video</span></div>
-          <h3>ScribNet Labs</h3>
-          <p>AI-avatar video series "The Agentic SE." The video pipeline is being rebuilt — new episodes in the works.</p>
-          <span class="card-link dim">More to come.</span>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- ============ BUILD LOG ============ -->
-    <section id="buildlog">
-      <div class="eyebrow">Shipped lately</div>
-      <h2>Build log</h2>
-      <p class="section-note">Compiled from each app's changelog — the whole fleet ships in public.</p>
-      <div class="tl">
-      <div class="tl-item"><span class="d">2026-09-28 &middot; scribnet.io</span><p>Migrated legacy scribnetai.github.io links to https://&lt;app&gt;.scribnet.io for the HTTPS-enforced apps (se-command-center, server-sizer, network-sizer...</p></div>
-      <div class="tl-item"><span class="d">2026-09-28 &middot; TCO Calculator</span><p>TLS certificate provisioned for the tco-calculator.scribnet.io custom domain (GitHub&#x27;s stuck DNS check was reset 2026-09-28); HTTPS is now enforced...</p></div>
-      <div class="tl-item"><span class="d">2026-09-28 &middot; Server Sizer</span><p>Fixed: slider track fill was stuck at 50% on the config cards — the theme refresh paints the track with a --fill CSS variable, but nothing in the a...</p></div>
-      <div class="tl-item"><span class="d">2026-09-28 &middot; SE Command Center</span><p>Morning briefing: 3 items (Citrix, Palo Alto Networks, NVIDIA). Archive updated.</p></div>
-      <div class="tl-extra" id="tlExtra" hidden>
-        <div class="tl-item"><span class="d">2026-09-28 &middot; RVTools Analyzer</span><p>Fixed: refresh-scenario slider track fill was stuck at 50% — the theme paints the track with a --fill CSS variable, but nothing set it. Sliders now...</p></div>
-        <div class="tl-item"><span class="d">2026-09-28 &middot; Fleet-wide</span><p>TLS certificates provisioned fleet-wide — HTTPS enforced on every app</p></div>
-        <div class="tl-item"><span class="d">2026-09-28 &middot; Fleet-wide</span><p>Added a floating Feedback button (bottom-right) that opens a dialog to send feedback via email — topic chips, optional name, and message, addressed...</p></div>
-        <div class="tl-item"><span class="d">2026-09-28 &middot; Fleet-wide</span><p>Added Umami website analytics (cookieless, no consent banner): pageview tracking plus custom events for ad-slot impression/click reporting.</p></div>
-        <div class="tl-item"><span class="d">2026-09-27 &middot; scribnet.io</span><p>Redesigned the favicon: full-bleed purple-to-blue gradient badge with a large bold &#x27;S&#x27; (the old PWA icon rendered tiny with white padding at bookma...</p></div>
-        <div class="tl-item"><span class="d">2026-09-27 &middot; TCO Calculator</span><p>Projects: named saves, export/import JSON, autosave with session restore.</p></div>
-        <div class="tl-item"><span class="d">2026-09-27 &middot; TCO Calculator</span><p>Outputs: KPI cards (TCO, savings, NPV savings, breakeven, avg annual savings), cumulative TCO chart with breakeven marker, year-by-year table, auto...</p></div>
-        <div class="tl-item"><span class="d">2026-09-27 &middot; TCO Calculator</span><p>Linked from the SE Command Center App Launcher.</p></div>
-      </div>
-      <button class="btn ghost log-toggle" id="logToggle" aria-expanded="false" aria-controls="tlExtra">Show all 12 <span aria-hidden="true">&darr;</span></button>
-    </section>
-
-    <!-- ============ PRINCIPLES ============ -->
-    <section id="principles">
-      <div class="eyebrow">How I work with AI</div>
-      <h2>Five rules I build by</h2>
-      <p class="section-note">Borrowed from <a href="https://theskillharbor.com">Skill Harbor</a>'s founder — who ships a build with an AI agent every day — then held to a higher bar here. Each one runs live in this fleet's pipeline.</p>
-      <div class="lesson-grid">
-        <div class="lesson-card reveal">
-          <span class="n">Rule 1</span>
-          <h3>One clear decision per batch</h3>
-          <p>Don't hand the agent five fuzzy tasks. One crisp decision per work unit.</p>
-          <p class="map"><b>In this pipeline:</b> the battlecard updater only touches qualifying items — one run, one job, no sprawl.</p>
-        </div>
-        <div class="lesson-card reveal">
-          <span class="n">Rule 2</span>
-          <h3>Hard stops are sacred</h3>
-          <p>Time-box the session; when the stop hits, stop. Prevents half-done sprawl.</p>
-          <p class="map"><b>In this pipeline:</b> battlecard research capped at 2–3 page reads; sessions end when they end.</p>
-        </div>
-        <div class="lesson-card reveal">
-          <span class="n">Rule 3</span>
-          <h3>Show, don't describe</h3>
-          <p>Make the agent show the actual output — not describe what it did.</p>
-          <p class="map"><b>In this pipeline:</b> the deployed-bytes rule — curl the live file before debugging a QA report.</p>
-        </div>
-        <div class="lesson-card reveal">
-          <span class="n">Rule 4</span>
-          <h3>Batch everything</h3>
-          <p>Group similar work into one run instead of many small ones.</p>
-          <p class="map"><b>In this pipeline:</b> single-commit deploys; the 06:15 / 07:15 morning production line.</p>
-        </div>
-        <div class="lesson-card reveal">
-          <span class="n">Rule 5</span>
-          <h3>Boring stuff compounds</h3>
-          <p>Changelogs, validation scripts, checklists — the unglamorous scaffolding is what makes a daily pipeline reliable.</p>
-          <p class="map"><b>In this pipeline:</b> dated CHANGELOG on every push; the midnight fleet QA.</p>
-        </div>
-      </div>
-      <p class="section-note" style="margin-top:1.1rem">The same thinking behind the <a href="/prompts.html">copy-paste workflows</a> — steal the patterns, beat the execution.</p>
-    </section>
-
-    <!-- ============ ABOUT ============ -->
-    <section id="about">
-      <div class="eyebrow">Who's behind this</div>
-      <h2>About</h2>
-      <div class="about-grid">
-        <p>Presales Systems Engineer. My world is datacenter: storage and HCI compute by history, security by necessity — the field changing fastest, so I point my AI projects at it on purpose.</p>
-        <p>At home: a <a href="/homelab.html">homelab</a> of Meraki gear, a Palo Alto firewall, and a couple of Proxmox boxes mostly running game servers. My belief: the best way to learn AI is to ship things with it — in public, where they can embarrass you.</p>
-      </div>
-    </section>
-
-    <!-- ============ NOW ============ -->
-    <section id="now">
-      <div class="eyebrow">Currently</div>
-      <h2>Now</h2>
-      <ul class="now-list">
-        <li>Shipped the <a href="/apps.html">fleet app launcher</a> — all ten apps in one place</li>
-        <li>Growing the AI band catalog past the first EP</li>
-        <li>Rebuilding the AI video pipeline</li>
-      </ul>
-      <p class="section-note">Say hi: <a href="mailto:scribnet.ai@gmail.com">scribnet.ai@gmail.com</a></p>
-    </section>
+SAFETY CHECK — before the first run, confirm:
+- You&#x27;ll never delete songs from my existing playlists — only add to the Muse-created ones.
+- Recommendations only. You won&#x27;t play, buy, or stream anything.</div>
+        <button class="copy-btn" data-target="prompt-3">Copy install prompt</button>
+        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>Safety check</h3>
+        <ul class="safety-check">
+            <li>('<b>Your playlists are read-only.</b> The workflow never deletes from existing playlists — it only suggests additions for the Muse-created ones.', "<b>Recommendations only.</b> It won't play, buy, or stream anything on your behalf.", '<b>No repeats.</b> It skips anything already on your Muse playlists and avoids repeating itself across days.')</li>
+        </ul>
+        <h3>How to use</h3>
+        <p class="howto"><b>1.</b> Copy the prompt, paste it into a fresh chat with your AI assistant, and confirm the safety check. Tell it your lane if yours differs.</p>
+      </section>
   </main>
-
   <footer>
     <p>© <span id="year"></span> ScribNet — scribnet.io</p>
     <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
@@ -254,8 +175,6 @@
     <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/homelab.html">Homelab</a><a href="/guides.html">Guides</a><a href="/prompts.html">Prompts</a></nav>
     <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
   </footer>
-
-  <script src="app.js"></script>
 <!-- ScribNet feedback widget: floating button + dialog, sends via user's email client (mailto). Self-contained: no external deps, no reliance on page CSS. -->
 <style>
 .snkf-btn{position:fixed;right:22px;bottom:22px;z-index:9990;display:flex;align-items:center;gap:9px;
@@ -361,6 +280,31 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
     var body = msg + "\n\n— " + (nameEl.value.trim() || "Anonymous") + "\nPage: " + location.href;
     location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     close();
+  });
+})();
+</script>
+
+
+
+<script>
+(function () {
+  document.querySelectorAll(".copy-btn[data-target]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var block = document.getElementById(btn.getAttribute("data-target"));
+      if (!block) return;
+      var text = block.textContent;
+      var note = btn.parentElement.querySelector(".copy-note");
+      function done() { if (note) note.textContent = "Copied — paste it into any fresh assistant chat."; }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
   });
 })();
 </script>
