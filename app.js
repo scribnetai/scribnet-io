@@ -43,7 +43,7 @@ document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 (function () {
   var el = document.getElementById("rotator");
   if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var words = ["AI", "agents", "code", "in public"];
+  var words = ["AI", "GitHub", "Terraform", "JavaScript", "Python", "YAML", "Bash", "Sparky"];
   var wi = 0, ci = words[0].length, deleting = true;
   function tick() {
     if (deleting) {
