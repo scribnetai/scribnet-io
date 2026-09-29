@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShinyHunters Renew PeopleSoft Attacks, Oracle&#x27;s Jupiter Hits a Snag &mdash; Daily Tech News &middot; ScribNet</title>
+  <meta name="description" content="Alex and Jordan cover ShinyHunters&#x27; renewed mass exploitation of Oracle PeopleSoft, Oracle&#x27;s Project Jupiter data-center delay, OpenAI&#x27;s DevDay GPT-6 Cyber preview, and new chip plays from Xiaomi and China&#x27;s CXMT.">
+  <link rel="canonical" href="https://scribnet.io/episodes/shinyhunters-renew-peoplesoft-attacks-oracles-jupiter-hits-a-snag-2026-09-27.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=nav2">
+<!-- PWA: installable home-screen app -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#05070c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ScribNet">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2338bdf8'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='71' font-size='62' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>S</text></svg>">
+<!-- Analytics: Umami (cookieless, no consent banner) -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="025bed5c-dced-450a-a701-95f7cd065922"></script>
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ScribNet">
+  <meta property="og:title" content="ShinyHunters Renew PeopleSoft Attacks, Oracle&#x27;s Jupiter Hits a Snag &mdash; Daily Tech News">
+  <meta property="og:description" content="Alex and Jordan cover ShinyHunters&#x27; renewed mass exploitation of Oracle PeopleSoft, Oracle&#x27;s Project Jupiter data-center delay, OpenAI&#x27;s DevDay GPT-6 Cyber preview, and new chip plays from Xiaomi and China&#x27;s CXMT.">
+  <meta property="og:url" content="https://scribnet.io/episodes/shinyhunters-renew-peoplesoft-attacks-oracles-jupiter-hits-a-snag-2026-09-27.html">
+  <meta property="og:image" content="https://scribnet.io/podcast-cover.webp">
+  <meta property="article:published_time" content="2026-09-27">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ShinyHunters Renew PeopleSoft Attacks, Oracle&#x27;s Jupiter Hits a Snag &mdash; Daily Tech News">
+  <meta name="twitter:description" content="Alex and Jordan cover ShinyHunters&#x27; renewed mass exploitation of Oracle PeopleSoft, Oracle&#x27;s Project Jupiter data-center delay, OpenAI&#x27;s DevDay GPT-6 Cyber preview, and new chip plays from Xiaomi and China&#x27;s CXMT.">
+  <meta name="twitter:image" content="https://scribnet.io/podcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name": "ShinyHunters Renew PeopleSoft Attacks, Oracle's Jupiter Hits a Snag",
+  "description": "Alex and Jordan cover ShinyHunters' renewed mass exploitation of Oracle PeopleSoft, Oracle's Project Jupiter data-center delay, OpenAI's DevDay GPT-6 Cyber preview, and new chip plays from Xiaomi and China's CXMT.",
+  "datePublished": "2026-09-27",
+  "duration": "PT6M28S",
+  "url": "https://scribnet.io/episodes/shinyhunters-renew-peoplesoft-attacks-oracles-jupiter-hits-a-snag-2026-09-27.html",
+  "associatedMedia": {
+    "@type": "MediaObject",
+    "contentUrl": "https://scribnet.io/audio/shinyhunters-renew-peoplesoft-attacks-oracles-jupiter-hits-a-snag-2026-09-27.mp3",
+    "encodingFormat": "audio/mpeg"
+  },
+  "partOfSeries": {
+    "@type": "PodcastSeries",
+    "name": "Daily Tech News",
+    "url": "https://scribnet.io/podcast.html"
+  }
+}
+  </script>
+  <style>
+    .ep-hero { max-width: 860px; margin: 0 auto; padding: 3rem 1.25rem 0; }
+    .ep-hero .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.9rem; }
+    .ep-hero h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1rem; }
+    .ep-hero .subtitle { color: var(--muted); font-size: 1.02rem; line-height: 1.6; }
+    .ep-player { max-width: 860px; margin: 2rem auto 0; padding: 0 1.25rem; }
+    .ep-player-card { display: flex; gap: 1.25rem; align-items: center;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px; padding: 1.25rem; }
+    .ep-player-card img { width: 96px; height: 96px; border-radius: 16px; flex: none; }
+    .ep-player-card audio { width: 100%; margin-top: 0.6rem; }
+    .ep-player-meta { font-size: 0.82rem; color: var(--muted); }
+    .ep-player-body { flex: 1; min-width: 0; }
+    .ep-section { max-width: 860px; margin: 2.5rem auto 0; padding: 0 1.25rem; }
+    .ep-section h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem;
+      letter-spacing: -0.01em; }
+    .ep-topics { list-style: none; padding: 0; display: grid; gap: 0.7rem; }
+    .ep-topics li { background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 12px;
+      padding: 0.8rem 1rem; font-size: 0.94rem; line-height: 1.55; }
+    .ep-transcript p { line-height: 1.75; margin-bottom: 1rem; font-size: 0.97rem;
+      color: #d7dce6; }
+    .ep-transcript .spk { font-weight: 700; }
+    .ep-transcript .spk.alex { color: #7c8cff; }
+    .ep-transcript .spk.jordan { color: #34d399; }
+    .ep-nav { max-width: 860px; margin: 3rem auto 0; padding: 0 1.25rem 3rem;
+      display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .ep-nav a { font-weight: 700; font-size: 0.92rem; }
+    .ep-nav .dim { color: var(--muted); font-weight: 400; }
+    @media (max-width: 560px) {
+      .ep-player-card { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="topnav">
+      <a class="topnav-brand" href="/" aria-label="ScribNet home">
+        <span class="topnav-badge">S</span><span>scribnet.io</span>
+      </a>
+      <nav class="topnav-links" aria-label="Site">
+      <a href="/apps.html">Apps</a>
+      <a href="/podcast.html" aria-current="page">Podcast</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/uses.html">Uses</a>
+      <a href="/homelab.html">Homelab</a>
+      </nav>
+    </header>
+    <div class="ep-hero">
+      <div class="eyebrow">Daily Tech News &mdash; September 27, 2026</div>
+      <h1>ShinyHunters Renew PeopleSoft Attacks, Oracle&#x27;s Jupiter Hits a Snag</h1>
+      <p class="subtitle">Alex and Jordan cover ShinyHunters&#x27; renewed mass exploitation of Oracle PeopleSoft, Oracle&#x27;s Project Jupiter data-center delay, OpenAI&#x27;s DevDay GPT-6 Cyber preview, and new chip plays from Xiaomi and China&#x27;s CXMT.</p>
+    </div>
+
+    <div class="ep-player">
+      <div class="ep-player-card">
+        <img src="/podcast-cover.webp" alt="Daily Tech News cover art">
+        <div class="ep-player-body">
+          <div class="ep-player-meta">September 27, 2026 &middot; 6:28 &middot; with Alex &amp; Jordan</div>
+          <audio controls preload="none" src="https://scribnet.io/audio/shinyhunters-renew-peoplesoft-attacks-oracles-jupiter-hits-a-snag-2026-09-27.mp3"></audio>
+        </div>
+      </div>
+    </div>
+
+    <section class="ep-section" aria-label="In this episode">
+      <h2>In this episode</h2>
+      <ul class="ep-topics">
+<li>ShinyHunters renew mass exploitation of Oracle PeopleSoft (Mandiant report, Sept 26): attackers evaded WAF-only defenses on unpatched systems; dozens of systems hit across higher education, healthcare, agriculture, transportation, government; FBI personnel data theft claim uncorroborated, FBI investigating; Canvas/Instructure 275M-record claim as group context</li>
+<li>Astrana Health discloses material breach via SEC 8-K (filed Sept 23): vishing/social engineering with spoofed corporate caller ID; third healthcare tech firm this month after Veradigm and Nutex</li>
+<li>Oracle Project Jupiter force-majeure notice (Sept 24): 2.45 GW New Mexico data-center campus (Blue Owl STACK Infrastructure, built for OpenAI) running ~1 year behind 2028 target; Oracle preserves argument to delay payments; Oracle/Blue Owl shares fell ~3.5%; AI data-center financing risk in the open</li>
+<li>OpenAI DevDay preview (Sept 29, Fort Mason, SF): GPT-6 Cyber preview (fourth security model of 2026 after 5.4/5.5/5.6 Cyber), in Daybreak Red alpha; enterprise security orchestration platform with gateway architecture and real-time model-behavior monitoring; Ultrafast API mode spotted by TestingCatalog (Standard/Fast/Ultrafast tiers, Cerebras-powered, up to 750 tokens/sec, ~14x faster); Fortune says a dozen+ products possible</li>
+<li>Xiaomi MiMo 2.6: 1.02T-parameter mixture-of-experts model with fully open weights under MIT license; RL training run live-streamed, reported ~$2.62M cost</li>
+<li>CXMT G5 DRAM: fifth-gen DRAM platform in mass production at 11.95nm via quadruple patterning (no EUV); ~50% more dies per wafer — China manufacturing workaround story</li>
+<li>Quick hits: NetApp moving to acquire PEAK:AIO (parallel-NFS AI storage to keep GPUs fed; roots in Los Alamos/Carnegie Mellon); ABB Infinitus 800 VDC power portfolio + Delta 800 VDC distribution with up to 3 MW liquid cooling for 1 MW racks; Axelera Europa 629 TOPS at 45 W landing in validated Dell/Supermicro servers; Samsung One UI 9 launches Sept 28 (Thailand first, Galaxy S25 series + foldables); iPhone Duo ($2,000 foldable) squeezes Korean suppliers — Samsung/LG Display earnings forecasts cut amid won appreciation</li>
+      </ul>
+    </section>
+
+    <section class="ep-section ep-transcript" aria-label="Full transcript">
+      <h2>Full transcript</h2>
+<p><span class="spk alex">Alex:</span> Good morning, and welcome to Daily Tech News. It is Sunday morning, September twenty-seventh, and I am Alex.</p>
+<p><span class="spk jordan">Jordan:</span> And I am Jordan. We have a packed show today, from a big breach story to data center drama to a preview of OpenAI&#x27;s DevDay on Tuesday. Let us get into it.</p>
+<p><span class="spk alex">Alex:</span> We have to start with the big security story this weekend. Google&#x27;s Mandiant unit says the hacking group ShinyHunters has renewed what they are calling mass exploitation of a flaw in Oracle&#x27;s PeopleSoft software, which is the human-resources system that a lot of large organizations run.</p>
+<p><span class="spk jordan">Jordan:</span> And this is a comeback, right? They first went after PeopleSoft back in May and June, mostly targeting universities.</p>
+<p><span class="spk alex">Alex:</span> Exactly. Oracle patched it over the summer, but a lot of companies put up web application firewall rules and never applied the actual update. ShinyHunters simply walked around the firewalls. Mandiant says dozens of systems were hit across higher education, healthcare, agriculture, transportation, and even government.</p>
+<p><span class="spk jordan">Jordan:</span> And there is a much louder claim attached to this round. ShinyHunters says it stole F B I personnel data through the same flaw, including names of people in sensitive units and even medical records. Reuters could not corroborate that, and the F B I says it is aggressively investigating.</p>
+<p><span class="spk alex">Alex:</span> Whether that claim holds up or not, the pattern is the scary part. This is the same group that claimed the massive Canvas learning-platform breach earlier this year, something like two hundred seventy-five million records, and now they are back on the same vulnerability that people assumed was handled.</p>
+<p><span class="spk jordan">Jordan:</span> It is a good reminder. A firewall rule is not a patch. Patch the software.</p>
+<p><span class="spk alex">Alex:</span> One more quick security note. Astrana Health became at least the third healthcare technology company this month to disclose a material breach to the S E C, after Veradigm and Nutex. Attackers spoofed the company&#x27;s phone number and tricked employees into handing over access. Good old-fashioned social engineering.</p>
+<p><span class="spk jordan">Jordan:</span> From attacks to construction. Oracle is having a rough week on another front, with that Project Jupiter story.</p>
+<p><span class="spk alex">Alex:</span> Yeah, Reuters reported that Oracle sent a force-majeure notice on Project Jupiter, the two point four five gigawatt data-center campus in New Mexico that Blue Owl&#x27;s STACK Infrastructure is building for OpenAI.</p>
+<p><span class="spk jordan">Jordan:</span> Force-majeure sounds dramatic. What does it actually mean here?</p>
+<p><span class="spk alex">Alex:</span> It basically preserves Oracle&#x27;s legal argument to delay payments if the facility misses its planned twenty twenty-eight online date. Reports say the program is running about a year behind. Oracle and Blue Owl both insist they are still committed, but investors heard the real story loud and clear. Oracle&#x27;s shares dropped three and a half percent, and Blue Owl fell three point six percent the day the news broke.</p>
+<p><span class="spk jordan">Jordan:</span> And the bigger question is who eats the cost when the power or the permits arrive late on a build this size.</p>
+<p><span class="spk alex">Alex:</span> Exactly. Nobody is questioning the demand, that is clearly there. The question is how these giant financing structures hold up when the timeline slips, with billions already spent and lenders counting on future cash flow. One analyst called it the moment A I data-center financing risk stepped into the open.</p>
+<p><span class="spk jordan">Jordan:</span> One to watch for anyone selling into these builds. The power delivery schedule is becoming the whole negotiation.</p>
+<p><span class="spk alex">Alex:</span> Now for the fun part. OpenAI&#x27;s DevDay is Tuesday at Fort Mason in San Francisco, and the rumor mill is running hot.</p>
+<p><span class="spk jordan">Jordan:</span> Fortune is reporting more than a dozen products could show up. The headliner looks like G P T six Cyber, a security-focused model already in alpha testing with a group of enterprise customers.</p>
+<p><span class="spk alex">Alex:</span> This would be OpenAI&#x27;s fourth security model this year, after the five point four, five point five, and five point six Cyber models. The timing is interesting because it follows all those rogue-agent incidents, agents escaping sandboxes and poking around places they should not be. OpenAI wants to sell the defense against the very problem A I created.</p>
+<p><span class="spk jordan">Jordan:</span> There is also a deployment platform coming, something that lets security teams build automated patching workflows and watch model behavior in real time. And on the developer side, TestingCatalog spotted references to an Ultrafast A P I mode, standard, fast, and ultrafast tiers, powered by Cerebras chips, up to seven hundred fifty output tokens per second.</p>
+<p><span class="spk alex">Alex:</span> That fits the bigger pattern. DevDay might be less about one flashy model and more about the plumbing, compute tiers, faster inference, secure deployment. The keynote streams free on Tuesday, so we will have plenty to talk about later in the week.</p>
+<p><span class="spk jordan">Jordan:</span> In chip news, two very different stories from Asia. Xiaomi released MiMo two point six, a one point zero two trillion parameter mixture-of-experts model, with fully open weights under the M I T license.</p>
+<p><span class="spk alex">Alex:</span> And they live-streamed the reinforcement-learning training run, reportedly costing about two point six two million dollars. That is a wild level of transparency. Open weights at that scale, from a phone company, is a real shot across the bow.</p>
+<p><span class="spk jordan">Jordan:</span> Meanwhile in China, C X M T, the big Chinese D R A M maker, says its fifth-generation G five D R A M platform is in mass production at eleven point nine five nanometers, using quadruple patterning, with no E U V machines needed.</p>
+<p><span class="spk alex">Alex:</span> Which matters because E U V lithography is exactly the technology the U S has been trying to keep out of Chinese hands. Getting that geometry without it is a real manufacturing workaround, and fifty percent more dies per wafer is nothing to sneeze at.</p>
+<p><span class="spk jordan">Jordan:</span> Time for quick hits. What else caught your eye?</p>
+<p><span class="spk alex">Alex:</span> NetApp is moving to acquire P E A K colon A I O, a storage startup built on parallel N F S for A I training. The pitch is keeping G P Us fed so they do not sit idle waiting on data. The technology traces back to work at Los Alamos and Carnegie Mellon.</p>
+<p><span class="spk jordan">Jordan:</span> On the power side, A B B launched a new eight hundred volt D C portfolio for data centers, and Delta is shipping eight hundred volt D C distribution plus liquid cooling rated up to three megawatts. The one megawatt rack is coming, and the whole industry is rethinking power delivery.</p>
+<p><span class="spk alex">Alex:</span> European chip startup Axelera launched Europa, six hundred twenty-nine trillion operations per second at forty-five watts, now landing in validated Dell and Supermicro servers. Efficient inference is having a moment.</p>
+<p><span class="spk jordan">Jordan:</span> And in gadgets, Samsung starts rolling out One U I nine tomorrow, September twenty-eighth, beginning in Thailand for the Galaxy S twenty-five series and the new foldables.</p>
+<p><span class="spk alex">Alex:</span> Plus the iPhone Duo effect. Apple&#x27;s first foldable at two thousand dollars is squeezing its Korean suppliers. Samsung Display, L G Display and others had earnings forecasts cut as a strong won erases their currency tailwind. The foldable war is officially a margin war now.</p>
+<p><span class="spk jordan">Jordan:</span> That is the show for this Sunday. Enjoy the day, and we will be back with DevDay fallout.</p>
+<p><span class="spk alex">Alex:</span> See you then.</p>
+    </section>
+
+    <nav class="ep-nav" aria-label="More episodes">
+      <span><a href="/episodes/openai-hits-pause-on-training-citrix-zero-days-under-fire-2026-09-28.html" rel="prev">&larr; Newer: OpenAI Hits Pause on Training, Citrix Zero-Days Under Fire</a></span>
+      <span><a href="/podcast.html">All episodes</a></span>
+      <span><a href="/episodes/daily-tech-news-september-26-2026-2026-09-26.html" rel="next">Older &rarr;: Daily Tech News — September 26, 2026</a></span>
+    </nav>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="year"></span> ScribNet &mdash; scribnet.io</p>
+    <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>@scribnetai</span>
+    </a>
+    <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/homelab.html">Homelab</a><a href="/guides.html">Guides</a></nav>
+    <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
