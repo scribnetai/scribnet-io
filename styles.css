@@ -212,3 +212,20 @@ footer .grad { background: var(--grad); -webkit-background-clip: text; backgroun
 @keyframes tl-in { from { opacity: 0; transform: translateY(10px); } }
 @media (prefers-reduced-motion: reduce) { .tl-extra:not([hidden]) .tl-item { animation: none; } }
 .log-toggle { margin-top: 1.1rem; font: inherit; cursor: pointer; }
+
+/* ---- Site top navigation (sub-pages) ---- */
+.topnav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2.25rem; }
+.topnav-brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--text); font-weight: 700; font-size: 0.95rem; letter-spacing: -0.01em; }
+.topnav-badge { width: 30px; height: 30px; border-radius: 9px; background: var(--grad); color: #060913; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; box-shadow: 0 6px 18px -6px rgba(124, 108, 255, 0.7); }
+.topnav-brand:hover .topnav-badge { filter: brightness(1.12); }
+.topnav-links { display: flex; align-items: center; gap: 0.15rem; }
+.topnav-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.5rem 0.8rem; border-radius: 999px; transition: color 0.15s ease, background 0.15s ease; }
+.topnav-links a:hover { color: var(--text); background: rgba(255, 255, 255, 0.06); }
+.topnav-links a[aria-current="page"] { color: var(--text); background: rgba(124, 108, 255, 0.16); }
+@media (max-width: 560px) {
+  .topnav { margin-bottom: 1.75rem; }
+  .topnav-links a { padding: 0.5rem 0.6rem; font-size: 0.82rem; }
+}
+@media (max-width: 420px) {
+  .topnav-brand span:last-child { display: none; }
+}
