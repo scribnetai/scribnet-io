@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-09-29 — Removed third-party attribution from site pages
+
+- Scrubbed all third-party brand mentions from `/prompts.html`, the homepage "Five rules" section, and `/lab.html` — the borrowed-patterns framing stays, unattributed.
 ## 2026-09-29 — Workflow prompts page + five rules on homepage
 
 - New `/prompts.html`: copy-paste workflow install prompts as a standalone page (ebook-style, confined for iteration) — briefing generator, podcast pipeline, song picks. Each workflow ships with a one-click copy button, a visible safety checklist, and how-to-use; prompts are tested to install from a fresh chat. Linked in topnav + footer site-wide.
@@ -7,7 +10,7 @@
 - `styles.css`: new lesson-card and prompt-pack component styles (cache-buster bumped to `?v=prompts1`).
 ## 2026-09-29 — Lab page: four borrowed patterns as live demos
 
-- New "Steal-worthy patterns, on trial" section on the unlinked `/lab.html`: four patterns borrowed from Skill Harbor (theskillharbor.com), rebuilt as working demos to evaluate live before anything ships to the real pages.
+- New "Steal-worthy patterns, on trial" section on the unlinked `/lab.html`: four borrowed patterns, rebuilt as working demos to evaluate live before anything ships to the real pages.
 - Demo 6 — Install-prompt packaging: pick a workflow (briefing generator, podcast pipeline, song picks) and copy a ready-to-paste install prompt with the safety checklist built in.
 - Demo 7 — Honest caveats: toggle the caveats block on a mock briefing item.
 - Demo 8 — Five daily-agent lessons: the five rules, each mapped to this fleet's pipeline.
