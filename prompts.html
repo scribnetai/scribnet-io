@@ -71,6 +71,25 @@
   }
   </script>
 <link rel="canonical" href="https://scribnet.io/prompts.html">
+
+<style>
+.prompt-filters{margin:1.75rem 0 0;display:flex;flex-direction:column;gap:.9rem}
+.pf-search{display:flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:.55rem 1.1rem;max-width:34rem}
+.pf-search input{flex:1;background:none;border:0;color:inherit;font:inherit;outline:none;min-width:0}
+.pf-search input::placeholder{color:rgba(255,255,255,.4)}
+.pf-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.pf-chip{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);color:inherit;border-radius:999px;padding:.35rem .9rem;font-size:.85rem;cursor:pointer;font-family:inherit}
+.pf-chip:hover{border-color:rgba(255,255,255,.35)}
+.pf-chip.on{background:linear-gradient(135deg,#7c5cff,#38e1ff);border-color:transparent;color:#060913;font-weight:600}
+.pf-count{margin:0;font-size:.85rem;color:rgba(255,255,255,.55)}
+.pf-empty{padding:2rem;text-align:center;color:rgba(255,255,255,.6);border:1px dashed rgba(255,255,255,.2);border-radius:1rem}
+.tag-row{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0 1.1rem}
+.tag{background:rgba(124,92,255,.14);border:1px solid rgba(124,92,255,.4);color:#cfc2ff;border-radius:999px;padding:.22rem .7rem;font-size:.78rem;cursor:pointer;font-family:inherit}
+.tag:hover{background:rgba(124,92,255,.28)}
+.prompt-pack[hidden]{display:none}
+@media(max-width:640px){.pf-search{max-width:none}}
+</style>
+
 </head>
 <body>
   <main>
@@ -92,10 +111,25 @@
     <p class="lede">Each prompt below installs a real workflow into any AI assistant — no accounts, no API keys, no setup docs. Every prompt opens with a short setup interview (up to five questions, one at a time), so the workflow configures itself to <em>your</em> world: your topics, your show, your taste in music. Every prompt is tested from a fresh chat, and every prompt ships with its safety checklist, stated up front.</p>
     <p class="section-note">The standard is simple — tested prompts, setup that adapts to you, and safety checks that are real.</p>
 
-      <section class="prompt-pack reveal" id="workflow-01">
+    <div class="prompt-filters">
+      <label class="pf-search" for="prompt-search">
+        <span aria-hidden="true">&#x1F50D;</span>
+        <input id="prompt-search" type="search" placeholder="Search workflows&hellip;" autocomplete="off" aria-label="Search workflows">
+      </label>
+      <div class="pf-chips" id="tag-chips" role="group" aria-label="Filter by tag"></div>
+      <p class="pf-count" id="prompt-count" aria-live="polite"></p>
+    </div>
+    <p class="pf-empty" id="prompt-empty" hidden>No workflows match &mdash; try a different search or tag.</p>
+
+      <section class="prompt-pack reveal" id="workflow-01" data-tags="news research productivity" data-search="Daily Briefing Your morning briefing, on your beat. Tell it your topics, companies, or industries — it researches the last 24 hours, keeps only what you can actually use, and flags what&#x27;s unverified. news research productivity">
         <div class="eyebrow">Workflow 01</div>
         <h2>Daily Briefing</h2>
         <p class="what">Your morning briefing, on your beat. Tell it your topics, companies, or industries — it researches the last 24 hours, keeps only what you can actually use, and flags what's unverified.</p>
+        <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="news">news</button>
+          <button type="button" class="tag" data-tag="research">research</button>
+          <button type="button" class="tag" data-tag="productivity">productivity</button>
+        </div>
         <h3>The install prompt</h3>
         <div class="prompt-block" id="prompt-1">Install the &quot;Daily Briefing&quot; workflow in this chat.
 
@@ -136,10 +170,15 @@ SAFETY CHECK — confirm before the first run:
         <h3>How to use</h3>
         <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
       </section>
-      <section class="prompt-pack reveal" id="workflow-02">
+      <section class="prompt-pack reveal" id="workflow-02" data-tags="content writing audio" data-search="Podcast Script Studio A two-host show from yesterday&#x27;s news. You define the topic, the hosts, and their personalities — it picks the stories, writes a conversational script that actually sounds like them, and marks rumor vs confirmed. content writing audio">
         <div class="eyebrow">Workflow 02</div>
         <h2>Podcast Script Studio</h2>
         <p class="what">A two-host show from yesterday's news. You define the topic, the hosts, and their personalities — it picks the stories, writes a conversational script that actually sounds like them, and marks rumor vs confirmed.</p>
+        <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="content">content</button>
+          <button type="button" class="tag" data-tag="writing">writing</button>
+          <button type="button" class="tag" data-tag="audio">audio</button>
+        </div>
         <h3>The install prompt</h3>
         <div class="prompt-block" id="prompt-2">Install the &quot;Podcast Script Studio&quot; workflow in this chat.
 
@@ -179,10 +218,15 @@ SAFETY CHECK — confirm before the first run:
         <h3>How to use</h3>
         <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
       </section>
-      <section class="prompt-pack reveal" id="workflow-03">
+      <section class="prompt-pack reveal" id="workflow-03" data-tags="music discovery playlists" data-search="Music Discovery New songs in your lane, on repeat. Name your reference artists or describe the sound — it hunts down tracks you haven&#x27;t heard, tells you why each fits, and what to listen for. music discovery playlists">
         <div class="eyebrow">Workflow 03</div>
         <h2>Music Discovery</h2>
         <p class="what">New songs in your lane, on repeat. Name your reference artists or describe the sound — it hunts down tracks you haven't heard, tells you why each fits, and what to listen for.</p>
+        <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="music">music</button>
+          <button type="button" class="tag" data-tag="discovery">discovery</button>
+          <button type="button" class="tag" data-tag="playlists">playlists</button>
+        </div>
         <h3>The install prompt</h3>
         <div class="prompt-block" id="prompt-3">Install the &quot;Music Discovery&quot; workflow in this chat.
 
@@ -360,6 +404,65 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
       } else { fallback(); }
     });
   });
+})();
+</script>
+<script>
+(function () {
+  // Live search + tag filter for the workflow packs. Tag chips are generated
+  // from the packs' own data-tags, so adding a workflow never needs UI edits.
+  var packs = Array.prototype.slice.call(document.querySelectorAll(".prompt-pack"));
+  var search = document.getElementById("prompt-search");
+  var chipsBox = document.getElementById("tag-chips");
+  var count = document.getElementById("prompt-count");
+  var empty = document.getElementById("prompt-empty");
+  if (!packs.length || !search || !chipsBox) return;
+  var seen = {};
+  packs.forEach(function (p) {
+    (p.getAttribute("data-tags") || "").split(" ").forEach(function (t) { if (t) seen[t] = true; });
+  });
+  var tags = Object.keys(seen).sort();
+  var activeTag = "";
+  function apply() {
+    var q = search.value.trim().toLowerCase();
+    var shown = 0;
+    packs.forEach(function (p) {
+      var hay = (p.getAttribute("data-search") || "").toLowerCase();
+      var ptags = (p.getAttribute("data-tags") || "").split(" ");
+      var ok = (!q || hay.indexOf(q) !== -1) && (!activeTag || ptags.indexOf(activeTag) !== -1);
+      p.hidden = !ok;
+      if (ok) shown++;
+    });
+    if (count) count.textContent = shown + (shown === 1 ? " workflow" : " workflows");
+    if (empty) empty.hidden = shown > 0;
+  }
+  function renderChips() {
+    chipsBox.innerHTML = "";
+    function chip(label, tag) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "pf-chip" + (activeTag === tag ? " on" : "");
+      b.textContent = label;
+      b.setAttribute("aria-pressed", activeTag === tag ? "true" : "false");
+      b.addEventListener("click", function () {
+        activeTag = (activeTag === tag) ? "" : tag;
+        renderChips(); apply();
+      });
+      chipsBox.appendChild(b);
+    }
+    chip("All", "");
+    tags.forEach(function (t) { chip(t, t); });
+  }
+  // Tag pills on each card act as filters too.
+  document.querySelectorAll(".prompt-pack .tag").forEach(function (pill) {
+    pill.addEventListener("click", function () {
+      activeTag = pill.getAttribute("data-tag") || "";
+      renderChips(); apply();
+      search.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+  search.addEventListener("input", apply);
+  renderChips();
+  apply();
 })();
 </script>
 

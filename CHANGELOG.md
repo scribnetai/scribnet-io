@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-29 — Prompts page: search + tag filtering, homepage hero button
+
+- Homepage hero now has a fourth button, "Workflow Prompts", linking to /prompts.html — sits alongside SE Command Center, App Launcher, and the podcast button.
+- Prompts page is now searchable and tag-filterable: a search box matches titles, blurbs, and tags; tag filter chips are generated from each workflow's tags, so new workflows only need their tags listed in the builder.
+- Each workflow card shows its tag pills — clicking a pill filters the page to that tag.
+- Builder change (build-prompts-page.py): tags live in WORKFLOW_TAGS next to the workflow definitions, so future regenerations keep the search/filter UI instead of drifting.
+
 ## 2026-09-29 — Fleet SEO pass: canonicals, social tags, structured data
 
 - All 9 app subdomains now ship full SEO head tags: canonical URL, meta description (trimmed to ~155 chars), Open Graph + Twitter Card tags, and `WebApplication` JSON-LD.
