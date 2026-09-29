@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-28 — App Launcher page
+- New `/apps.html`: an app-store-style launcher for the whole 10-app fleet —
+  live search, category filters, 3D tilt + cursor spotlight + shine sweep on
+  hover, and each app's real PWA icon pulled from its subdomain. Same design
+  language as the homepage (Inter, glass cards, violet→cyan gradient).
+- Homepage hero gains an "App Launcher" button next to SE Command Center and
+  the podcast; footer nav on all pages links it too.
+
 ## 2026-09-28 — Build log, Uses, Homelab diary
 - New Build log section on the homepage, compiled from the fleet's changelogs (fleet-wide rollouts collapsed to single lines).
 - Hero stats strip updated: live sites, changes shipped, podcast episodes.

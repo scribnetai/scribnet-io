@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Launcher — ScribNet</title>
+  <meta name="description" content="The ScribNet app launcher — every app in the fleet, one tap away. Sizers, analyzers, sales tools, and games.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+<!-- PWA: installable home-screen app -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#05070c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ScribNet">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2338bdf8'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='71' font-size='62' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>S</text></svg>">
+<!-- Analytics: Umami (cookieless, no consent banner) -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="025bed5c-dced-450a-a701-95f7cd065922"></script>
+</head>
+<body>
+  <main>
+    <a class="backlink" href="/">&larr; scribnet.io</a>
+    <div class="launcher-hero">
+      <div class="pill"><span class="dot"></span>scribnet.io</div>
+      <div class="eyebrow">App launcher</div>
+      <h1>Ten apps. <span class="grad">One tap.</span></h1>
+      <p class="subtitle">Everything I've shipped with AI, in one place. Hover a tile, find your tool, launch it.</p>
+    </div>
+
+    <div class="toolbar">
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="app-search" type="search" placeholder="Search apps…" autocomplete="off" aria-label="Search apps">
+      </label>
+      <div class="chips" role="group" aria-label="Filter by category">
+          <button type="button" class="chip active" data-cat="all">All</button>
+          <button type="button" class="chip" data-cat="dashboard">Dashboard</button>
+          <button type="button" class="chip" data-cat="sizing">Sizing</button>
+          <button type="button" class="chip" data-cat="analysis">Analysis</button>
+          <button type="button" class="chip" data-cat="sales">Sales</button>
+          <button type="button" class="chip" data-cat="game">Game</button>
+      </div>
+      <p class="count" id="app-count" aria-live="polite">10 apps</p>
+    </div>
+
+    <div class="app-grid" id="app-grid">
+        <a class="tile" style="animation-delay:0ms" href="https://se-command-center.scribnet.io/" data-cat="dashboard" data-name="se command center my morning vendor-intel dashboard. an ai agent researches 14 vendors before i wake up, then publishes the briefing straight to the page. dashboard">
+          <span class="tile-icon"><img src="https://se-command-center.scribnet.io/icon-192.png" alt="SE Command Center icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Dashboard</span>
+          <h3>SE Command Center</h3>
+          <p>My morning vendor-intel dashboard. An AI agent researches 14 vendors before I wake up, then publishes the briefing straight to the page.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+        <a class="tile" style="animation-delay:60ms" href="https://server-sizer.scribnet.io/" data-cat="sizing" data-name="server sizer feed it rvtools data or manual cluster numbers and get a sized refresh build: host specs, licensing, the works. sizing">
+          <span class="tile-icon"><img src="https://server-sizer.scribnet.io/icon-192.png" alt="Server Sizer icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Sizing</span>
+          <h3>Server Sizer</h3>
+          <p>Feed it RVTools data or manual cluster numbers and get a sized refresh build: host specs, licensing, the works.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+        <a class="tile" style="animation-delay:120ms" href="https://storage-sizer.scribnet.io/" data-cat="sizing" data-name="storage sizer feed it rvtools data or pool numbers and get a year-by-year raw storage capacity plan. sizing">
+          <span class="tile-icon"><img src="https://storage-sizer.scribnet.io/icon-192.png" alt="Storage Sizer icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Sizing</span>
+          <h3>Storage Sizer</h3>
+          <p>Feed it RVTools data or pool numbers and get a year-by-year raw storage capacity plan.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+        <a class="tile" style="animation-delay:180ms" href="https://network-sizer.scribnet.io/" data-cat="sizing" data-name="network sizer feed it rvtools data or host counts and get top-of-rack and fibre channel san switch plans. sizing">
+          <span class="tile-icon"><img src="https://network-sizer.scribnet.io/icon-192.png" alt="Network Sizer icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Sizing</span>
+          <h3>Network Sizer</h3>
+          <p>Feed it RVTools data or host counts and get top-of-rack and Fibre Channel SAN switch plans.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+        <a class="tile" style="animation-delay:240ms" href="https://rvtools-analyzer.scribnet.io/" data-cat="analysis" data-name="rvtools analyzer drop an rvtools export and get cluster breakdowns, per-core licensing math, and storage totals. analysis">
+          <span class="tile-icon"><img src="https://rvtools-analyzer.scribnet.io/icon-192.png" alt="RVTools Analyzer icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Analysis</span>
+          <h3>RVTools Analyzer</h3>
+          <p>Drop an RVTools export and get cluster breakdowns, per-core licensing math, and storage totals.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+        <a class="tile" style="animation-delay:300ms" href="https://deal-pack.scribnet.io/" data-cat="sales" data-name="deal pack turn sizing outputs into a customer-ready refresh proposal — import json, assemble, export. sales">
+          <span class="tile-icon"><img src="https://deal-pack.scribnet.io/icon-192.png" alt="Deal Pack icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Sales</span>
+          <h3>Deal Pack</h3>
+          <p>Turn sizing outputs into a customer-ready refresh proposal — import JSON, assemble, export.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+        <a class="tile" style="animation-delay:360ms" href="https://battlecards.scribnet.io/" data-cat="sales" data-name="battlecards know both sides of every deal — competitive battlecards for presales conversations. sales">
+          <span class="tile-icon"><img src="https://battlecards.scribnet.io/icon-192.png" alt="Battlecards icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Sales</span>
+          <h3>Battlecards</h3>
+          <p>Know both sides of every deal — competitive battlecards for presales conversations.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+        <a class="tile" style="animation-delay:420ms" href="https://tco-calculator.scribnet.io/" data-cat="analysis" data-name="tco calculator total cost of ownership modeled year by year: tco, savings, npv, and breakeven. analysis">
+          <span class="tile-icon"><img src="https://tco-calculator.scribnet.io/icon-192.png" alt="TCO Calculator icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Analysis</span>
+          <h3>TCO Calculator</h3>
+          <p>Total cost of ownership modeled year by year: TCO, savings, NPV, and breakeven.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+        <a class="tile" style="animation-delay:480ms" href="https://cargo-foundry.scribnet.io/" data-cat="game" data-name="cargo foundry a factorio-style browser game: belts, miners, furnaces, assemblers, shipment orders. fully playable. game">
+          <span class="tile-icon"><img src="https://cargo-foundry.scribnet.io/icon-192.png" alt="Cargo Foundry icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Game</span>
+          <h3>Cargo Foundry</h3>
+          <p>A Factorio-style browser game: belts, miners, furnaces, assemblers, shipment orders. Fully playable.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+        <a class="tile" style="animation-delay:540ms" href="https://statement-analyzer.scribnet.io/" data-cat="analysis" data-name="statement analyzer drop a bank statement csv and get spending breakdowns, trends, and money findings — private, in-browser. analysis">
+          <span class="tile-icon"><img src="https://statement-analyzer.scribnet.io/icon-192.png" alt="Statement Analyzer icon" loading="lazy" onerror="iconFallback(this)"></span>
+          <span class="tile-kicker">Analysis</span>
+          <h3>Statement Analyzer</h3>
+          <p>Drop a bank statement CSV and get spending breakdowns, trends, and money findings — private, in-browser.</p>
+          <span class="tile-foot">
+            <span class="tile-open">Open <span class="arrow">&rarr;</span></span>
+          </span>
+          <span class="tile-shine" aria-hidden="true"></span>
+        </a>
+    </div>
+    <p class="empty" id="app-empty" hidden>No apps match — try a different search.</p>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> ScribNet — scribnet.io</p>
+    <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>@scribnetai</span>
+    </a>
+    <nav class="foot-links"><a href="/uses.html">Uses</a><a href="/homelab.html">Homelab</a></nav>
+    <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
+  </footer>
+
+  <style>
+    .launcher-hero { padding: 2.5rem 0 0.5rem; }
+    .launcher-hero h1 { margin-bottom: 0.4rem; }
+    .toolbar { display: flex; flex-direction: column; gap: 0.9rem; margin: 1.6rem 0 1.4rem; }
+    .search { display: flex; align-items: center; gap: 0.6rem; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 999px; padding: 0.7rem 1.2rem;
+      max-width: 26rem; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .search svg { width: 1.05rem; height: 1.05rem; color: var(--faint); flex: none; }
+    .search input { flex: 1; background: none; border: none; outline: none; color: var(--text);
+      font: inherit; font-size: 0.95rem; min-width: 0; }
+    .search input::placeholder { color: var(--faint); }
+    .search:focus-within { border-color: rgba(124,108,255,0.6); box-shadow: 0 0 0 3px rgba(124,108,255,0.15); }
+    .chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .chip { padding: 0.5rem 1.05rem; border-radius: 999px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--muted); font-size: 0.83rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: all 0.18s ease; }
+    .chip:hover { color: var(--text); border-color: rgba(124,108,255,0.5); transform: translateY(-1px); }
+    .chip.active { background: var(--grad); color: #060913; border-color: transparent; font-weight: 700; }
+    .count { color: var(--faint); font-size: 0.82rem; }
+    .empty { color: var(--muted); padding: 3rem 0; text-align: center; }
+    .app-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.1rem; perspective: 1400px; }
+    .tile {
+      --mx: 50%; --my: 50%;
+      position: relative; display: flex; flex-direction: column;
+      background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 1.6rem 1.5rem 1.35rem;
+      text-decoration: none; color: inherit;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      transform-style: preserve-3d; will-change: transform;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
+      opacity: 0; animation: tile-rise 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+    }
+    @keyframes tile-rise { from { opacity: 0; translate: 0 18px; } to { opacity: 1; translate: 0 0; } }
+    .tile::before { /* cursor spotlight */
+      content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+      background: radial-gradient(430px circle at var(--mx) var(--my), rgba(124,108,255,0.17), transparent 55%);
+      opacity: 0; transition: opacity 0.3s ease; }
+    .tile:hover::before, .tile:focus-visible::before { opacity: 1; }
+    .tile::after { /* top gradient hairline */
+      content: ""; position: absolute; top: 0; left: 12%; right: 12%; height: 1px;
+      background: var(--grad); opacity: 0; transition: opacity 0.25s ease; }
+    .tile:hover::after, .tile:focus-visible::after { opacity: 1; }
+    .tile:hover, .tile:focus-visible { border-color: rgba(124,108,255,0.55);
+      box-shadow: 0 24px 60px -18px rgba(124,108,255,0.55); outline: none; }
+    .tile-icon { width: 72px; height: 72px; border-radius: 20px; overflow: hidden; margin-bottom: 1rem;
+      box-shadow: 0 10px 30px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1);
+      transition: transform 0.25s ease, box-shadow 0.25s ease; transform: translateZ(36px); background: var(--grad); }
+    .tile:hover .tile-icon { transform: translateZ(60px) scale(1.07);
+      box-shadow: 0 16px 42px -8px rgba(124,108,255,0.55), 0 0 0 1px rgba(124,108,255,0.45); }
+    .tile-icon img { width: 100%; height: 100%; display: block; }
+    .tile-kicker { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.3rem; }
+    .tile h3 { font-size: 1.18rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.45rem; }
+    .tile p { color: var(--muted); font-size: 0.89rem; flex: 0 1 auto; }
+    .tile-foot { margin-top: auto; padding-top: 1.15rem; display: flex; justify-content: flex-end; }
+    .tile-open { display: inline-flex; align-items: center; gap: 0.4rem;
+      font-weight: 700; font-size: 0.85rem; padding: 0.5rem 1.15rem; border-radius: 999px;
+      color: #060913; background: var(--grad);
+      box-shadow: 0 6px 18px -6px rgba(124,108,255,0.8);
+      transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .tile-open .arrow { display: inline-block; transition: transform 0.2s ease; }
+    .tile:hover .tile-open { transform: scale(1.06); box-shadow: 0 8px 26px -6px rgba(124,108,255,1); }
+    .tile:hover .tile-open .arrow { transform: translateX(4px); }
+    .tile-shine { position: absolute; top: -10%; bottom: -10%; width: 45%; left: 0; pointer-events: none;
+      background: linear-gradient(105deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: translateX(-260%) skewX(-18deg); }
+    .tile:hover .tile-shine { animation: tile-shine 0.75s ease; }
+    @keyframes tile-shine { to { transform: translateX(560%) skewX(-18deg); } }
+    @media (max-width: 640px) { .app-grid { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) {
+      .tile { animation: none; opacity: 1; }
+      .tile:hover .tile-shine { animation: none; }
+    }
+  </style>
+
+  <script>
+  function iconFallback(img) {
+    img.onerror = null;
+    img.src = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2338bdf8'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='71' font-size='62' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>S</text></svg>";
+  }
+  (function () {
+    var tiles = Array.prototype.slice.call(document.querySelectorAll(".tile"));
+    var search = document.getElementById("app-search");
+    var count = document.getElementById("app-count");
+    var empty = document.getElementById("app-empty");
+    var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
+    var cat = "all";
+    var canHover = window.matchMedia("(hover: hover)").matches;
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* 3D tilt + cursor spotlight */
+    if (canHover && !reduceMotion) {
+      tiles.forEach(function (t) {
+        var raf = null;
+        t.addEventListener("mousemove", function (e) {
+          var r = t.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5;
+          var y = (e.clientY - r.top) / r.height - 0.5;
+          t.style.setProperty("--mx", ((x + 0.5) * 100).toFixed(1) + "%");
+          t.style.setProperty("--my", ((y + 0.5) * 100).toFixed(1) + "%");
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(function () {
+            t.style.transform =
+              "rotateX(" + (-y * 7).toFixed(2) + "deg) rotateY(" + (x * 9).toFixed(2) + "deg) translateY(-4px)";
+          });
+        });
+        t.addEventListener("mouseleave", function () {
+          if (raf) cancelAnimationFrame(raf);
+          t.style.transform = "";
+        });
+      });
+    }
+
+    /* search + category filter */
+    function apply() {
+      var q = search.value.trim().toLowerCase();
+      var n = 0;
+      tiles.forEach(function (t) {
+        var okCat = cat === "all" || t.getAttribute("data-cat") === cat;
+        var okQ = !q || t.getAttribute("data-name").indexOf(q) !== -1;
+        var show = okCat && okQ;
+        t.style.display = show ? "" : "none";
+        if (show) n++;
+      });
+      count.textContent = n + (n === 1 ? " app" : " apps");
+      empty.hidden = n !== 0;
+    }
+    search.addEventListener("input", apply);
+    chips.forEach(function (c) {
+      c.addEventListener("click", function () {
+        chips.forEach(function (x) { x.classList.remove("active"); });
+        c.classList.add("active");
+        cat = c.getAttribute("data-cat");
+        apply();
+      });
+    });
+  })();
+  </script>
+
+<!-- ScribNet feedback widget: floating button + dialog, sends via user's email client (mailto). Self-contained: no external deps, no reliance on page CSS. -->
+<style>
+.snkf-btn{position:fixed;right:22px;bottom:22px;z-index:9990;display:flex;align-items:center;gap:9px;
+  padding:12px 18px;border-radius:999px;cursor:pointer;font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.2px;color:#fff;
+  background:rgba(20,26,46,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.16);box-shadow:0 8px 28px rgba(0,0,0,.45),0 0 0 1px rgba(124,92,255,.12);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;min-height:46px}
+.snkf-btn:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.55);box-shadow:0 12px 32px rgba(0,0,0,.5),0 0 18px rgba(124,92,255,.35)}
+.snkf-btn:active{transform:translateY(0)}
+.snkf-btn svg{width:18px;height:18px;flex:none}
+.snkf-overlay{position:fixed;inset:0;z-index:9991;display:none;align-items:center;justify-content:center;
+  background:rgba(4,6,12,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:16px}
+.snkf-overlay.open{display:flex}
+.snkf-card{width:420px;max-width:100%;max-height:calc(100vh - 60px);overflow:auto;border-radius:20px;padding:26px 24px 22px;
+  background:rgba(20,26,46,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 70px rgba(0,0,0,.6);
+  font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;color:#eef1f8;
+  animation:snkf-pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes snkf-pop{from{transform:scale(.94) translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.snkf-title{font-size:19px;font-weight:700;margin:0 0 4px}
+.snkf-sub{font-size:13.5px;color:#9aa4c0;margin:0 0 18px;line-height:1.5}
+.snkf-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#8b94b3;margin:0 0 8px}
+.snkf-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.snkf-chip{padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);
+  color:#cfd6ea;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s ease}
+.snkf-chip:hover{border-color:rgba(124,92,255,.6);color:#fff}
+.snkf-chip.sel{background:linear-gradient(135deg,#7c5cff,#38bdf8);border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(124,92,255,.4)}
+.snkf-field{width:100%;box-sizing:border-box;border-radius:12px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);color:#fff;font-family:inherit;font-size:14.5px;padding:11px 13px;margin-bottom:14px;outline:none;
+  transition:border-color .15s ease}
+.snkf-field::placeholder{color:#6b7490}
+.snkf-field:focus{border-color:#7c5cff;box-shadow:0 0 0 3px rgba(124,92,255,.25)}
+textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
+.snkf-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+.snkf-cancel{padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:transparent;
+  color:#cfd6ea;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.snkf-cancel:hover{background:rgba(255,255,255,.07)}
+.snkf-send{padding:11px 22px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#7c5cff,#38bdf8);color:#fff;font-family:inherit;font-size:14px;font-weight:700;
+  box-shadow:0 6px 20px rgba(124,92,255,.45);transition:transform .15s ease,box-shadow .15s ease}
+.snkf-send:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(124,92,255,.6)}
+.snkf-send:disabled{opacity:.45;cursor:default;transform:none}
+.snkf-note{font-size:12px;color:#6b7490;margin:14px 0 0;text-align:center}
+@media (max-width:480px){
+  .snkf-overlay{align-items:flex-end;padding:0}
+  .snkf-card{width:100%;border-radius:22px 22px 0 0;max-height:88vh}
+  .snkf-btn{right:16px;bottom:16px;padding:12px 16px}
+}
+</style>
+<button class="snkf-btn" id="snkfBtn" aria-label="Send feedback" aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  <span>Feedback</span>
+</button>
+<div class="snkf-overlay" id="snkfOverlay" role="dialog" aria-modal="true" aria-labelledby="snkfTitle">
+  <div class="snkf-card">
+    <h2 class="snkf-title" id="snkfTitle">Send feedback</h2>
+    <p class="snkf-sub">Spotted a bug, have an idea, or just want to say hi? I read everything.</p>
+    <p class="snkf-label">What's this about?</p>
+    <div class="snkf-chips" id="snkfChips">
+      <button type="button" class="snkf-chip sel" data-topic="Bug">Bug</button>
+      <button type="button" class="snkf-chip" data-topic="Idea">Idea</button>
+      <button type="button" class="snkf-chip" data-topic="Question">Question</button>
+      <button type="button" class="snkf-chip" data-topic="Praise">Praise</button>
+    </div>
+    <p class="snkf-label">Your name <span style="text-transform:none;letter-spacing:0;opacity:.6">(optional)</span></p>
+    <input class="snkf-field" id="snkfName" type="text" maxlength="80" placeholder="Jane SE" autocomplete="name">
+    <p class="snkf-label">Message</p>
+    <textarea class="snkf-field" id="snkfMsg" maxlength="2000" placeholder="What's on your mind?"></textarea>
+    <div class="snkf-actions">
+      <button type="button" class="snkf-cancel" id="snkfCancel">Cancel</button>
+      <button type="button" class="snkf-send" id="snkfSend" disabled>Send via email</button>
+    </div>
+    <p class="snkf-note">Opens your email app with the message addressed to me.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var TO = "scribnet.ai@gmail.com";
+  var btn = document.getElementById("snkfBtn"),
+      overlay = document.getElementById("snkfOverlay"),
+      cancel = document.getElementById("snkfCancel"),
+      send = document.getElementById("snkfSend"),
+      nameEl = document.getElementById("snkfName"),
+      msgEl = document.getElementById("snkfMsg"),
+      chips = document.getElementById("snkfChips"),
+      topic = "Bug";
+  function open(){ overlay.classList.add("open"); setTimeout(function(){ msgEl.focus(); }, 60); }
+  function close(){ overlay.classList.remove("open"); btn.focus(); }
+  btn.addEventListener("click", open);
+  cancel.addEventListener("click", close);
+  overlay.addEventListener("click", function(e){ if (e.target === overlay) close(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && overlay.classList.contains("open")) close(); });
+  chips.addEventListener("click", function(e){
+    var c = e.target.closest(".snkf-chip"); if (!c) return;
+    chips.querySelectorAll(".snkf-chip").forEach(function(x){ x.classList.remove("sel"); });
+    c.classList.add("sel"); topic = c.getAttribute("data-topic");
+  });
+  msgEl.addEventListener("input", function(){ send.disabled = !msgEl.value.trim(); });
+  send.addEventListener("click", function(){
+    var msg = msgEl.value.trim(); if (!msg) return;
+    var subject = "[Feedback: " + topic + "] " + document.title;
+    var body = msg + "\n\n— " + (nameEl.value.trim() || "Anonymous") + "\nPage: " + location.href;
+    location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    close();
+  });
+})();
+</script>
+
+
+</body>
+</html>
