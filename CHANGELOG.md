@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-29 — Lab page: four borrowed patterns as live demos
+
+- New "Steal-worthy patterns, on trial" section on the unlinked `/lab.html`: four patterns borrowed from Skill Harbor (theskillharbor.com), rebuilt as working demos to evaluate live before anything ships to the real pages.
+- Demo 6 — Install-prompt packaging: pick a workflow (briefing generator, podcast pipeline, song picks) and copy a ready-to-paste install prompt with the safety checklist built in.
+- Demo 7 — Honest caveats: toggle the caveats block on a mock briefing item.
+- Demo 8 — Five daily-agent lessons: the five rules, each mapped to this fleet's pipeline.
+- Demo 9 — Skill safety checklist: interactive fetch → summarize → scan → install → verify walkthrough with progress bar.
+
 ## 2026-09-29 — Podcast episode pages for search indexing
 
 - New `/episodes/<slug>.html` pages: one per published episode (6 live) with full transcript, topics, audio player, canonical URL, and PodcastEpisode JSON-LD structured data — gives Google indexable text for every episode.

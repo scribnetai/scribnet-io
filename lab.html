@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=nav2">
 <!-- PWA: installable home-screen app -->
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#05070c">
@@ -36,6 +36,28 @@
     @keyframes blink { to { visibility: hidden; } }
     @media (prefers-reduced-motion: reduce) { .aurora, .caret { display: none; } }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://scribnet.io/#org",
+        "name": "ScribNet",
+        "url": "https://scribnet.io/",
+        "description": "ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.",
+        "sameAs": ["https://github.com/scribnetai"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://scribnet.io/#website",
+        "url": "https://scribnet.io/",
+        "name": "ScribNet",
+        "publisher": {"@id": "https://scribnet.io/#org"}
+      }
+    ]
+  }
+  </script>
 
 <style>
   .lab-demo { background: rgba(255,255,255,.025); border: 1px solid var(--border);
@@ -114,6 +136,74 @@
     background: linear-gradient(120deg, var(--violet), var(--cyan));
     -webkit-background-clip: text; background-clip: text; color: transparent; }
   .thumb-stats i { font-style: normal; color: var(--muted); font-size: .8rem; }
+
+  /* 6-9 — borrowed patterns section */
+  .borrow-div { margin: 3.5rem 0 2rem; }
+  .borrow-div h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); letter-spacing: -0.02em; margin: .4rem 0 .6rem; }
+  .borrow-div .lede { margin-bottom: 2rem; }
+  .borrow-div a { color: var(--cyan); }
+
+  /* 6 — install prompt picker */
+  .prompt-picker { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
+  .prompt-picker label { color: var(--muted); font-size: .9rem; }
+  .prompt-picker select { background: rgba(255,255,255,.05); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px; padding: .55rem .8rem; font-size: .9rem; }
+  .prompt-block { background: rgba(0,0,0,.35); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.1rem 1.2rem; font-size: .85rem; line-height: 1.55;
+    white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--text); max-height: 380px; overflow-y: auto; }
+  .copy-btn { margin-top: .8rem; background: linear-gradient(120deg, var(--violet), var(--cyan));
+    border: none; color: #0b0b14; font-weight: 700; border-radius: 10px; padding: .6rem 1.2rem;
+    cursor: pointer; font-size: .9rem; }
+  .copy-btn:active { transform: scale(.97); }
+  .copy-note { color: var(--muted); font-size: .82rem; margin: .5rem 0 0; }
+
+  /* 7 — honest caveats */
+  .mock-brief { border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.2rem;
+    background: rgba(0,0,0,.25); max-width: 640px; }
+  .mock-brief .tag { display: inline-block; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--cyan); border: 1px solid var(--border); border-radius: 20px; padding: .15rem .6rem; margin-bottom: .6rem; }
+  .mock-brief h4 { margin: 0 0 .4rem; font-size: 1.05rem; }
+  .mock-brief p { margin: 0 0 .5rem; color: var(--muted); font-size: .9rem; }
+  .mock-brief p b, .mock-brief .why b { color: var(--text); }
+  .caveat-toggle { margin: 1rem 0 0; background: rgba(255,255,255,.05); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px; padding: .55rem 1rem; cursor: pointer; font-size: .88rem; }
+  .caveat-toggle:hover { border-color: rgba(124,108,255,.5); }
+  .caveats { display: none; margin-top: 1rem; border-left: 3px solid var(--cyan);
+    padding: .6rem 0 .6rem 1rem; }
+  .caveats.show { display: block; }
+  .caveats p { font-size: .85rem; margin: 0 0 .35rem; color: var(--muted); }
+  .caveats p b { color: var(--text); font-weight: 600; }
+  .caveats .cav-head { color: var(--cyan); font-size: .78rem; letter-spacing: .12em;
+    text-transform: uppercase; font-weight: 700; margin-bottom: .5rem; }
+
+  /* 8 — lessons grid */
+  .lesson-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .lesson-card { border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.15rem;
+    background: rgba(255,255,255,.02); transition: transform .25s ease, border-color .25s ease; }
+  .lesson-card:hover { transform: translateY(-3px); border-color: rgba(124,108,255,.5); }
+  .lesson-card .n { font-size: .75rem; color: var(--cyan); letter-spacing: .12em; font-weight: 700; }
+  .lesson-card h4 { margin: .3rem 0 .4rem; font-size: 1rem; }
+  .lesson-card p { margin: 0 0 .5rem; color: var(--muted); font-size: .86rem; }
+  .lesson-card .map { font-size: .82rem; color: var(--text); border-top: 1px solid var(--border);
+    padding-top: .55rem; margin: .55rem 0 0; }
+  .lesson-card .map b { color: var(--cyan); font-weight: 600; }
+
+  /* 9 — safety checklist */
+  .check-progress { height: 8px; border-radius: 6px; background: rgba(255,255,255,.06);
+    margin-bottom: .6rem; overflow: hidden; }
+  .check-progress i { display: block; height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--violet), var(--cyan)); transition: width .3s ease; }
+  .check-count { color: var(--muted); font-size: .85rem; margin: 0 0 1rem; }
+  .check-step { display: flex; gap: .9rem; align-items: flex-start; border: 1px solid var(--border);
+    border-radius: 12px; padding: .95rem 1.05rem; margin-bottom: .7rem; background: rgba(0,0,0,.2);
+    cursor: pointer; }
+  .check-step input { margin-top: .2rem; width: 1.05rem; height: 1.05rem; accent-color: var(--cyan);
+    flex-shrink: 0; cursor: pointer; }
+  .check-step.done { border-color: rgba(77,225,255,.45); }
+  .check-step.done h4 { text-decoration: line-through; color: var(--muted); }
+  .check-step h4 { margin: 0 0 .25rem; font-size: .98rem; font-weight: 600; }
+  .check-step p { margin: 0; color: var(--muted); font-size: .86rem; }
 </style>
 
 </head>
@@ -124,7 +214,7 @@
   <p><span class="pill">Unlinked &middot; playground</span></p>
   <p class="eyebrow">Visual lab</p>
   <h1>Ideas, <span class="grad">live.</span></h1>
-  <p class="lede">Five more visual directions, running for real below. Poke at them, then tell me which ones to ship to the actual pages.</p>
+  <p class="lede">Nine live demos below — five visual directions, plus four borrowed patterns from Skill Harbor on trial. Poke at them, then tell me which ones to ship to the actual pages.</p>
 
   <section class="lab-demo reveal">
     <h3>1. Site-wide cursor glow</h3>
@@ -206,6 +296,96 @@
     <p class="idea">The violet&rarr;cyan gradient slowly drifts instead of sitting still. Could apply to headlines or the logo mark.</p>
     <p class="animated-grad">Building in public.</p>
   </section>
+
+  <div class="borrow-div">
+    <p class="eyebrow">Borrowed ideas &middot; Skill Harbor</p>
+    <h2>Steal-worthy patterns, <span class="grad">on trial.</span></h2>
+    <p class="lede">Four patterns from <a href="https://theskillharbor.com">Skill Harbor</a> — a directory of AI builds for assistants — rebuilt here as working demos so they can be kicked around live before anything ships to the real pages.</p>
+
+    <section class="lab-demo reveal">
+      <h3>6. Install-prompt packaging</h3>
+      <p class="idea">Borrowed idea #1: every capability ships as one copy-paste prompt — no accounts, no setup docs. Pick a workflow, copy the prompt, paste it into any fresh chat. The safety checklist rides along at the bottom.</p>
+      <div class="prompt-picker">
+        <label for="wf-select">Workflow:</label>
+        <select id="wf-select">
+          <option value="briefing">Daily SE briefing generator</option>
+          <option value="podcast">Daily Tech News podcast pipeline</option>
+          <option value="songs">Daily song picks</option>
+        </select>
+      </div>
+      <div class="prompt-block" id="prompt-block"></div>
+      <button class="copy-btn" id="copy-prompt">Copy install prompt</button>
+      <p class="copy-note" id="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+    </section>
+
+    <section class="lab-demo reveal">
+      <h3>7. Honest caveats</h3>
+      <p class="idea">Borrowed idea #2: every artifact carries a short structured block saying what wasn't verified. Toggle it on the mock briefing item below.</p>
+      <div class="mock-brief">
+        <span class="tag">Mock example</span>
+        <h4>Acme Storage launches HyperArray X9</h4>
+        <p>Acme's new all-flash array promises 2&times; the throughput of the X8 at the same price point, with a ransomware-detection engine built into the OS.</p>
+        <p class="why"><b>Why it matters:</b> a credible answer when a customer asks "what's new in primary storage" — and a wedge against incumbents on refresh cycles.</p>
+        <button class="caveat-toggle" id="caveat-toggle" aria-expanded="false">Show honest caveats</button>
+        <div class="caveats" id="caveats">
+          <p class="cav-head">Honest caveats</p>
+          <p><b>Pricing</b> is vendor-listed, not verified against a real quote.</p>
+          <p><b>"2&times; faster"</b> is a vendor claim from the press release — no independent benchmark yet.</p>
+          <p><b>Coverage</b> limited to public announcements in the last 24h; partner-only briefings not included.</p>
+          <p><b>Single-sourced</b> — only the vendor's announcement so far; no third-party reviews.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-demo reveal">
+      <h3>8. Five daily-agent lessons</h3>
+      <p class="idea">Borrowed idea #3: the five rules from Skill Harbor's "5 things I learned building a site with an AI agent every day" — each mapped to this fleet's pipeline.</p>
+      <div class="lesson-grid">
+        <div class="lesson-card">
+          <span class="n">Lesson 1</span>
+          <h4>One clear decision per batch</h4>
+          <p>Don't hand the agent five fuzzy tasks. One crisp decision per work unit.</p>
+          <p class="map"><b>In your pipeline:</b> the battlecard updater only touches qualifying items — one cron run, one job, no sprawl.</p>
+        </div>
+        <div class="lesson-card">
+          <span class="n">Lesson 2</span>
+          <h4>Hard stops are sacred</h4>
+          <p>Time-box the session; when the stop hits, stop. Prevents half-done sprawl.</p>
+          <p class="map"><b>In your pipeline:</b> battlecard research capped at 2–3 page reads; sessions end when they end.</p>
+        </div>
+        <div class="lesson-card">
+          <span class="n">Lesson 3</span>
+          <h4>Show, don't describe</h4>
+          <p>Make the agent show the actual output — not describe what it did.</p>
+          <p class="map"><b>In your pipeline:</b> the deployed-bytes rule — curl the live file before debugging a QA report.</p>
+        </div>
+        <div class="lesson-card">
+          <span class="n">Lesson 4</span>
+          <h4>Batch everything</h4>
+          <p>Group similar work into one run instead of many small ones.</p>
+          <p class="map"><b>In your pipeline:</b> single-commit deploys; the 06:15 / 07:15 morning production line.</p>
+        </div>
+        <div class="lesson-card">
+          <span class="n">Lesson 5</span>
+          <h4>Boring stuff compounds</h4>
+          <p>Changelogs, validation scripts, checklists — the unglamorous scaffolding is what makes a daily pipeline reliable.</p>
+          <p class="map"><b>In your pipeline:</b> dated CHANGELOG on every push; the midnight fleet QA.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-demo reveal">
+      <h3>9. Skill safety checklist</h3>
+      <p class="idea">Borrowed idea #4: the manual vetting flow — fetch, summarize, scan, install, verify. Tick the steps as you go; it's all client-side.</p>
+      <div class="check-progress"><i id="check-bar"></i></div>
+      <p class="check-count" id="check-count">0 of 5 steps checked</p>
+      <label class="check-step"><input type="checkbox"><div><h4>1. Fetch</h4><p>Get the SKILL.md and any scripts. Read them — never install blind.</p></div></label>
+      <label class="check-step"><input type="checkbox"><div><h4>2. Summarize</h4><p>What does it claim to do? What permissions, network access, or data does it need?</p></div></label>
+      <label class="check-step"><input type="checkbox"><div><h4>3. Scan</h4><p>Search for network calls, credential harvesting, exfiltration patterns, obfuscated code. Run SkillSpector where it applies.</p></div></label>
+      <label class="check-step"><input type="checkbox"><div><h4>4. Install</h4><p>Least privilege. Scratch or sandbox first when you can.</p></div></label>
+      <label class="check-step"><input type="checkbox"><div><h4>5. Verify</h4><p>Run it and watch what it actually does. Check for unexpected network or file access.</p></div></label>
+    </section>
+  </div>
 </main>
 
 <footer>
@@ -214,7 +394,7 @@
       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       <span>@scribnetai</span>
     </a>
-    <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/homelab.html">Homelab</a></nav>
+    <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/homelab.html">Homelab</a><a href="/guides.html">Guides</a></nav>
     <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
   </footer>
 <!-- ScribNet feedback widget: floating button + dialog, sends via user's email client (mailto). Self-contained: no external deps, no reliance on page CSS. -->
@@ -362,6 +542,98 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
       card.style.transform = "perspective(700px) rotateX(0deg) rotateY(0deg)";
       setTimeout(function () { card.style.transition = ""; }, 500);
     });
+  }
+
+  // 6 — install prompt picker + copy button
+  var PROMPTS = {
+    briefing: `Install the "Daily SE Briefing" workflow in this chat.
+
+Each run:
+1. Research the last 24 hours of news for: Dell, Cisco, CrowdStrike, VMware/Broadcom, Cohesity, Palo Alto Networks, Nutanix.
+2. Keep only what a presales systems engineer can use in a customer conversation: product launches, CVEs, competitive moves, pricing/licensing changes. No filler, no press-release rewrites.
+3. Format each item as: headline, 2-3 sentence summary, "why it matters" (one line for a customer call), source link.
+4. End with an "Honest caveats" block: what wasn't verified, what's vendor-claimed vs independently confirmed.
+
+SAFETY CHECK — before the first run, confirm:
+- You will only read public sources. You won't touch my accounts, inbox, or files.
+- If any step needs credentials or private data, stop and ask me first.`,
+    podcast: `Install the "Daily Tech News Podcast" workflow in this chat.
+
+Each run:
+1. Pick the 4-5 most interesting tech stories from the last 24 hours — datacenter, AI, and infrastructure first.
+2. Write a conversational two-host script (Alex: warm and curious, Jordan: dry and technical). Vary the cold open every day — never ship formulaic, interchangeable episodes.
+3. Keep it to about 8 minutes of spoken audio. End with one takeaway per story.
+4. Append "Honest caveats": which stories are single-sourced, what's rumor vs confirmed.
+
+SAFETY CHECK — before the first run, confirm:
+- You won't publish or upload anything. Script only; I handle recording and posting.
+- If a story involves a security vulnerability, include the vendor's patch guidance, not exploit detail.`,
+    songs: `Install the "Daily Song Picks" workflow in this chat.
+
+Each run:
+1. Find 3 new songs I haven't heard. Lean into my lane: Bilmuri / A Day To Remember territory — pop-punk-infused metalcore, emo, genre-fluid heavy pop — at least 1-2 of the 3. The third can be heavier straight metalcore.
+2. For each: song — artist, one line on why it fits, and what to listen for (a riff, a drum fill, a vocal moment).
+3. Skip anything already on my Muse playlists. No repeats across days.
+
+SAFETY CHECK — before the first run, confirm:
+- You'll never delete songs from my existing playlists — only add to the Muse-created ones.
+- Recommendations only. You won't play, buy, or stream anything.`
+  };
+  var wfSelect = document.getElementById("wf-select");
+  var promptBlock = document.getElementById("prompt-block");
+  var copyBtn = document.getElementById("copy-prompt");
+  var copyNote = document.getElementById("copy-note");
+  function renderPrompt() {
+    if (promptBlock && wfSelect) promptBlock.textContent = PROMPTS[wfSelect.value] || "";
+  }
+  if (wfSelect && promptBlock) {
+    renderPrompt();
+    wfSelect.addEventListener("change", renderPrompt);
+  }
+  if (copyBtn && promptBlock) {
+    copyBtn.addEventListener("click", function () {
+      var text = promptBlock.textContent;
+      function done() { if (copyNote) copyNote.textContent = "Copied — paste it into any fresh assistant chat."; }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  }
+
+  // 7 — honest caveats toggle
+  var cavToggle = document.getElementById("caveat-toggle");
+  var cavBlock = document.getElementById("caveats");
+  if (cavToggle && cavBlock) {
+    cavToggle.addEventListener("click", function () {
+      var show = cavBlock.classList.toggle("show");
+      cavToggle.textContent = show ? "Hide honest caveats" : "Show honest caveats";
+      cavToggle.setAttribute("aria-expanded", show ? "true" : "false");
+    });
+  }
+
+  // 9 — safety checklist progress
+  var stepBoxes = document.querySelectorAll(".check-step input[type=checkbox]");
+  var checkBar = document.getElementById("check-bar");
+  var checkCount = document.getElementById("check-count");
+  function updateCheck() {
+    var doneCount = 0;
+    stepBoxes.forEach(function (cb) {
+      if (cb.checked) doneCount++;
+      var step = cb.closest(".check-step");
+      if (step) step.classList.toggle("done", cb.checked);
+    });
+    if (checkBar && stepBoxes.length) checkBar.style.width = (doneCount / stepBoxes.length * 100) + "%";
+    if (checkCount) checkCount.textContent = doneCount + " of " + stepBoxes.length + " steps checked";
+  }
+  if (stepBoxes.length) {
+    stepBoxes.forEach(function (cb) { cb.addEventListener("change", updateCheck); });
+    updateCheck();
   }
 })();
 </script>
