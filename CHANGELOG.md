@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-28 — Branded social cards (lab direction C)
+
+- Real 1200×630 OG images generated from the actual fleet PWA icons (Direction C, "the fleet"): og-home.png ("ScribNet — Building AI in Public") and og-apps.png ("Ten apps. One tap.").
+- og:* + twitter:* meta tags wired on all five public pages (home, apps, podcast, uses, homelab); link shares now unfurl with branded art.
 ## 2026-09-28 — Homepage motion pass + visual lab
 
 - Tab title is now "ScribNet: Building AI in Public".
