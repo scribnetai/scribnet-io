@@ -153,7 +153,10 @@
     .book-chapters li::marker { color: var(--cyan); font-weight: 700; }
     .book-card .card-link { margin-top: auto; }
     @media (prefers-reduced-motion: reduce) { .book-card { animation: none; } }
+    @media (max-width: 560px) { .topnav-links { flex-wrap: wrap; justify-content: flex-end; row-gap: 0.15rem; } }
   </style>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 
 <!-- ScribNet feedback widget: floating button + dialog, sends via user's email client (mailto). Self-contained: no external deps, no reliance on page CSS. -->
 <style>

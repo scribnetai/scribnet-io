@@ -281,6 +281,8 @@ Thumbs.db</code></pre>
     <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
   </footer>
 
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
   <style>
     .guide-hero { padding: 2.5rem 0 0.5rem; max-width: 46rem; }
     .guide-hero h1 { margin-bottom: 0.5rem; }
@@ -335,6 +337,7 @@ Thumbs.db</code></pre>
     .book-nav strong { color: var(--text); font-size: 1.02rem; }
     .book-next { text-align: right; }
     @media (max-width: 640px) { .book-nav { grid-template-columns: 1fr; } .book-next { text-align: left; } }
+    @media (max-width: 560px) { .topnav-links { flex-wrap: wrap; justify-content: flex-end; row-gap: 0.15rem; } }
 
   </style>
 

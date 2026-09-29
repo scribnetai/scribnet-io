@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-29 — Guides mobile hardening
+
+- Guides pages now set the footer copyright year via a tiny inline script (the book pages don't load app.js, so the year was rendering blank).
+- Added a mobile fallback so the 5-link topnav wraps instead of squeezing on narrow phone screens.
+
 ## 2026-09-29 — "Zero to Dangerous" book series
 
 - New `/guides.html`: a four-book beginner series — Kubernetes, Terraform, APIs, GitHub — six chapters each, in the site's design language (hero, chapter TOC, tip/footgun callouts, TL;DR takeaways, prev/next book nav).
