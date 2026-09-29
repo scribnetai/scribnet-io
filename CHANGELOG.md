@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-29 — SEO foundations
+
+- New `/robots.txt` (allow all) and `/sitemap.xml` (all 11 pages) so search engines can discover and crawl the site.
+- Homepage `<head>` gains JSON-LD structured data (Organization + WebSite schema) to help Google recognize ScribNet as a distinct entity from scribnet.com.
+
 ## 2026-09-29 — Book page bug fixes
 
 - Fixed the book pages' stylesheet link: it was copied from the homepage as a relative `styles.css` path, which 404'd under `/guides/` — the header, footer, and GitHub icon were rendering unstyled (including a viewport-sized octocat in the footer). Now root-relative.
