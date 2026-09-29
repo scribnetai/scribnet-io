@@ -162,3 +162,39 @@ footer .grad { background: var(--grad); -webkit-background-clip: text; backgroun
   .cards { grid-template-columns: 1fr; }
   .stats { gap: 1.5rem; }
 }
+
+/* ---------- build log ---------- */
+.log-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; max-width: 58rem; }
+.log-item {
+  display: grid; grid-template-columns: 6.5rem 9rem 1fr; gap: 0.8rem; align-items: baseline;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.7rem 1rem;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.log-date { color: var(--faint); font-size: 0.78rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.log-app { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan); white-space: nowrap; }
+.log-text { color: var(--muted); font-size: 0.88rem; }
+
+/* ---------- prose pages (uses / homelab) ---------- */
+.backlink { display: inline-block; margin-bottom: 1.5rem; color: var(--cyan); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+.backlink:hover { text-decoration: underline; }
+.prose { max-width: 46rem; }
+.prose h2 { margin-bottom: 0.6rem; }
+.prose h3 { margin: 2rem 0 0.5rem; font-size: 1.08rem; font-weight: 700; letter-spacing: -0.01em; }
+.prose p, .prose li { color: var(--muted); font-size: 0.95rem; }
+.prose p { margin-bottom: 0.8rem; }
+.prose ul { margin: 0.4rem 0 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.prose a { color: var(--cyan); }
+.prose strong { color: var(--text); }
+.diary { display: flex; flex-direction: column; gap: 1.4rem; margin-top: 1.5rem; }
+.diary-item { border-left: 2px solid rgba(124, 108, 255, 0.5); padding-left: 1.2rem; }
+.diary-date { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--violet); margin-bottom: 0.3rem; }
+.diary-item h3 { margin: 0 0 0.4rem; font-size: 1.02rem; }
+.diary-item p { color: var(--muted); font-size: 0.92rem; margin-bottom: 0.5rem; }
+.diary-next { border-left-color: var(--amber); }
+.foot-links { display: flex; gap: 1.1rem; }
+.foot-links a { color: var(--muted); text-decoration: none; font-weight: 600; }
+.foot-links a:hover { color: var(--cyan); }
+
+@media (max-width: 640px) {
+  .log-item { grid-template-columns: 1fr; gap: 0.15rem; }
+}

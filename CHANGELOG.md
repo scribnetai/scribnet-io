@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-28 — Build log, Uses, Homelab diary
+- New Build log section on the homepage, compiled from the fleet's changelogs (fleet-wide rollouts collapsed to single lines).
+- Hero stats strip updated: live sites, changes shipped, podcast episodes.
+- New /uses.html: the gear behind the builds — homelab, desk, software.
+- New /homelab.html: homelab build diary with the bring-up timeline and k3s learning track.
+- About section links the homelab diary; footer gains Uses/Homelab links.
+
 ## 2026-09-28 — Canonical subdomain links
 - Replaced legacy `scribnetai.github.io/<repo>/` links with canonical
   `https://<repo>.scribnet.io/` URLs (the old URLs 301-redirect, but docs and

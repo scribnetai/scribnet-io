@@ -33,9 +33,9 @@
         <a id="daily-podcast-btn" class="btn ghost" href="https://scribnet.io/podcast.html">Daily Tech News Podcast</a>
       </div>
       <div class="stats">
-        <div class="stat"><strong>14</strong><span>vendors tracked daily</span></div>
-        <div class="stat"><strong>5</strong><span>AI-generated tracks</span></div>
-        <div class="stat"><strong>1</strong><span>browser game shipped</span></div>
+        <div class="stat"><strong>11</strong><span>sites live</span></div>
+        <div class="stat"><strong>136</strong><span>changes shipped</span></div>
+        <div class="stat"><strong>5</strong><span>podcast episodes</span></div>
         <div class="stat"><strong>∞</strong><span>experiments queued</span></div>
       </div>
     </div>
@@ -100,13 +100,34 @@
       </div>
     </section>
 
+    <!-- ============ BUILD LOG ============ -->
+    <section id="buildlog">
+      <div class="eyebrow">Shipped lately</div>
+      <h2>Build log</h2>
+      <p class="section-note">Compiled from each app's changelog — the whole fleet ships in public.</p>
+      <ul class="log-list">
+        <li class="log-item"><span class="log-date">2026-09-28</span><span class="log-app">scribnet.io</span><span class="log-text">Migrated legacy scribnetai.github.io links to https://&lt;app&gt;.scribnet.io for the HTTPS-enforced apps (se-command-center, server-sizer, network-sizer...</span></li>
+        <li class="log-item"><span class="log-date">2026-09-28</span><span class="log-app">TCO Calculator</span><span class="log-text">TLS certificate provisioned for the tco-calculator.scribnet.io custom domain (GitHub&#x27;s stuck DNS check was reset 2026-09-28); HTTPS is now enforced...</span></li>
+        <li class="log-item"><span class="log-date">2026-09-28</span><span class="log-app">Server Sizer</span><span class="log-text">Fixed: slider track fill was stuck at 50% on the config cards — the theme refresh paints the track with a --fill CSS variable, but nothing in the a...</span></li>
+        <li class="log-item"><span class="log-date">2026-09-28</span><span class="log-app">SE Command Center</span><span class="log-text">Morning briefing: 3 items (Citrix, Palo Alto Networks, NVIDIA). Archive updated.</span></li>
+        <li class="log-item"><span class="log-date">2026-09-28</span><span class="log-app">RVTools Analyzer</span><span class="log-text">Fixed: refresh-scenario slider track fill was stuck at 50% — the theme paints the track with a --fill CSS variable, but nothing set it. Sliders now...</span></li>
+        <li class="log-item"><span class="log-date">2026-09-28</span><span class="log-app">Fleet-wide</span><span class="log-text">TLS certificates provisioned fleet-wide — HTTPS enforced on every app</span></li>
+        <li class="log-item"><span class="log-date">2026-09-28</span><span class="log-app">Fleet-wide</span><span class="log-text">Added a floating Feedback button (bottom-right) that opens a dialog to send feedback via email — topic chips, optional name, and message, addressed...</span></li>
+        <li class="log-item"><span class="log-date">2026-09-28</span><span class="log-app">Fleet-wide</span><span class="log-text">Added Umami website analytics (cookieless, no consent banner): pageview tracking plus custom events for ad-slot impression/click reporting.</span></li>
+        <li class="log-item"><span class="log-date">2026-09-27</span><span class="log-app">scribnet.io</span><span class="log-text">Redesigned the favicon: full-bleed purple-to-blue gradient badge with a large bold &#x27;S&#x27; (the old PWA icon rendered tiny with white padding at bookma...</span></li>
+        <li class="log-item"><span class="log-date">2026-09-27</span><span class="log-app">TCO Calculator</span><span class="log-text">Projects: named saves, export/import JSON, autosave with session restore.</span></li>
+        <li class="log-item"><span class="log-date">2026-09-27</span><span class="log-app">TCO Calculator</span><span class="log-text">Outputs: KPI cards (TCO, savings, NPV savings, breakeven, avg annual savings), cumulative TCO chart with breakeven marker, year-by-year table, auto...</span></li>
+        <li class="log-item"><span class="log-date">2026-09-27</span><span class="log-app">TCO Calculator</span><span class="log-text">Linked from the SE Command Center App Launcher.</span></li>
+      </ul>
+    </section>
+
     <!-- ============ ABOUT ============ -->
     <section id="about">
       <div class="eyebrow">Who's behind this</div>
       <h2>About</h2>
       <div class="about-grid">
         <p>Presales Systems Engineer. My world is datacenter: storage and HCI compute by history, security by necessity — the field changing fastest, so I point my AI projects at it on purpose.</p>
-        <p>At home: a homelab of Meraki gear, a Palo Alto firewall, and a couple of Proxmox boxes mostly running game servers. My belief: the best way to learn AI is to ship things with it — in public, where they can embarrass you.</p>
+        <p>At home: a <a href="/homelab.html">homelab</a> of Meraki gear, a Palo Alto firewall, and a couple of Proxmox boxes mostly running game servers. My belief: the best way to learn AI is to ship things with it — in public, where they can embarrass you.</p>
       </div>
     </section>
 
@@ -129,6 +150,7 @@
       <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       <span>@scribnetai</span>
     </a>
+    <nav class="foot-links"><a href="/uses.html">Uses</a><a href="/homelab.html">Homelab</a></nav>
     <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
   </footer>
 
