@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 — Book pages redesigned ("Paper" reading theme)
+
+- All four Zero to Dangerous books restyled as a proper reading experience: warm paper background, Newsreader serif body type, JetBrains Mono code, title-page hero, numbered contents card, reading progress bar, copy buttons on code blocks, redesigned tip/footgun/takeaway callouts, and an interactive "dangerous checklist" (tap to check off, remembered per book). Print stylesheet included.
+- Header and footer now sit in dark bands matching the site chrome exactly; the book content keeps its own paper theme between them.
+- Theme lives in `~/workspace/guides/book-theme.css`, read by `assemble-books.py` at build time.
+
 ## 2026-09-29 — Guides index reveal fix
 
 - Fixed invisible book cards on `/guides.html`: the cards reuse the site's `.card` style (which starts at `opacity: 0` until JS adds `.in`), but the page shipped without the scroll-reveal script — the books were in the HTML but never faded in. Added the same tiny IntersectionObserver reveal the homepage uses.

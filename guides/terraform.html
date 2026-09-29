@@ -7,7 +7,7 @@
   <meta name="description" content="Zero to Dangerous: Terraform — desired-state infrastructure: providers, state files, and provisioning real VMs.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=nav2">
 <!-- PWA: installable home-screen app -->
 <link rel="manifest" href="/manifest.webmanifest">
@@ -50,7 +50,75 @@
   <meta name="twitter:image" content="https://scribnet.io/og/og-apps.png">
 </head>
 <body>
-  <main>
+<div id="read-progress"></div>
+  <script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* Reading progress bar */
+  (function () {
+    var bar = document.getElementById("read-progress"), ticking = false;
+    function update() {
+      ticking = false;
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  })();
+
+  /* Copy buttons on code blocks */
+  document.querySelectorAll(".chapter pre").forEach(function (pre) {
+    var btn = document.createElement("button");
+    btn.className = "copy-btn"; btn.type = "button"; btn.textContent = "Copy";
+    btn.addEventListener("click", function () {
+      var code = pre.querySelector("code");
+      var text = code ? code.innerText : pre.innerText;
+      function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* Interactive "dangerous checklist" — tap to check off, remembered per book */
+  (function () {
+    var store = null;
+    try { store = window.localStorage; } catch (e) {}
+    var key = "ztd-checklist:" + location.pathname;
+    document.querySelectorAll(".chapter h3").forEach(function (h) {
+      if (h.textContent.toLowerCase().indexOf("dangerous checklist") === -1) return;
+      var ul = h.nextElementSibling;
+      if (!ul || !ul.classList || !ul.classList.contains("tldr")) return;
+      ul.classList.add("checklist");
+      var saved = {};
+      try { saved = JSON.parse(store.getItem(key) || "{}"); } catch (e) {}
+      ul.querySelectorAll("li").forEach(function (li, i) {
+        if (saved[i]) li.classList.add("done");
+        li.addEventListener("click", function () {
+          li.classList.toggle("done");
+          if (!store) return;
+          var s = {};
+          ul.querySelectorAll("li").forEach(function (x, j) {
+            if (x.classList.contains("done")) s[j] = 1;
+          });
+          try { store.setItem(key, JSON.stringify(s)); } catch (e) {}
+        });
+      });
+    });
+  })();
+  </script>
+  <div class="chrome-top"><div class="chrome-inner">
     <header class="topnav">
       <a class="topnav-brand" href="/" aria-label="ScribNet home">
         <span class="topnav-badge">S</span><span>scribnet.io</span>
@@ -63,6 +131,8 @@
       <a href="/homelab.html">Homelab</a>
       </nav>
     </header>
+  </div></div>
+  <main>
 <div class="guide-hero">
   <div class="eyebrow">Zero to Dangerous</div>
   <h1>Terraform</h1>
@@ -315,6 +385,7 @@ resource "vm_clone" "adopted" {
 
   </main>
 
+  <div class="chrome-bottom"><div class="chrome-inner">
   <footer>
     <p>© <span id="year"></span> ScribNet — scribnet.io</p>
     <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
@@ -324,64 +395,272 @@ resource "vm_clone" "adopted" {
     <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/guides.html">Guides</a><a href="/homelab.html">Homelab</a></nav>
     <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
   </footer>
+  </div></div>
 
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <style>/* ============================================================
+   Zero to Dangerous — "Paper" reading theme
+   A warm, editorial book theme for the guides. Deliberately NOT
+   the site's dark neon system: this is meant to be read.
+   ============================================================ */
 
-  <style>
-    .guide-hero { padding: 2.5rem 0 0.5rem; max-width: 46rem; }
-    .guide-hero h1 { margin-bottom: 0.5rem; }
-    .guide-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.1rem; }
-    .guide-meta span { font-size: 0.78rem; font-weight: 600; color: var(--muted);
-      border: 1px solid var(--border); border-radius: 999px; padding: 0.35rem 0.85rem;
-      background: var(--surface); }
-    .toc { margin: 2rem 0; padding: 1.4rem 1.6rem; border: 1px solid var(--border);
-      border-radius: 18px; background: linear-gradient(180deg, var(--surface-strong), var(--surface));
-      max-width: 46rem; }
-    .toc-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.7rem; }
-    .toc ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.45rem; }
-    .toc li::marker { color: var(--cyan); font-weight: 700; }
-    .toc a { color: var(--text); text-decoration: none; font-weight: 500; }
-    .toc a:hover { color: var(--cyan); text-decoration: underline; }
-    .chapter { max-width: 46rem; margin: 0 auto 3.5rem; scroll-margin-top: 1.5rem; }
-    .ch-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.4rem; }
-    .chapter h2 { font-size: 1.7rem; letter-spacing: -0.01em; margin-bottom: 1rem; }
-    .chapter h3 { font-size: 1.15rem; margin: 1.8rem 0 0.7rem; }
-    .chapter p { color: var(--text); line-height: 1.75; margin-bottom: 1rem; opacity: 0.92; }
-    .chapter code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 0.86em; background: rgba(124,108,255,0.12); border: 1px solid rgba(124,108,255,0.25);
-      border-radius: 6px; padding: 0.1em 0.4em; }
-    .chapter pre { background: #0a0e1a; border: 1px solid var(--border); border-radius: 14px;
-      padding: 1.1rem 1.3rem; overflow-x: auto; margin: 1.2rem 0; }
-    .chapter pre code { background: none; border: none; padding: 0; font-size: 0.83rem;
-      line-height: 1.65; color: #dbe4ff; display: block; }
-    .callout, .warn { border-radius: 14px; padding: 1rem 1.25rem; margin: 1.3rem 0;
-      line-height: 1.65; font-size: 0.93rem; }
-    .callout { background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.35); }
-    .warn { background: rgba(255,170,80,0.07); border: 1px solid rgba(255,170,80,0.4); }
-    .callout strong, .warn strong { display: block; margin-bottom: 0.25rem;
-      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
-    .callout strong { color: var(--cyan); }
-    .warn strong { color: #ffb35c; }
-    .tldr { list-style: none; margin: 1.4rem 0 0; padding: 1.1rem 1.3rem 1.1rem 2.6rem;
-      border: 1px dashed rgba(124,108,255,0.45); border-radius: 14px;
-      background: rgba(124,108,255,0.05); position: relative; }
-    .tldr::before { content: "TL;DR"; position: absolute; left: 1.1rem; top: 1.15rem;
-      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; color: var(--cyan);
-      writing-mode: vertical-rl; }
-    .tldr li { line-height: 1.65; margin-bottom: 0.4rem; font-size: 0.93rem; }
-    .tldr li:last-child { margin-bottom: 0; }
-    .book-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-      max-width: 46rem; margin: 1rem auto 3rem; }
-    .book-nav a { border: 1px solid var(--border); border-radius: 16px; padding: 1.1rem 1.3rem;
-      text-decoration: none; background: var(--surface); transition: border-color 0.2s ease, transform 0.2s ease; }
-    .book-nav a:hover { border-color: rgba(124,108,255,0.55); transform: translateY(-2px); }
-    .book-nav span { display: block; font-size: 0.75rem; color: var(--faint); margin-bottom: 0.3rem; }
-    .book-nav strong { color: var(--text); font-size: 1.02rem; }
-    .book-next { text-align: right; }
-    @media (max-width: 640px) { .book-nav { grid-template-columns: 1fr; } .book-next { text-align: left; } }
-    @media (max-width: 560px) { .topnav-links { flex-wrap: wrap; justify-content: flex-end; row-gap: 0.15rem; } }
+:root {
+  --paper: #FAF7F0;
+  --paper-deep: #F2ECDD;
+  --paper-card: #FFFDF8;
+  --ink: #1C1712;
+  --ink-2: #4A4238;
+  --muted: #857A69;
+  --line: #E4DAC6;
+  --accent: #B0512C;
+  --accent-deep: #8A3D1F;
+  --accent-soft: #F7E8DB;
+  --tip-ink: #1E5B3C;
+  --tip-bg: #E9F3EB;
+  --tip-line: #2F7D52;
+  --warn-ink: #8A3D1F;
+  --warn-bg: #FAEEE1;
+  --warn-line: #B0512C;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); }
+::selection { background: #F0D6BC; }
+
+/* ---- reading progress ---- */
+#read-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent), #D98A4B);
+  z-index: 200;
+}
+
+/* ---- site chrome bands: header/footer match the site exactly ---- */
+.chrome-top { background: #05070c; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.chrome-bottom { background: #05070c; border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: 4rem; }
+.chrome-inner { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+.chrome-top .topnav { margin-bottom: 0; padding: 1.1rem 0; }
+.chrome-bottom footer { margin-top: 0; border-top: none; padding-bottom: 2.5rem; }
+
+/* ---- title page hero ---- */
+.guide-hero { text-align: center; max-width: 44rem; margin: 0 auto; padding: 3.5rem 0 2.75rem; }
+.guide-hero .eyebrow {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);
+  display: flex; align-items: center; justify-content: center; gap: 1.1rem;
+}
+.guide-hero .eyebrow::before, .guide-hero .eyebrow::after {
+  content: ""; height: 1px; width: 3.5rem; background: var(--line);
+}
+.guide-hero h1 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(2.75rem, 7vw, 4.25rem);
+  letter-spacing: -0.02em; line-height: 1.04; color: var(--ink);
+  margin: 1.1rem 0 0.9rem;
+}
+.guide-hero .subtitle {
+  font-family: var(--serif); font-style: italic; font-size: 1.22rem;
+  line-height: 1.6; color: var(--ink-2); max-width: 36rem; margin: 0 auto;
+}
+.guide-meta { display: flex; gap: 0.55rem; justify-content: center; flex-wrap: wrap; margin-top: 1.6rem; }
+.guide-meta span {
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 600; color: var(--ink-2);
+  border: 1px solid var(--line); background: var(--paper-card);
+  border-radius: 999px; padding: 0.42rem 0.95rem;
+}
+
+/* ---- table of contents ---- */
+.toc {
+  max-width: 42rem; margin: 0 auto 3.5rem; background: var(--paper-card);
+  border: 1px solid var(--line); border-radius: 18px; padding: 1.75rem 2rem 1.5rem;
+  box-shadow: 0 18px 40px -28px rgba(90, 70, 40, 0.35);
+}
+.toc-title {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 0.9rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--line);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; counter-reset: ch; }
+.toc li { counter-increment: ch; }
+.toc li a {
+  display: flex; align-items: baseline; gap: 0.9rem;
+  padding: 0.55rem 0.4rem; border-radius: 8px;
+  text-decoration: none; color: var(--ink);
+  font-family: var(--serif); font-size: 1.08rem; font-weight: 500;
+}
+.toc li a::before {
+  content: counter(ch, decimal-leading-zero);
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 800; color: var(--accent);
+  min-width: 1.6rem;
+}
+.toc li a::after {
+  content: ""; flex: 1; border-bottom: 1px dotted #D5C8AE; transform: translateY(-5px);
+  min-width: 1.5rem;
+}
+.toc li a:hover { color: var(--accent-deep); background: var(--accent-soft); }
+
+/* ---- chapters ---- */
+.chapter { max-width: 42rem; margin: 0 auto 4.5rem; scroll-margin-top: 1.5rem; }
+.ch-num {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);
+  display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.8rem;
+}
+.ch-num::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+.chapter h2 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  letter-spacing: -0.015em; line-height: 1.12; color: var(--ink);
+  margin: 0 0 1.3rem;
+}
+.chapter > h2 + p { font-size: 1.24rem; line-height: 1.7; color: var(--ink-2); }
+.chapter h3 {
+  font-family: var(--sans); font-size: 1.04rem; font-weight: 700;
+  letter-spacing: -0.01em; color: var(--ink); margin: 2.4rem 0 0.8rem;
+}
+.chapter p {
+  font-family: var(--serif); font-size: 1.12rem; line-height: 1.8;
+  color: var(--ink); margin: 0 0 1.15rem;
+}
+.chapter ul:not(.tldr), .chapter ol:not(.tldr) {
+  font-family: var(--serif); font-size: 1.08rem; line-height: 1.75;
+  color: var(--ink); margin: 0 0 1.3rem; padding-left: 1.4rem;
+}
+.chapter li { margin-bottom: 0.45rem; }
+.chapter li::marker { color: var(--accent); font-weight: 700; }
+.chapter a {
+  color: var(--accent-deep); text-decoration: underline;
+  text-decoration-color: #E4BFA1; text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+.chapter a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.chapter strong { font-weight: 600; }
+
+/* ---- code ---- */
+.chapter code {
+  font-family: var(--mono); font-size: 0.8em; color: var(--accent-deep);
+  background: var(--paper-deep); border: 1px solid var(--line);
+  border-radius: 6px; padding: 0.14em 0.45em; white-space: nowrap;
+}
+.chapter pre {
+  position: relative; background: #2A231A; border: 1px solid #3D3423;
+  border-radius: 14px; padding: 1.15rem 1.3rem; margin: 1.5rem 0;
+  overflow-x: auto; box-shadow: 0 16px 34px -24px rgba(40, 30, 15, 0.5);
+}
+.chapter pre code {
+  background: none; border: none; padding: 0; border-radius: 0;
+  color: #F0E7D3; font-size: 0.84rem; line-height: 1.7;
+  display: block; white-space: pre;
+}
+.copy-btn {
+  position: absolute; top: 0.65rem; right: 0.65rem;
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
+  color: #CFC3AB; background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px;
+  padding: 0.32rem 0.7rem; cursor: pointer; opacity: 0; transition: opacity 0.2s ease;
+}
+.chapter pre:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+.copy-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.14); }
+@media (hover: none) { .copy-btn { opacity: 1; } }
+
+/* ---- callouts ---- */
+.callout, .warn {
+  border-radius: 12px; padding: 1.05rem 1.3rem 1.05rem 1.4rem; margin: 1.6rem 0;
+  font-family: var(--sans); font-size: 0.93rem; line-height: 1.66;
+  border: 1px solid; border-left-width: 4px;
+}
+.callout { background: var(--tip-bg); border-color: #CFE3D6; border-left-color: var(--tip-line); color: #274434; }
+.warn { background: var(--warn-bg); border-color: #F0D6B8; border-left-color: var(--warn-line); color: #5C3A20; }
+.callout strong, .warn strong {
+  display: block; font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.35rem;
+}
+.callout strong { color: var(--tip-ink); }
+.warn strong { color: var(--warn-ink); }
+.callout code, .warn code { background: rgba(255, 255, 255, 0.65); white-space: normal; }
+
+/* ---- takeaways + checklist ---- */
+.tldr {
+  list-style: none; margin: 1.8rem 0 0; padding: 1.3rem 1.5rem 1.3rem;
+  background: var(--paper-card); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: 0 12px 30px -24px rgba(90, 70, 40, 0.4);
+}
+.tldr::before {
+  content: "Key takeaways";
+  display: block; font-family: var(--sans); font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 0.85rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--line);
+}
+.tldr li {
+  position: relative; font-family: var(--sans); font-size: 0.94rem; line-height: 1.62;
+  color: var(--ink-2); padding-left: 1.9rem; margin-bottom: 0.55rem;
+}
+.tldr li:last-child { margin-bottom: 0; }
+.tldr li::before {
+  content: "✓"; position: absolute; left: 0.1rem; top: 0.02rem;
+  color: var(--tip-line); font-weight: 800;
+}
+/* the final "dangerous checklist" becomes interactive */
+.tldr.checklist::before { content: "The dangerous checklist — tap to check off"; }
+.tldr.checklist li { cursor: pointer; padding-left: 2.2rem; border-radius: 8px; }
+.tldr.checklist li::before {
+  content: ""; width: 1.05rem; height: 1.05rem; top: 0.22rem; left: 0.15rem;
+  border: 1.5px solid var(--muted); border-radius: 6px; background: #fff;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.tldr.checklist li.done { color: var(--muted); text-decoration: line-through; text-decoration-color: #C9BCA4; }
+.tldr.checklist li.done::before {
+  content: "✓"; background: var(--tip-line); border-color: var(--tip-line); color: #fff;
+  font-size: 0.72rem; font-weight: 800; line-height: 1.05rem; text-align: center;
+}
+
+/* ---- prev / next book nav ---- */
+.book-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 42rem; margin: 2.5rem auto 4rem; }
+.book-nav a {
+  display: block; background: var(--paper-card); border: 1px solid var(--line);
+  border-radius: 16px; padding: 1.25rem 1.4rem; text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.book-nav a:hover { transform: translateY(-3px); border-color: #D8C39E; box-shadow: 0 18px 38px -22px rgba(90, 70, 40, 0.45); }
+.book-nav span {
+  display: block; font-family: var(--sans); font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem;
+}
+.book-nav strong { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); }
+.book-prev span::before { content: "← "; color: var(--accent); }
+.book-next { text-align: right; }
+.book-next span::after { content: " →"; color: var(--accent); }
+
+/* ---- responsive ---- */
+@media (max-width: 640px) {
+  .guide-hero { padding: 2.5rem 0 2rem; }
+  .guide-hero .eyebrow::before, .guide-hero .eyebrow::after { width: 2rem; }
+  .toc { padding: 1.3rem 1.35rem 1.1rem; margin-bottom: 2.75rem; }
+  .toc li a { font-size: 1rem; }
+  .chapter { margin-bottom: 3.5rem; }
+  .chapter p { font-size: 1.06rem; }
+  .chapter > h2 + p { font-size: 1.14rem; }
+  .chapter pre code { font-size: 0.8rem; }
+  .book-nav { grid-template-columns: 1fr; }
+  .book-next { text-align: left; }
+}
+@media (max-width: 560px) {
+  .topnav-links { flex-wrap: wrap; justify-content: flex-end; row-gap: 0.15rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+/* ---- print: it's a book, let it print like one ---- */
+@media print {
+  .topnav, #read-progress, footer, .book-nav, .snkf-btn, .copy-btn { display: none !important; }
+  body { background: #fff; }
+  .guide-hero { padding-top: 0; }
+  .chapter, .toc { max-width: 100%; box-shadow: none; }
+  .chapter pre { background: #f5f5f5; border-color: #ddd; box-shadow: none; }
+  .chapter pre code { color: #222; }
+}
 
   </style>
 
