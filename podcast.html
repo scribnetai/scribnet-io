@@ -167,7 +167,10 @@
       text-transform: uppercase; color: var(--cyan); margin-bottom: 0.3rem; }
     .tile h3 { font-size: 1.18rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.45rem; }
     .tile p { color: var(--muted); font-size: 0.89rem; }
-    .tile-foot { margin-top: auto; padding-top: 1.15rem; display: flex; justify-content: flex-end; }
+    .tile-foot { margin-top: auto; padding-top: 1.15rem; display: flex; justify-content: space-between; align-items: center; }
+    .tile-transcript { font-size: 0.82rem; font-weight: 600; color: var(--muted);
+      text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.18); }
+    .tile-transcript:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
     .tile-open { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 700; font-size: 0.85rem;
       padding: 0.5rem 1.15rem; border-radius: 999px; color: #060913; background: var(--grad);
       box-shadow: 0 6px 18px -6px rgba(124,108,255,0.8); transition: transform 0.2s ease, box-shadow 0.2s ease; }
@@ -321,6 +324,13 @@
           open.className = "tile-open";
           open.innerHTML = 'Play <span class="arrow">&rarr;</span>';
           foot.appendChild(open);
+          var tr = document.createElement("a");
+          tr.className = "tile-transcript";
+          tr.href = "/episodes/" + ep.url.split("/").pop().replace(/\.mp3$/, "") + ".html";
+          tr.textContent = "Transcript \u2192";
+          tr.setAttribute("aria-label", "Read transcript: " + ep.title);
+          tr.addEventListener("click", function (e) { e.stopPropagation(); });
+          foot.appendChild(tr);
           var shine = document.createElement("span");
           shine.className = "tile-shine";
           shine.setAttribute("aria-hidden", "true");

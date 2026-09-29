@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-29 — Podcast episode pages for search indexing
+
+- New `/episodes/<slug>.html` pages: one per published episode (6 live) with full transcript, topics, audio player, canonical URL, and PodcastEpisode JSON-LD structured data — gives Google indexable text for every episode.
+- `sitemap.xml` now includes all episode URLs.
+- New `build-episode-pages.py` in the podcast goal workspace: idempotent generator run by the daily link-update job, so new episodes get pages automatically (one git-db commit per run, skipped when nothing changed).
+- Podcast tile grid gains a "Transcript →" link on each episode tile.
+
 ## 2026-09-29 — SEO foundations
 
 - New `/robots.txt` (allow all) and `/sitemap.xml` (all 11 pages) so search engines can discover and crawl the site.
