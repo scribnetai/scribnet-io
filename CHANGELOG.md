@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-28 — Homepage motion pass + visual lab
+
+- Tab title is now "ScribNet: Building AI in Public".
+- Added a demure animated aurora: three slow-drifting, heavily blurred violet/cyan blobs at low opacity (disabled under prefers-reduced-motion).
+- Hero stats now count up when scrolled into view (the ∞ stays ∞).
+- Hero line got a typewriter rotator: "Building with AI / agents / code / in public by night", with a blinking caret.
+- New unlinked /lab.html playground with live demos of five more visual ideas: site-wide cursor glow, timeline build log, 3D tilt cards, branded link-preview mockups, animated gradient text.
 ## 2026-09-28 — App Launcher page
 - New `/apps.html`: an app-store-style launcher for the whole 10-app fleet —
   live search, category filters, 3D tilt + cursor spotlight + shine sweep on
