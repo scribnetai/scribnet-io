@@ -38,46 +38,34 @@
   </style>
 
 <style>
-  .lab-demo { background: rgba(255,255,255,.025); border: 1px solid var(--line);
+  .lab-demo { background: rgba(255,255,255,.025); border: 1px solid var(--border);
     border-radius: var(--r); padding: 1.6rem; margin: 0 0 2.5rem; }
   .lab-demo h3 { margin: 0 0 .3rem; font-size: 1.25rem; }
-  .lab-demo > p.idea { color: var(--mut); margin: 0 0 1.2rem; font-size: .95rem; }
+  .lab-demo > p.idea { color: var(--muted); margin: 0 0 1.2rem; font-size: .95rem; }
   .eyebrow { color: var(--cyan); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; }
 
   /* 1 — cursor glow stage */
   .glow-stage { position: relative; height: 220px; border-radius: 14px; overflow: hidden;
-    border: 1px solid var(--line); background: rgba(0,0,0,.25); cursor: crosshair; }
+    border: 1px solid var(--border); background: rgba(0,0,0,.25); cursor: crosshair; }
   .glow-stage::before { content: ""; position: absolute; inset: 0;
     background: radial-gradient(320px circle at var(--gx, 50%) var(--gy, 50%),
       rgba(124,108,255,.28), transparent 65%);
     transition: background .05s linear; }
   .glow-stage span { position: absolute; inset: 0; display: flex; align-items: center;
-    justify-content: center; color: var(--mut); font-size: .9rem; }
+    justify-content: center; color: var(--muted); font-size: .9rem; }
 
-  /* 2 — timeline build log */
-  .tl { position: relative; margin: .5rem 0 0 .4rem; padding-left: 1.7rem; max-width: 640px; }
-  .tl::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px;
-    border-radius: 2px; background: linear-gradient(180deg, var(--violet), var(--cyan)); opacity: .55; }
-  .tl-item { position: relative; padding: 0 0 1.3rem; }
-  .tl-item:last-child { padding-bottom: 0; }
-  .tl-item::before { content: ""; position: absolute; left: -1.7rem; top: 3px; width: 12px; height: 12px;
-    border-radius: 50%; background: var(--bg); border: 2px solid var(--violet);
-    box-shadow: 0 0 12px rgba(124,108,255,.8); }
-  .tl-item .d { color: var(--cyan); font-size: .78rem; letter-spacing: .08em; }
-  .tl-item p { margin: .15rem 0 0; font-size: .92rem; color: var(--mut); }
-  .tl-item p b { color: var(--txt); font-weight: 600; }
 
   /* 3 — tilt card */
   .tilt-card { max-width: 420px; padding: 1.5rem; border-radius: var(--r);
-    background: rgba(255,255,255,.03); border: 1px solid var(--line);
+    background: rgba(255,255,255,.03); border: 1px solid var(--border);
     transform-style: preserve-3d; will-change: transform; position: relative; }
   .tilt-card h4 { margin: 0 0 .4rem; font-size: 1.15rem; }
-  .tilt-card p { margin: 0; color: var(--mut); font-size: .92rem; }
+  .tilt-card p { margin: 0; color: var(--muted); font-size: .92rem; }
   .tilt-card .tilt-icon { font-size: 2rem; display: block; margin-bottom: .6rem;
     transform: translateZ(40px); }
 
   /* 4 — social preview mockups */
-  .mock { border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+  .mock { border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
     max-width: 520px; background: rgba(0,0,0,.3); margin-bottom: 1rem; }
   .mock .thumb { height: 170px; display: flex; align-items: center; justify-content: center;
     background: radial-gradient(120% 140% at 20% 10%, #2a2350 0%, #14121f 55%, #0a0a12 100%); }
@@ -86,12 +74,12 @@
     -webkit-background-clip: text; background-clip: text; color: transparent; }
   .mock .meta { padding: .9rem 1.1rem; }
   .mock .meta .t { font-weight: 700; font-size: .95rem; margin: 0 0 .2rem; }
-  .mock .meta .d { color: var(--mut); font-size: .85rem; margin: 0 0 .35rem; }
+  .mock .meta .d { color: var(--muted); font-size: .85rem; margin: 0 0 .35rem; }
   .mock .meta .u { color: var(--cyan); font-size: .8rem; margin: 0; }
   .mock.chat { padding: 1rem 1.1rem; }
   .mock.chat .bubble { background: #1c1c26; border-radius: 16px 16px 16px 4px;
-    padding: .8rem 1rem; font-size: .9rem; color: var(--mut); }
-  .mock.chat .bubble b { color: var(--txt); }
+    padding: .8rem 1rem; font-size: .9rem; color: var(--muted); }
+  .mock.chat .bubble b { color: var(--text); }
   .mock.chat .linkline { color: var(--cyan); font-size: .82rem; margin-top: .4rem; display: block; }
 
   /* 5 — animated gradient text */
@@ -101,6 +89,31 @@
     color: transparent; animation: grad-shift 7s ease-in-out infinite alternate; }
   @keyframes grad-shift { to { background-position: 100% center; } }
   @media (prefers-reduced-motion: reduce) { .animated-grad { animation: none; } }
+
+  /* 4 — social card art directions */
+  .mock-label { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--cyan); margin: 1.5rem 0 .5rem; font-weight: 700; }
+  .mock .thumb.og { height: auto; aspect-ratio: 1.91 / 1; }
+  .thumb-aurora { position: relative; overflow: hidden;
+    background:
+      radial-gradient(45% 75% at 18% 30%, rgba(124,108,255,.55), transparent 70%),
+      radial-gradient(45% 75% at 82% 70%, rgba(77,225,255,.38), transparent 70%),
+      #0b0b14; }
+  .og-word { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.02em; text-align: center; }
+  .og-word span { display: block; font-size: 1rem; font-weight: 500; color: var(--muted);
+    letter-spacing: 0; margin-top: .35rem; }
+  .thumb-fleet { display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; justify-content: center;
+    background: radial-gradient(120% 140% at 50% 0%, #1a1730 0%, #0b0b14 70%); padding: 1.5rem; }
+  .thumb-fleet span { font-size: 1.9rem; background: rgba(255,255,255,.05);
+    border: 1px solid var(--border); border-radius: 12px; width: 3.1rem; height: 3.1rem;
+    display: flex; align-items: center; justify-content: center; }
+  .thumb-stats { display: flex; align-items: center; justify-content: center; gap: 2.4rem;
+    background: linear-gradient(135deg, #141221, #0b0b14); }
+  .thumb-stats div { text-align: center; }
+  .thumb-stats b { font-size: 2.6rem; font-weight: 800; display: block;
+    background: linear-gradient(120deg, var(--violet), var(--cyan));
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .thumb-stats i { font-style: normal; color: var(--muted); font-size: .8rem; }
 </style>
 
 </head>
@@ -142,12 +155,44 @@
 
   <section class="lab-demo reveal">
     <h3>4. Branded link previews</h3>
-    <p class="idea">Custom social-card art so sharing scribnet.io unfurls with branding instead of a blank box. Two mockups of how it would look:</p>
+    <p class="idea">Custom social-card art so sharing scribnet.io unfurls with branding instead of a blank box. Same copy everywhere — only the art changes. Tell me which letter wins and I'll generate the real 1200&times;630 images.</p>
     <div class="mock chat">
       <div class="bubble"><b>Scrib</b> check out what I shipped this weekend<br><span class="linkline">scribnet.io &mdash; ScribNet: Building AI in Public</span></div>
     </div>
+    <p class="mock-label">Direction A &middot; Monogram</p>
     <div class="mock">
-      <div class="thumb"><span class="bigs">S</span></div>
+      <div class="thumb og"><span class="bigs">S</span></div>
+      <div class="meta">
+        <p class="t">ScribNet: Building AI in Public</p>
+        <p class="d">Presales by day, building with AI by night. Ten apps, shipped in the open.</p>
+        <p class="u">scribnet.io</p>
+      </div>
+    </div>
+    <p class="mock-label">Direction B &middot; Aurora</p>
+    <div class="mock">
+      <div class="thumb og thumb-aurora"><div class="og-word">ScribNet<span>Building AI in Public</span></div></div>
+      <div class="meta">
+        <p class="t">ScribNet: Building AI in Public</p>
+        <p class="d">Presales by day, building with AI by night. Ten apps, shipped in the open.</p>
+        <p class="u">scribnet.io</p>
+      </div>
+    </div>
+    <p class="mock-label">Direction C &middot; The fleet</p>
+    <div class="mock">
+      <div class="thumb og thumb-fleet"><span>&#127916;</span><span>&#128421;</span><span>&#128230;</span><span>&#127760;</span><span>&#128202;</span><span>&#128188;</span><span>&#9876;</span><span>&#129518;</span><span>&#127918;</span><span>&#128196;</span></div>
+      <div class="meta">
+        <p class="t">ScribNet: Building AI in Public</p>
+        <p class="d">Presales by day, building with AI by night. Ten apps, shipped in the open.</p>
+        <p class="u">scribnet.io</p>
+      </div>
+    </div>
+    <p class="mock-label">Direction D &middot; By the numbers</p>
+    <div class="mock">
+      <div class="thumb og thumb-stats">
+        <div><b>10</b><i>apps shipped</i></div>
+        <div><b>152</b><i>changes in public</i></div>
+        <div><b>&infin;</b><i>curiosity</i></div>
+      </div>
       <div class="meta">
         <p class="t">ScribNet: Building AI in Public</p>
         <p class="d">Presales by day, building with AI by night. Ten apps, shipped in the open.</p>

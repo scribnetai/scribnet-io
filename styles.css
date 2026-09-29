@@ -68,7 +68,9 @@ h1 {
   background: linear-gradient(180deg, #ffffff 30%, #aeb8cc 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+h1 .grad { background: linear-gradient(120deg, var(--violet), var(--cyan), var(--violet)); background-size: 220% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: grad-drift 8s ease-in-out infinite alternate; }
+@keyframes grad-drift { to { background-position: 100% center; } }
+@media (prefers-reduced-motion: reduce) { h1 .grad { animation: none; } }
 
 .subtitle { color: var(--muted); font-size: 1.05rem; margin-top: 1rem; max-width: 38rem; }
 
@@ -163,16 +165,17 @@ footer .grad { background: var(--grad); -webkit-background-clip: text; backgroun
   .stats { gap: 1.5rem; }
 }
 
-/* ---------- build log ---------- */
-.log-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; max-width: 58rem; }
-.log-item {
-  display: grid; grid-template-columns: 6.5rem 9rem 1fr; gap: 0.8rem; align-items: baseline;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0.7rem 1rem;
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-}
-.log-date { color: var(--faint); font-size: 0.78rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.log-app { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan); white-space: nowrap; }
-.log-text { color: var(--muted); font-size: 0.88rem; }
+/* ---------- build log timeline ---------- */
+.tl { position: relative; margin: 0.5rem 0 0 0.4rem; padding-left: 1.7rem; max-width: 58rem; }
+.tl::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--violet), var(--cyan)); opacity: 0.55; }
+.tl-item { position: relative; padding: 0 0 1.15rem; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-item::before { content: ""; position: absolute; left: calc(-1.7rem - 2px); top: 4px; width: 12px; height: 12px;
+  border-radius: 50%; background: var(--bg); border: 2px solid var(--violet);
+  box-shadow: 0 0 12px rgba(124, 108, 255, 0.8); }
+.tl-item .d { color: var(--cyan); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.tl-item p { margin: 0.2rem 0 0; font-size: 0.9rem; color: var(--muted); max-width: 52rem; }
 
 /* ---------- prose pages (uses / homelab) ---------- */
 .backlink { display: inline-block; margin-bottom: 1.5rem; color: var(--cyan); text-decoration: none; font-weight: 600; font-size: 0.9rem; }

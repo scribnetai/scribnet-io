@@ -1,11 +1,5 @@
 # Changelog
 
-## 2026-09-28 — Lab page fix
-
-- /lab.html was missing the fleet feedback widget (generator used a stale selector); fixed and redeployed.
-## 2026-09-28 — Hero rotator word list
-
-- The typewriter now cycles tools and languages actually used across the fleet: AI, GitHub, Terraform, JavaScript, Python, YAML, Bash… and Sparky.
 ## 2026-09-28 — Homepage motion pass + visual lab
 
 - Tab title is now "ScribNet: Building AI in Public".
