@@ -416,11 +416,11 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
   var count = document.getElementById("prompt-count");
   var empty = document.getElementById("prompt-empty");
   if (!packs.length || !search || !chipsBox) return;
-  var seen = {};
+  var counts = {};
   packs.forEach(function (p) {
-    (p.getAttribute("data-tags") || "").split(" ").forEach(function (t) { if (t) seen[t] = true; });
+    (p.getAttribute("data-tags") || "").split(" ").forEach(function (t) { if (t) counts[t] = (counts[t] || 0) + 1; });
   });
-  var tags = Object.keys(seen).sort();
+  var tags = Object.keys(counts).sort();
   var activeTag = "";
   function apply() {
     var q = search.value.trim().toLowerCase();
@@ -437,11 +437,11 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
   }
   function renderChips() {
     chipsBox.innerHTML = "";
-    function chip(label, tag) {
+    function chip(label, tag, n) {
       var b = document.createElement("button");
       b.type = "button";
       b.className = "pf-chip" + (activeTag === tag ? " on" : "");
-      b.textContent = label;
+      b.textContent = label + " (" + n + ")";
       b.setAttribute("aria-pressed", activeTag === tag ? "true" : "false");
       b.addEventListener("click", function () {
         activeTag = (activeTag === tag) ? "" : tag;
@@ -449,8 +449,8 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
       });
       chipsBox.appendChild(b);
     }
-    chip("All", "");
-    tags.forEach(function (t) { chip(t, t); });
+    chip("All", "", packs.length);
+    tags.forEach(function (t) { chip(t, t, counts[t]); });
   }
   // Tag pills on each card act as filters too.
   document.querySelectorAll(".prompt-pack .tag").forEach(function (pill) {

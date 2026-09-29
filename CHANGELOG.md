@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-29 — Prompts page: tag chips now show counts
+
+- Filter chips now read like `news (4)` — each tag's chip shows how many workflows carry it, so tag coverage is comparable at a glance. `All` shows the total workflow count.
+- Counts are computed from the packs' own tags at page load, so they stay correct as workflows are added.
+
 ## 2026-09-29 — Prompts page: search + tag filtering, homepage hero button
 
 - Homepage hero now has a fourth button, "Workflow Prompts", linking to /prompts.html — sits alongside SE Command Center, App Launcher, and the podcast button.
