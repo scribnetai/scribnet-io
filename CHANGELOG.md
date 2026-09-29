@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-29 — Guides index reveal fix
+
+- Fixed invisible book cards on `/guides.html`: the cards reuse the site's `.card` style (which starts at `opacity: 0` until JS adds `.in`), but the page shipped without the scroll-reveal script — the books were in the HTML but never faded in. Added the same tiny IntersectionObserver reveal the homepage uses.
+
 ## 2026-09-29 — Guides mobile hardening
 
 - Guides pages now set the footer copyright year via a tiny inline script (the book pages don't load app.js, so the year was rendering blank).
