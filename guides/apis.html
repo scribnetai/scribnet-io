@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=nav2">
+  <link rel="stylesheet" href="/styles.css?v=nav2">
 <!-- PWA: installable home-screen app -->
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#05070c">
@@ -51,73 +51,6 @@
 </head>
 <body>
 <div id="read-progress"></div>
-  <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  /* Reading progress bar */
-  (function () {
-    var bar = document.getElementById("read-progress"), ticking = false;
-    function update() {
-      ticking = false;
-      var h = document.documentElement;
-      var max = h.scrollHeight - h.clientHeight;
-      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
-    }
-    window.addEventListener("scroll", function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    }, { passive: true });
-    update();
-  })();
-
-  /* Copy buttons on code blocks */
-  document.querySelectorAll(".chapter pre").forEach(function (pre) {
-    var btn = document.createElement("button");
-    btn.className = "copy-btn"; btn.type = "button"; btn.textContent = "Copy";
-    btn.addEventListener("click", function () {
-      var code = pre.querySelector("code");
-      var text = code ? code.innerText : pre.innerText;
-      function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); }
-      function fallback() {
-        var ta = document.createElement("textarea");
-        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
-        document.body.appendChild(ta); ta.select();
-        try { document.execCommand("copy"); } catch (e) {}
-        document.body.removeChild(ta); done();
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, fallback);
-      } else { fallback(); }
-    });
-    pre.appendChild(btn);
-  });
-
-  /* Interactive "dangerous checklist" — tap to check off, remembered per book */
-  (function () {
-    var store = null;
-    try { store = window.localStorage; } catch (e) {}
-    var key = "ztd-checklist:" + location.pathname;
-    document.querySelectorAll(".chapter h3").forEach(function (h) {
-      if (h.textContent.toLowerCase().indexOf("dangerous checklist") === -1) return;
-      var ul = h.nextElementSibling;
-      if (!ul || !ul.classList || !ul.classList.contains("tldr")) return;
-      ul.classList.add("checklist");
-      var saved = {};
-      try { saved = JSON.parse(store.getItem(key) || "{}"); } catch (e) {}
-      ul.querySelectorAll("li").forEach(function (li, i) {
-        if (saved[i]) li.classList.add("done");
-        li.addEventListener("click", function () {
-          li.classList.toggle("done");
-          if (!store) return;
-          var s = {};
-          ul.querySelectorAll("li").forEach(function (x, j) {
-            if (x.classList.contains("done")) s[j] = 1;
-          });
-          try { store.setItem(key, JSON.stringify(s)); } catch (e) {}
-        });
-      });
-    });
-  })();
-  </script>
   <div class="chrome-top"><div class="chrome-inner">
     <header class="topnav">
       <a class="topnav-brand" href="/" aria-label="ScribNet home">
@@ -738,5 +671,73 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
 </script>
 
 
+<script>
+  var _yr = document.getElementById("year");
+  if (_yr) _yr.textContent = new Date().getFullYear();
+
+  /* Reading progress bar */
+  (function () {
+    var bar = document.getElementById("read-progress"), ticking = false;
+    function update() {
+      ticking = false;
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  })();
+
+  /* Copy buttons on code blocks */
+  document.querySelectorAll(".chapter pre").forEach(function (pre) {
+    var btn = document.createElement("button");
+    btn.className = "copy-btn"; btn.type = "button"; btn.textContent = "Copy";
+    btn.addEventListener("click", function () {
+      var code = pre.querySelector("code");
+      var text = code ? code.innerText : pre.innerText;
+      function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* Interactive "dangerous checklist" — tap to check off, remembered per book */
+  (function () {
+    var store = null;
+    try { store = window.localStorage; } catch (e) {}
+    var key = "ztd-checklist:" + location.pathname;
+    document.querySelectorAll(".chapter h3").forEach(function (h) {
+      if (h.textContent.toLowerCase().indexOf("dangerous checklist") === -1) return;
+      var ul = h.nextElementSibling;
+      if (!ul || !ul.classList || !ul.classList.contains("tldr")) return;
+      ul.classList.add("checklist");
+      var saved = {};
+      try { saved = JSON.parse(store.getItem(key) || "{}"); } catch (e) {}
+      ul.querySelectorAll("li").forEach(function (li, i) {
+        if (saved[i]) li.classList.add("done");
+        li.addEventListener("click", function () {
+          li.classList.toggle("done");
+          if (!store) return;
+          var s = {};
+          ul.querySelectorAll("li").forEach(function (x, j) {
+            if (x.classList.contains("done")) s[j] = 1;
+          });
+          try { store.setItem(key, JSON.stringify(s)); } catch (e) {}
+        });
+      });
+    });
+  })();
+  </script>
 </body>
 </html>

@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-09-29 — Book page bug fixes
+
+- Fixed the book pages' stylesheet link: it was copied from the homepage as a relative `styles.css` path, which 404'd under `/guides/` — the header, footer, and GitHub icon were rendering unstyled (including a viewport-sized octocat in the footer). Now root-relative.
+- Fixed the book-page script running before the footer existed: the `#year` lookup threw and killed the whole script block (no checklist, no copy buttons, no progress bar, blank year). The script now runs at the end of `<body>` with a guarded lookup.
+
 ## 2026-09-29 — Book pages redesigned ("Paper" reading theme)
 
 - All four Zero to Dangerous books restyled as a proper reading experience: warm paper background, Newsreader serif body type, JetBrains Mono code, title-page hero, numbered contents card, reading progress bar, copy buttons on code blocks, redesigned tip/footgun/takeaway callouts, and an interactive "dangerous checklist" (tap to check off, remembered per book). Print stylesheet included.
