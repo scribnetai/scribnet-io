@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes — Zero to Dangerous · ScribNet</title>
+  <meta name="description" content="Zero to Dangerous: Kubernetes — from “what&#x27;s a pod” to running k3s on your homelab. Six chapters, zero dumb questions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=nav2">
+<!-- PWA: installable home-screen app -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#05070c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ScribNet">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2338bdf8'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='71' font-size='62' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>S</text></svg>">
+<!-- Analytics: Umami (cookieless, no consent banner) -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="025bed5c-dced-450a-a701-95f7cd065922"></script>
+  <style>
+    /* Demure animated aurora — three slow-drifting blurred blobs, very faint. */
+    .aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .aurora i { position: absolute; display: block; border-radius: 50%; filter: blur(90px); will-change: transform; }
+    .aurora .a1 { width: 640px; height: 640px; left: -180px; top: -200px; background: #7c6cff; opacity: .13; animation: drift1 30s ease-in-out infinite alternate; }
+    .aurora .a2 { width: 760px; height: 760px; right: -240px; top: -140px; background: #4de1ff; opacity: .08; animation: drift2 38s ease-in-out infinite alternate; }
+    .aurora .a3 { width: 580px; height: 580px; left: 32%; bottom: -280px; background: #7c6cff; opacity: .09; animation: drift3 46s ease-in-out infinite alternate; }
+    @keyframes drift1 { to { transform: translate(130px, 90px) scale(1.15); } }
+    @keyframes drift2 { to { transform: translate(-150px, 110px) scale(1.08); } }
+    @keyframes drift3 { to { transform: translate(100px, -80px) scale(1.18); } }
+    /* Typewriter caret for the rotating hero word. */
+    .caret { display: inline-block; width: 3px; height: 0.95em; margin-left: 3px; vertical-align: -0.1em;
+      border-radius: 2px; background: var(--cyan); animation: blink 1.1s steps(2, start) infinite; }
+    @keyframes blink { to { visibility: hidden; } }
+    @media (prefers-reduced-motion: reduce) { .aurora, .caret { display: none; } }
+  </style>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ScribNet">
+  <meta property="og:title" content="Kubernetes — Zero to Dangerous">
+  <meta property="og:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
+  <meta property="og:url" content="https://scribnet.io/guides/kubernetes.html">
+  <meta property="og:image" content="https://scribnet.io/og/og-apps.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kubernetes — Zero to Dangerous">
+  <meta name="twitter:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
+  <meta name="twitter:image" content="https://scribnet.io/og/og-apps.png">
+</head>
+<body>
+  <main>
+    <header class="topnav">
+      <a class="topnav-brand" href="/" aria-label="ScribNet home">
+        <span class="topnav-badge">S</span><span>scribnet.io</span>
+      </a>
+      <nav class="topnav-links" aria-label="Site">
+      <a href="/apps.html">Apps</a>
+      <a href="/podcast.html">Podcast</a>
+      <a href="/guides.html" aria-current="page">Guides</a>
+      <a href="/uses.html">Uses</a>
+      <a href="/homelab.html">Homelab</a>
+      </nav>
+    </header>
+<div class="guide-hero">
+  <div class="eyebrow">Zero to Dangerous</div>
+  <h1>Kubernetes</h1>
+  <p class="subtitle">Deploy a real app on your own cluster — and understand every object you're creating along the way.</p>
+  <div class="guide-meta"><span>6 chapters</span><span>~25 min read</span><span>Beginner</span></div>
+</div>
+
+<nav class="toc" aria-label="Chapters">
+  <div class="toc-title">Chapters</div>
+  <ol>
+    <li><a href="#ch1">Why Kubernetes exists</a></li>
+    <li><a href="#ch2">Containers in 10 minutes</a></li>
+    <li><a href="#ch3">The three objects that run everything</a></li>
+    <li><a href="#ch4">Config, secrets, and storage</a></li>
+    <li><a href="#ch5">Getting traffic in</a></li>
+    <li><a href="#ch6">Your first cluster: k3s in the homelab</a></li>
+  </ol>
+</nav>
+
+<section class="chapter" id="ch1">
+  <div class="ch-num">Chapter 1</div>
+  <h2>Why Kubernetes exists</h2>
+  <p>You already know this story if you've ever managed VMware. You had a physical server. You carved it into VMs, and every VM was a pet: you named it, you nursed it through patches, you held your breath during vMotion. Then the pets multiplied. Ten servers became a hundred VMs, and the spreadsheet of "which VM runs what, and why is DB03 doing 90% CPU at 2am" became somebody's full-time job.</p>
+  <p>Kubernetes is what happens when you stop managing individual machines and start managing <em>intent</em>. You don't say "put this app on host 4." You say "I want three copies of this app running at all times," and a control plane figures out the placement, restarts the dead ones, and rolls out updates without you babysitting a maintenance window.</p>
+  <h3>The mental model that actually sticks</h3>
+  <p>Map it to the world you know. A VM is a heavy apartment building: full kitchen, plumbing, its own foundation (a complete guest OS), takes minutes to build, and eats gigabytes of disk before anything useful runs inside it. A container is a furnished room inside a building that already exists: it shares the foundation (the host's kernel), starts in milliseconds, and only carries what's actually different — the app and its dependencies.</p>
+  <p>Kubernetes is the building manager. It doesn't care about any individual room. It cares that the building has the right number of occupied rooms, that broken rooms get replaced, that new tenants move in without anyone noticing, and that the mail (network traffic) reaches the right door. You file requests with the manager ("three replicas, please"); the manager does the physical labor.</p>
+  <h3>Why "just use Docker" stops scaling</h3>
+  <p>Docker is excellent at running one container on one machine. The moment you need the same app on three machines, Docker shrugs — that's not its job. Who decides which machine has spare capacity? Who restarts the container when the host dies? Who updates all three copies without downtime, and rolls back when the new version is broken? Who hands out IP addresses that don't change every time a container restarts?</p>
+  <p>Answering those questions by hand is how you end up writing a pile of shell scripts and cron jobs that slowly becomes a worse Kubernetes written by you, at 2am, during an outage. The industry already made that mistake at scale so you don't have to.</p>
+  <div class="callout"><strong>Tip:</strong> If the VMware comparison helps, keep it: a Kubernetes <em>node</em> is roughly an ESXi host, and a <em>pod</em> is roughly a VM — except pods are cattle. You never SSH into a pod to fix it. You delete it and let the manager replace it.</div>
+  <ul class="tldr">
+    <li>Kubernetes manages <em>intent</em> ("three copies, always"), not machines</li>
+    <li>VM = apartment building; container = furnished room; Kubernetes = the building manager</li>
+    <li>Pets get names and hand-holding; cattle get replaced when they fail</li>
+    <li>"Just Docker" breaks at scheduling, self-healing, and networking across machines</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch2">
+  <div class="ch-num">Chapter 2</div>
+  <h2>Containers in 10 minutes</h2>
+  <p>You can't survive Kubernetes without understanding the thing it orchestrates. The good news: containers are a simpler idea than the marketing suggests. A container image is a frozen filesystem snapshot plus a startup command. When you run it, the Linux kernel gives that process its own walled-off view of the world — its own files, its own network interface, its own process list — using two old kernel features called <em>namespaces</em> and <em>cgroups</em>. That's it. No virtualization, no guest OS, no magic. Isolation enforced by the kernel, not by hardware.</p>
+  <h3>Images are layered</h3>
+  <p>Images are built in layers, and layers are the whole reason containers are fast. Each instruction in a Dockerfile creates one read-only layer stacked on the last. When ten containers share the same base layer, the disk and memory store it once. When you change one line at the bottom of your Dockerfile, only the layers below that line rebuild.</p>
+  <p>Here's the anatomy of a real Dockerfile — read it top to bottom and you've learned 80% of what matters:</p>
+  <pre><code># Start FROM a known base — this is layer 1
+FROM nginx:1.27
+
+# Bake config into the image — a new layer each
+COPY ./site.conf /etc/nginx/conf.d/default.conf
+COPY ./html /usr/share/nginx/html
+
+# Document the port (informational only — it opens nothing by itself)
+EXPOSE 80
+
+# The process this container runs. If it exits, the container exits.
+CMD ["nginx", "-g", "daemon off;"]</code></pre>
+  <p>Build it with <code>docker build -t my-site:1.0 .</code> and run it with <code>docker run -p 8080:80 my-site:1.0</code>. The image is the recipe; the container is the meal. Images are immutable — you never change a running container, you build a new image and replace it. That immutability is exactly why Kubernetes can treat workloads as cattle.</p>
+  <h3>Registries are just image warehouses</h3>
+  <p>An image on your laptop is useless to a cluster. A <em>registry</em> is where images live so machines can pull them — Docker Hub for public images, or a private registry for yours. When Kubernetes needs to run your app on some node, that node pulls the image from the registry by name and tag (<code>my-site:1.0</code>). Tag immutability matters here: if you keep pushing new code to the <code>latest</code> tag, nodes cache unpredictably and you can't tell what's actually running. Tag every build with a version or git hash. <code>latest</code> is a footgun wearing a trench coat.</p>
+  <div class="warn"><strong>Footgun:</strong> A container's filesystem is ephemeral. Anything your app writes inside the container — uploads, logs, a database file — vanishes when the container is replaced. Chapter 4 fixes this properly, but burn the rule in now: containers are for <em>code</em>, never for <em>data</em>.</div>
+  <ul class="tldr">
+    <li>Image = frozen filesystem + startup command; container = a running instance of an image</li>
+    <li>Layers make builds fast and sharing cheap — order your Dockerfile from slow-changing to fast-changing</li>
+    <li>Registries distribute images; tag every build with a real version, never rely on <code>latest</code></li>
+    <li>Container filesystems are ephemeral — plan for that before you deploy anything stateful</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch3">
+  <div class="ch-num">Chapter 3</div>
+  <h2>The three objects that run everything</h2>
+  <p>Kubernetes has dozens of object types, but three of them do 90% of the work: <strong>Pods</strong>, <strong>Deployments</strong>, and <strong>Services</strong>. Learn what each one is <em>for</em> and the rest of the API starts reading like a menu instead of a maze.</p>
+  <h3>Pod: the smallest unit</h3>
+  <p>A Pod is one or more containers that share a network namespace and storage — they get one IP address and can talk to each other on <code>localhost</code>. Think of a pod as a single VM that happens to contain tightly coupled processes (your app plus a logging sidecar, say). You almost never create pods directly, because a pod that dies stays dead — nothing restarts it. Pods are the <em>currency</em> the other objects spend, not something you manage by hand.</p>
+  <h3>Deployment: the "keep this many running" machine</h3>
+  <p>A Deployment is where intent lives. You declare "I want 2 replicas of this pod template," and the Deployment's controller watches reality and reconciles it toward your declaration, forever. Container crashed? Replacement pod. Node died? Pods rescheduled elsewhere. New image version? Rolling update — new pods come up, old pods drain, zero downtime if your app handles it. Broken new version? <code>kubectl rollout undo</code> and you're back.</p>
+  <pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoami
+  labels:
+    app: whoami
+spec:
+  replicas: 2
+  selector:                       # which pods belong to me...
+    matchLabels:
+      app: whoami
+  template:                       # ...and what those pods look like
+    metadata:
+      labels:
+        app: whoami               # must match the selector above
+    spec:
+      containers:
+      - name: whoami
+        image: traefik/whoami:latest
+        ports:
+        - containerPort: 80</code></pre>
+  <p>The critical line is the <code>selector</code> / <code>template.metadata.labels</code> handshake: the Deployment finds its pods by label. If those labels don't match, your Deployment cheerfully reports zero replicas and you stare at an empty <code>kubectl get pods</code> wondering what you did wrong. Everyone hits this once.</p>
+  <h3>Service: the stable front door</h3>
+  <p>Pods are mortal — they get replaced and every replacement gets a new IP. A Service is a stable virtual IP (and DNS name) that load-balances across the current set of healthy pods matching its selector. Your app talks to <code>whoami</code> the Service; Kubernetes worries about which pods are behind it right now.</p>
+  <pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+spec:
+  selector:
+    app: whoami        # send traffic to pods with this label
+  ports:
+  - port: 80           # the Service's port...
+    targetPort: 80      # ...forwarded to this port on the pods</code></pre>
+  <p>Apply both files with <code>kubectl apply -f whoami.yaml</code> and the chain is complete: Deployment keeps 2 pods alive, Service gives them one stable address. Inside the cluster, any other pod can now reach your app at <code>http://whoami</code> — Kubernetes DNS resolves the Service name automatically.</p>
+  <div class="callout"><strong>Tip:</strong> <code>kubectl get pods</code>, <code>kubectl describe pod/&lt;name&gt;</code>, and <code>kubectl logs &lt;name&gt;</code> are the holy trinity of debugging. Nine out of ten beginner problems are answered by the Events section at the bottom of <code>describe</code> — usually <code>ImagePullBackOff</code> (bad image name) or <code>CrashLoopBackOff</code> (the app exits immediately).</div>
+  <ul class="tldr">
+    <li>Pod = one or more containers sharing an IP; mortal, never managed directly</li>
+    <li>Deployment = "keep N copies of this pod template running," plus rolling updates and rollbacks</li>
+    <li>Service = stable IP + DNS name load-balancing across pods matched by label selector</li>
+    <li>Labels are the wiring — selector and pod labels must match or nothing connects</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch4">
+  <div class="ch-num">Chapter 4</div>
+  <h2>Config, secrets, and storage</h2>
+  <p>Chapter 2's rule — containers are for code, never for data — now needs its full solution. Real apps need three things that don't belong baked into an image: configuration that changes per environment, credentials that must stay private, and data that must survive pod restarts. Kubernetes gives you one object for each.</p>
+  <h3>ConfigMaps: configuration as an object</h3>
+  <p>A ConfigMap is a bag of key-value pairs (or whole config files) stored in the cluster, injected into pods as environment variables or mounted files. The point: the same image runs in dev, staging, and prod, and only the ConfigMap changes. Twelve-factor app doctrine, enforced by the platform.</p>
+  <pre><code>apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: whoami-config
+data:
+  WHOAMI_NAME: "homelab"</code></pre>
+  <p>Reference it in the pod template with <code>envFrom: [{configMapRef: {name: whoami-config}}]</code>, and every key becomes an environment variable. Change the ConfigMap, restart the pods, new config — no rebuild.</p>
+  <h3>Secrets: credentials, with a famous caveat</h3>
+  <p>Secrets work like ConfigMaps but are intended for passwords, tokens, and keys. Create one imperatively and skip hand-writing YAML:</p>
+  <pre><code>kubectl create secret generic db-creds \
+  --from-literal=username=labuser \
+  --from-literal=password='s3cr3t-pw'</code></pre>
+  <p>Now the caveat everyone learns the embarrassing way: <strong>Secrets are base64-encoded, not encrypted.</strong> Anyone who can read the Secret object can decode it in one command (<code>kubectl get secret db-creds -o jsonpath='{.data.password}' | base64 -d</code>). Base64 is an envelope, not a safe. For a homelab that's usually fine — it keeps credentials out of your YAML and your git history. For anything that matters, you encrypt secrets at rest (etcd encryption) or use an external secret manager. Never commit a Secret manifest with real values to a public repo.</p>
+  <h3>Volumes and PVCs: data that outlives pods</h3>
+  <p>A <em>volume</em> is storage attached to a pod. A <em>PersistentVolumeClaim</em> (PVC) is a pod's <em>request</em> for storage: "I need 5 GB, writable by one node." The cluster's storage provisioner fulfills the claim with an actual volume. This two-step dance exists so your YAML doesn't care whether the storage is a local disk, NFS, or cloud block storage — the claim is portable, the provisioner is environment-specific.</p>
+  <pre><code>apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-data
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 5Gi</code></pre>
+  <p>On k3s, the built-in <code>local-path</code> provisioner automatically fulfills this claim using disk on whichever node the pod lands on — no setup required. Mount it in the pod template under <code>volumes</code>/<code>volumeMounts</code>, and files written to that path survive pod restarts, reschedules, and image updates. Delete the PVC and the data is gone — which is exactly the semantics you want: data lifecycle managed as deliberately as the data itself.</p>
+  <div class="warn"><strong>Footgun:</strong> <code>local-path</code> storage is tied to one node. If that node dies, the data is unreachable until the node returns. Fine for a homelab learning cluster; for anything you care about, that's what replicated storage (Longhorn, in chapter 6's "where next") is for.</div>
+  <ul class="tldr">
+    <li>ConfigMaps hold non-secret config; same image, different config per environment</li>
+    <li>Secrets hold credentials but are base64, not encryption — keep real values out of git</li>
+    <li>PVCs are portable storage requests; the provisioner decides what backs them</li>
+    <li>k3s ships a <code>local-path</code> provisioner, so PVCs work out of the box</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch5">
+  <div class="ch-num">Chapter 5</div>
+  <h2>Getting traffic in</h2>
+  <p>This is the chapter that breaks every beginner, because Kubernetes offers four ways to expose an app and the names explain nothing. Here's the whole thing in one mental picture: your Service from chapter 3 is reachable <em>inside</em> the cluster. Getting traffic <em>from outside</em> is a separate problem, and the four Service/Ingress types are four answers to it.</p>
+  <h3>The four doors, plainly</h3>
+  <p><strong>ClusterIP</strong> (the default) exposes the Service on an internal-only IP. Only pods inside the cluster can reach it. This is what you want for backends — your API server should not be on the internet, full stop.</p>
+  <p><strong>NodePort</strong> opens the same port on <em>every node's</em> IP, in the 30000–32767 range, forwarding to your Service. It works everywhere with zero extra components, which is why tutorials love it — and why you should outgrow it fast. Random high ports, no hostnames, no TLS termination. It's the "it works on my machine" of networking.</p>
+  <p><strong>LoadBalancer</strong> asks the infrastructure for a real external load balancer with its own IP. On AWS or Azure that's a cloud LB provisioned automatically. On your homelab there is no cloud, so this type just sits there <code>&lt;pending&gt;</code> forever unless you install something like MetalLB to fake it. Beginners on bare metal burn hours on this. Now you won't.</p>
+  <p><strong>Ingress</strong> is the grown-up answer: a single entry point that routes by hostname and path. One IP, many apps — <code>app1.test</code> and <code>app2.test</code> both hit the same address, and the Ingress controller reads the Host header and forwards to the right Service. It also terminates TLS, so your apps don't each reinvent certificates. An Ingress is just a set of routing rules; the <em>Ingress controller</em> (Traefik ships built into k3s) is the software that enforces them.</p>
+  <pre><code>apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: whoami
+spec:
+  ingressClassName: traefik     # k3s's built-in controller
+  rules:
+  - host: whoami.test
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: whoami        # route to the Service from chapter 3
+            port:
+              number: 80</code></pre>
+  <div class="callout"><strong>Tip:</strong> The decision tree is short. Internal-only? ClusterIP. Quick test on a laptop? NodePort. Cloud with real LBs? LoadBalancer. Homelab or production with hostnames and TLS? Ingress, every time.</div>
+  <ul class="tldr">
+    <li>ClusterIP = internal only; NodePort = every node, random high port; LoadBalancer = needs a cloud (or MetalLB)</li>
+    <li>Ingress = one entry point routing by hostname/path, with TLS termination — the standard answer</li>
+    <li>k3s includes the Traefik Ingress controller out of the box</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch6">
+  <div class="ch-num">Chapter 6</div>
+  <h2>Your first cluster: k3s in the homelab</h2>
+  <p>Theory's done. k3s is Kubernetes with the batteries included and the weight removed — a single 100 MB binary, SQLite instead of etcd by default, Traefik and the local-path provisioner preinstalled. It's the fastest path from zero to a real cluster on hardware you already own.</p>
+  <h3>Install k3s and connect kubectl</h3>
+  <p>On your first node (any reasonably modern Linux box or VM):</p>
+  <pre><code>curl -sfL https://get.k3s.io | sh -
+sudo k3s kubectl get nodes</code></pre>
+  <p>You should see one node, <code>Ready</code>, a minute or so later. That command is your proof of life. (Want worker nodes later? Run the same installer on each with <code>K3S_URL</code> and <code>K3S_TOKEN</code> set from <code>/var/lib/rancher/k3s/server/node-token</code> on the server — but one node is plenty for this chapter.)</p>
+  <p>k3s writes its admin kubeconfig to <code>/etc/rancher/k3s/k3s.yaml</code> on the server. Copy it to your workstation as <code>labuser</code> and point it at the server's real address (example: <code>192.0.2.10</code>):</p>
+  <pre><code>scp labuser@192.0.2.10:/etc/rancher/k3s/k3s.yaml ~/.kube/config
+sed -i 's/127.0.0.1/192.0.2.10/' ~/.kube/config
+chmod 600 ~/.kube/config
+kubectl get nodes</code></pre>
+  <p>Learn five commands and you can operate the cluster: <code>get</code> (list things), <code>describe</code> (why is it broken), <code>logs</code> (what did it say), <code>exec -it</code> (get a shell inside), <code>apply -f</code> (make the cluster match this file). Everything else is specialization.</p>
+  <h3>Deploy the whoami demo</h3>
+  <p><code>whoami</code> is a tiny web server that reports its own hostname — perfect for proving that load balancing and Ingress actually work. Save the Deployment, Service, and Ingress from chapters 3 and 5 into <code>whoami.yaml</code>, then:</p>
+  <pre><code>kubectl apply -f whoami.yaml
+kubectl get pods -w          # watch them come up; Ctrl-C when Running
+kubectl get ingress whoami   # note the ADDRESS column</code></pre>
+  <p>No DNS in the homelab? Fake the hostname with a curl header — Traefik routes on the Host header, exactly like real DNS would:</p>
+  <pre><code>curl -H "Host: whoami.test" http://192.0.2.10/</code></pre>
+  <p>You'll get back the pod's hostname. Now scale it and watch the load balancer do its job:</p>
+  <pre><code>kubectl scale deployment whoami --replicas=3
+for i in 1 2 3 4; do curl -s -H "Host: whoami.test" http://192.0.2.10/ | grep Hostname; done</code></pre>
+  <p>Different hostnames in the responses: three pods, one address, traffic spread across them. That loop you just ran is the entire value proposition of chapter 1, in four lines.</p>
+  <div class="warn"><strong>Footgun:</strong> k3s's Traefik binds ports 80 and 443 on the node. If something else (another web server, a reverse proxy) already owns those ports on your homelab box, Traefik's pods will crash-loop. Check with <code>ss -tlnp | grep -E ':(80|443)'</code> before you install.</div>
+  <h3>The dangerous checklist</h3>
+  <ul class="tldr">
+    <li>Install k3s on a homelab node and confirm <code>kubectl get nodes</code> shows it Ready</li>
+    <li>Deploy an app from your own YAML: Deployment + Service + Ingress, applied with <code>kubectl apply -f</code></li>
+    <li>Scale it to 3 replicas and prove traffic spreads across pods with repeated curls</li>
+    <li>Do a zero-downtime update: change the image tag, <code>kubectl apply</code>, watch the rolling update with <code>kubectl rollout status</code></li>
+    <li>Break it on purpose: delete a pod with <code>kubectl delete pod</code> and watch the Deployment replace it — then check <code>kubectl describe</code> to see the Events telling the story</li>
+  </ul>
+  <p><strong>Where next:</strong> you now understand the core loop. The natural next rungs are <strong>Helm</strong> (packages for Kubernetes — install complex apps like databases with one command instead of fifty YAML files), <strong>Longhorn</strong> (replicated block storage across nodes, so a dead node doesn't take your data with it — the answer to chapter 4's footgun), and <strong>ArgoCD</strong> (GitOps: your cluster continuously reconciles itself toward what's committed in git, so the repo becomes the source of truth). Each one is a "Zero to Dangerous" chapter in your homelab story waiting to happen.</p>
+  <p>Official docs, for when you're ready to go deeper: <a href="https://kubernetes.io/docs/home/">kubernetes.io/docs</a> and <a href="https://docs.k3s.io/">docs.k3s.io</a> are genuinely excellent — start with the Concepts section, not the Tasks.</p>
+</section>
+
+<nav class="book-nav">
+  <a class="book-prev" href="/guides.html"><span>&larr; Previous book</span><strong>All guides</strong></a>
+  <a class="book-next" href="/guides/terraform.html"><span>Next book &rarr;</span><strong>Terraform</strong></a>
+</nav>
+
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> ScribNet — scribnet.io</p>
+    <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>@scribnetai</span>
+    </a>
+    <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/guides.html">Guides</a><a href="/homelab.html">Homelab</a></nav>
+    <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
+  </footer>
+
+  <style>
+    .guide-hero { padding: 2.5rem 0 0.5rem; max-width: 46rem; }
+    .guide-hero h1 { margin-bottom: 0.5rem; }
+    .guide-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.1rem; }
+    .guide-meta span { font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 999px; padding: 0.35rem 0.85rem;
+      background: var(--surface); }
+    .toc { margin: 2rem 0; padding: 1.4rem 1.6rem; border: 1px solid var(--border);
+      border-radius: 18px; background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+      max-width: 46rem; }
+    .toc-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.7rem; }
+    .toc ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.45rem; }
+    .toc li::marker { color: var(--cyan); font-weight: 700; }
+    .toc a { color: var(--text); text-decoration: none; font-weight: 500; }
+    .toc a:hover { color: var(--cyan); text-decoration: underline; }
+    .chapter { max-width: 46rem; margin: 0 auto 3.5rem; scroll-margin-top: 1.5rem; }
+    .ch-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.4rem; }
+    .chapter h2 { font-size: 1.7rem; letter-spacing: -0.01em; margin-bottom: 1rem; }
+    .chapter h3 { font-size: 1.15rem; margin: 1.8rem 0 0.7rem; }
+    .chapter p { color: var(--text); line-height: 1.75; margin-bottom: 1rem; opacity: 0.92; }
+    .chapter code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.86em; background: rgba(124,108,255,0.12); border: 1px solid rgba(124,108,255,0.25);
+      border-radius: 6px; padding: 0.1em 0.4em; }
+    .chapter pre { background: #0a0e1a; border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.1rem 1.3rem; overflow-x: auto; margin: 1.2rem 0; }
+    .chapter pre code { background: none; border: none; padding: 0; font-size: 0.83rem;
+      line-height: 1.65; color: #dbe4ff; display: block; }
+    .callout, .warn { border-radius: 14px; padding: 1rem 1.25rem; margin: 1.3rem 0;
+      line-height: 1.65; font-size: 0.93rem; }
+    .callout { background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.35); }
+    .warn { background: rgba(255,170,80,0.07); border: 1px solid rgba(255,170,80,0.4); }
+    .callout strong, .warn strong { display: block; margin-bottom: 0.25rem;
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .callout strong { color: var(--cyan); }
+    .warn strong { color: #ffb35c; }
+    .tldr { list-style: none; margin: 1.4rem 0 0; padding: 1.1rem 1.3rem 1.1rem 2.6rem;
+      border: 1px dashed rgba(124,108,255,0.45); border-radius: 14px;
+      background: rgba(124,108,255,0.05); position: relative; }
+    .tldr::before { content: "TL;DR"; position: absolute; left: 1.1rem; top: 1.15rem;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; color: var(--cyan);
+      writing-mode: vertical-rl; }
+    .tldr li { line-height: 1.65; margin-bottom: 0.4rem; font-size: 0.93rem; }
+    .tldr li:last-child { margin-bottom: 0; }
+    .book-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      max-width: 46rem; margin: 1rem auto 3rem; }
+    .book-nav a { border: 1px solid var(--border); border-radius: 16px; padding: 1.1rem 1.3rem;
+      text-decoration: none; background: var(--surface); transition: border-color 0.2s ease, transform 0.2s ease; }
+    .book-nav a:hover { border-color: rgba(124,108,255,0.55); transform: translateY(-2px); }
+    .book-nav span { display: block; font-size: 0.75rem; color: var(--faint); margin-bottom: 0.3rem; }
+    .book-nav strong { color: var(--text); font-size: 1.02rem; }
+    .book-next { text-align: right; }
+    @media (max-width: 640px) { .book-nav { grid-template-columns: 1fr; } .book-next { text-align: left; } }
+
+  </style>
+
+<!-- ScribNet feedback widget: floating button + dialog, sends via user's email client (mailto). Self-contained: no external deps, no reliance on page CSS. -->
+<style>
+.snkf-btn{position:fixed;right:22px;bottom:22px;z-index:9990;display:flex;align-items:center;gap:9px;
+  padding:12px 18px;border-radius:999px;cursor:pointer;font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.2px;color:#fff;
+  background:rgba(20,26,46,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.16);box-shadow:0 8px 28px rgba(0,0,0,.45),0 0 0 1px rgba(124,92,255,.12);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;min-height:46px}
+.snkf-btn:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.55);box-shadow:0 12px 32px rgba(0,0,0,.5),0 0 18px rgba(124,92,255,.35)}
+.snkf-btn:active{transform:translateY(0)}
+.snkf-btn svg{width:18px;height:18px;flex:none}
+.snkf-overlay{position:fixed;inset:0;z-index:9991;display:none;align-items:center;justify-content:center;
+  background:rgba(4,6,12,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:16px}
+.snkf-overlay.open{display:flex}
+.snkf-card{width:420px;max-width:100%;max-height:calc(100vh - 60px);overflow:auto;border-radius:20px;padding:26px 24px 22px;
+  background:rgba(20,26,46,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 70px rgba(0,0,0,.6);
+  font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;color:#eef1f8;
+  animation:snkf-pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes snkf-pop{from{transform:scale(.94) translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.snkf-title{font-size:19px;font-weight:700;margin:0 0 4px}
+.snkf-sub{font-size:13.5px;color:#9aa4c0;margin:0 0 18px;line-height:1.5}
+.snkf-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#8b94b3;margin:0 0 8px}
+.snkf-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.snkf-chip{padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);
+  color:#cfd6ea;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s ease}
+.snkf-chip:hover{border-color:rgba(124,92,255,.6);color:#fff}
+.snkf-chip.sel{background:linear-gradient(135deg,#7c5cff,#38bdf8);border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(124,92,255,.4)}
+.snkf-field{width:100%;box-sizing:border-box;border-radius:12px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);color:#fff;font-family:inherit;font-size:14.5px;padding:11px 13px;margin-bottom:14px;outline:none;
+  transition:border-color .15s ease}
+.snkf-field::placeholder{color:#6b7490}
+.snkf-field:focus{border-color:#7c5cff;box-shadow:0 0 0 3px rgba(124,92,255,.25)}
+textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
+.snkf-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+.snkf-cancel{padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:transparent;
+  color:#cfd6ea;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.snkf-cancel:hover{background:rgba(255,255,255,.07)}
+.snkf-send{padding:11px 22px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#7c5cff,#38bdf8);color:#fff;font-family:inherit;font-size:14px;font-weight:700;
+  box-shadow:0 6px 20px rgba(124,92,255,.45);transition:transform .15s ease,box-shadow .15s ease}
+.snkf-send:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(124,92,255,.6)}
+.snkf-send:disabled{opacity:.45;cursor:default;transform:none}
+.snkf-note{font-size:12px;color:#6b7490;margin:14px 0 0;text-align:center}
+@media (max-width:480px){
+  .snkf-overlay{align-items:flex-end;padding:0}
+  .snkf-card{width:100%;border-radius:22px 22px 0 0;max-height:88vh}
+  .snkf-btn{right:16px;bottom:16px;padding:12px 16px}
+}
+</style>
+<button class="snkf-btn" id="snkfBtn" aria-label="Send feedback" aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  <span>Feedback</span>
+</button>
+<div class="snkf-overlay" id="snkfOverlay" role="dialog" aria-modal="true" aria-labelledby="snkfTitle">
+  <div class="snkf-card">
+    <h2 class="snkf-title" id="snkfTitle">Send feedback</h2>
+    <p class="snkf-sub">Spotted a bug, have an idea, or just want to say hi? I read everything.</p>
+    <p class="snkf-label">What's this about?</p>
+    <div class="snkf-chips" id="snkfChips">
+      <button type="button" class="snkf-chip sel" data-topic="Bug">Bug</button>
+      <button type="button" class="snkf-chip" data-topic="Idea">Idea</button>
+      <button type="button" class="snkf-chip" data-topic="Question">Question</button>
+      <button type="button" class="snkf-chip" data-topic="Praise">Praise</button>
+    </div>
+    <p class="snkf-label">Your name <span style="text-transform:none;letter-spacing:0;opacity:.6">(optional)</span></p>
+    <input class="snkf-field" id="snkfName" type="text" maxlength="80" placeholder="Jane SE" autocomplete="name">
+    <p class="snkf-label">Message</p>
+    <textarea class="snkf-field" id="snkfMsg" maxlength="2000" placeholder="What's on your mind?"></textarea>
+    <div class="snkf-actions">
+      <button type="button" class="snkf-cancel" id="snkfCancel">Cancel</button>
+      <button type="button" class="snkf-send" id="snkfSend" disabled>Send via email</button>
+    </div>
+    <p class="snkf-note">Opens your email app with the message addressed to me.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var TO = "scribnet.ai@gmail.com";
+  var btn = document.getElementById("snkfBtn"),
+      overlay = document.getElementById("snkfOverlay"),
+      cancel = document.getElementById("snkfCancel"),
+      send = document.getElementById("snkfSend"),
+      nameEl = document.getElementById("snkfName"),
+      msgEl = document.getElementById("snkfMsg"),
+      chips = document.getElementById("snkfChips"),
+      topic = "Bug";
+  function open(){ overlay.classList.add("open"); setTimeout(function(){ msgEl.focus(); }, 60); }
+  function close(){ overlay.classList.remove("open"); btn.focus(); }
+  btn.addEventListener("click", open);
+  cancel.addEventListener("click", close);
+  overlay.addEventListener("click", function(e){ if (e.target === overlay) close(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && overlay.classList.contains("open")) close(); });
+  chips.addEventListener("click", function(e){
+    var c = e.target.closest(".snkf-chip"); if (!c) return;
+    chips.querySelectorAll(".snkf-chip").forEach(function(x){ x.classList.remove("sel"); });
+    c.classList.add("sel"); topic = c.getAttribute("data-topic");
+  });
+  msgEl.addEventListener("input", function(){ send.disabled = !msgEl.value.trim(); });
+  send.addEventListener("click", function(){
+    var msg = msgEl.value.trim(); if (!msg) return;
+    var subject = "[Feedback: " + topic + "] " + document.title;
+    var body = msg + "\n\n— " + (nameEl.value.trim() || "Anonymous") + "\nPage: " + location.href;
+    location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    close();
+  });
+})();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APIs — Zero to Dangerous · ScribNet</title>
+  <meta name="description" content="Zero to Dangerous: APIs — REST, HTTP, auth, curl, and rate limits. The 20% that does 80% of the work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=nav2">
+<!-- PWA: installable home-screen app -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#05070c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ScribNet">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2338bdf8'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='71' font-size='62' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>S</text></svg>">
+<!-- Analytics: Umami (cookieless, no consent banner) -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="025bed5c-dced-450a-a701-95f7cd065922"></script>
+  <style>
+    /* Demure animated aurora — three slow-drifting blurred blobs, very faint. */
+    .aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .aurora i { position: absolute; display: block; border-radius: 50%; filter: blur(90px); will-change: transform; }
+    .aurora .a1 { width: 640px; height: 640px; left: -180px; top: -200px; background: #7c6cff; opacity: .13; animation: drift1 30s ease-in-out infinite alternate; }
+    .aurora .a2 { width: 760px; height: 760px; right: -240px; top: -140px; background: #4de1ff; opacity: .08; animation: drift2 38s ease-in-out infinite alternate; }
+    .aurora .a3 { width: 580px; height: 580px; left: 32%; bottom: -280px; background: #7c6cff; opacity: .09; animation: drift3 46s ease-in-out infinite alternate; }
+    @keyframes drift1 { to { transform: translate(130px, 90px) scale(1.15); } }
+    @keyframes drift2 { to { transform: translate(-150px, 110px) scale(1.08); } }
+    @keyframes drift3 { to { transform: translate(100px, -80px) scale(1.18); } }
+    /* Typewriter caret for the rotating hero word. */
+    .caret { display: inline-block; width: 3px; height: 0.95em; margin-left: 3px; vertical-align: -0.1em;
+      border-radius: 2px; background: var(--cyan); animation: blink 1.1s steps(2, start) infinite; }
+    @keyframes blink { to { visibility: hidden; } }
+    @media (prefers-reduced-motion: reduce) { .aurora, .caret { display: none; } }
+  </style>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ScribNet">
+  <meta property="og:title" content="APIs — Zero to Dangerous">
+  <meta property="og:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
+  <meta property="og:url" content="https://scribnet.io/guides/apis.html">
+  <meta property="og:image" content="https://scribnet.io/og/og-apps.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="APIs — Zero to Dangerous">
+  <meta name="twitter:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
+  <meta name="twitter:image" content="https://scribnet.io/og/og-apps.png">
+</head>
+<body>
+  <main>
+    <header class="topnav">
+      <a class="topnav-brand" href="/" aria-label="ScribNet home">
+        <span class="topnav-badge">S</span><span>scribnet.io</span>
+      </a>
+      <nav class="topnav-links" aria-label="Site">
+      <a href="/apps.html">Apps</a>
+      <a href="/podcast.html">Podcast</a>
+      <a href="/guides.html" aria-current="page">Guides</a>
+      <a href="/uses.html">Uses</a>
+      <a href="/homelab.html">Homelab</a>
+      </nav>
+    </header>
+<div class="guide-hero">
+  <div class="eyebrow">Zero to Dangerous</div>
+  <h1>APIs</h1>
+  <p class="subtitle">After this: you'll read any API's docs, call it from the terminal, and script against one without leaking credentials.</p>
+  <div class="guide-meta"><span>6 chapters</span><span>~25 min read</span><span>Beginner</span></div>
+</div>
+
+<nav class="toc" aria-label="Chapters">
+  <div class="toc-title">Chapters</div>
+  <ol>
+    <li><a href="#ch1">The UI Is the Demo. The API Is the Product.</a></li>
+    <li><a href="#ch2">REST and HTTP: The 20% That Matters</a></li>
+    <li><a href="#ch3">curl and jq: Reading APIs From the Terminal</a></li>
+    <li><a href="#ch4">Auth Without Tears</a></li>
+    <li><a href="#ch5">Playing Nice: Limits, Pages, and Webhooks</a></li>
+    <li><a href="#ch6">Build One: An Inbox Lister in Python</a></li>
+  </ol>
+</nav>
+
+<section class="chapter" id="ch1">
+  <div class="ch-num">Chapter 1</div>
+  <h2>The UI Is the Demo. The API Is the Product.</h2>
+  <p>Open your browser's dev tools, click the Network tab, then click any button in any web app. Watch what happens: the page fires off an HTTP request, gets some JSON back, and re-renders. That request <em>is</em> the product. The buttons, the pretty dashboard, the loading spinner — that's a skin stretched over a set of endpoints.</p>
+  <p>An API (application programming interface) is just the set of HTTP requests a service is willing to answer, documented. When you click "start VM" in a Proxmox dashboard, the browser calls something like <code>POST /api2/json/nodes/pve/qemu/101/status/start</code>. The API doesn't care that you clicked a button. It would answer the exact same request coming from a Python script at 3 AM, a cron job, or another company's integration.</p>
+  <p>This is why APIs matter to you: every automation you've ever wanted — "email me when the backup finishes," "pull the VM list into a spreadsheet," "restart the thing when the thing breaks" — is just calling the same endpoints the UI calls, without the UI in the middle. Learn to speak HTTP directly and the demo becomes optional.</p>
+  <div class="callout"><strong>Tip:</strong> next time you're in any web UI, open the Network tab and read the requests it makes. It's the fastest way to learn a product's real API — better than most documentation.</div>
+  <ul class="tldr">
+    <li>The web UI is a skin over HTTP endpoints; the endpoints are the real product.</li>
+    <li>An API is the documented set of requests a service answers.</li>
+    <li>Anything the UI can do, a script can do — usually faster, at 3 AM, on a schedule.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch2">
+  <div class="ch-num">Chapter 2</div>
+  <h2>REST and HTTP: The 20% That Matters</h2>
+  <p>HTTP APIs come in flavors (REST, GraphQL, gRPC), but REST over HTTP is the default language of the internet, and 20% of it covers 95% of what you'll ever call. Here's the whole mental model: <strong>resources</strong> (nouns, in the URL) plus <strong>verbs</strong> (what you're doing to them).</p>
+  <h3>The verbs</h3>
+  <p>There are five you need. <code>GET</code> reads something and changes nothing. <code>POST</code> creates something new. <code>PUT</code> replaces a resource wholesale. <code>PATCH</code> updates just a few fields. <code>DELETE</code> removes it. A "RESTful" endpoint reads like a sentence: <code>GET /v1/servers</code> lists servers, <code>GET /v1/servers/42</code> fetches server 42, <code>POST /v1/servers</code> creates one, <code>DELETE /v1/servers/42</code> kills it. Nouns in the path, verbs in the method — if an API names its endpoints <code>/getServerData</code>, it's not RESTful, but it'll still work fine. Don't be a purist about other people's APIs.</p>
+  <h3>The status codes that matter</h3>
+  <p>Every response carries a three-digit status code. Memorize seven: <code>200</code> OK, <code>201</code> created (your POST worked), <code>400</code> your request was malformed, <code>401</code> you're not authenticated, <code>404</code> that resource doesn't exist, <code>429</code> slow down (rate limited), <code>500</code> their server broke. The first digit is the category: 2xx success, 4xx you messed up, 5xx they messed up. When something fails, the status code tells you <em>whose</em> problem it is before you read a single line of the error body.</p>
+  <h3>JSON: the envelope</h3>
+  <p>Request and response bodies are almost always JSON — curly braces, quoted keys, values that are strings, numbers, booleans, arrays, or nested objects:</p>
+  <pre><code>{
+  "id": 42,
+  "hostname": "lab-nuc-01",
+  "cpus": 16,
+  "tags": ["proxmox", "lab"],
+  "online": true
+}</code></pre>
+  <h3>Query parameters</h3>
+  <p>The part of a URL after the <code>?</code> is a set of key-value filters: <code>GET /v1/servers?online=true&amp;sort=-cpus&amp;limit=10</code> asks for the ten online servers with the most CPUs. Query params are how APIs expose filtering, sorting, and searching without inventing new endpoints. Two conventions to know: <code>limit</code>/<code>offset</code> (or <code>page</code>) for slicing big lists — more on that in chapter 5 — and comma-separated or repeated keys for multi-value filters (<code>?tag=proxmox&amp;tag=lab</code>). When docs say a parameter is "required," a missing one gets you a <code>400</code>; when it's optional, the API applies its default.</p>
+  <p>That's it. Verbs, noun-URLs, status codes, JSON. You now know enough HTTP to read any REST API's documentation without flinching. (MDN's <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status">HTTP status reference</a> is the one bookmark worth keeping.)</p>
+  <div class="warn"><strong>Footgun:</strong> <code>PUT</code> replaces the <em>entire</em> resource — fields you omit may get wiped to defaults. When you only mean to change one field, reach for <code>PATCH</code>.</div>
+  <ul class="tldr">
+    <li>Five verbs: GET reads, POST creates, PUT replaces, PATCH tweaks, DELETE removes.</li>
+    <li>URLs are nouns (<code>/v1/servers/42</code>); the verb lives in the HTTP method.</li>
+    <li>Seven status codes (200, 201, 400, 401, 404, 429, 500) tell you whose problem a failure is.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch3">
+  <div class="ch-num">Chapter 3</div>
+  <h2>curl and jq: Reading APIs From the Terminal</h2>
+  <p><code>curl</code> makes HTTP requests from the command line. No browser, no app, no clicking — just you and the endpoint. Let's call a real public API (GitHub's, no login needed) and fetch a repo:</p>
+  <pre><code>curl -s https://api.github.com/repos/python/cpython</code></pre>
+  <p>The <code>-s</code> flag means silent (no progress meter). You'll get a wall of JSON. That's where <code>jq</code> comes in — it's a JSON filter that pretty-prints and lets you reach into the structure:</p>
+  <pre><code>curl -s https://api.github.com/repos/python/cpython | jq .
+curl -s https://api.github.com/repos/python/cpython | jq '{name: .name, stars: .stargazers_count}'</code></pre>
+  <pre><code>{
+  "name": "cpython",
+  "stars": 68214
+}</code></pre>
+  <p>The <code>-r</code> flag gives you raw output (no quotes) — perfect for lists:</p>
+  <pre><code>curl -s "https://api.github.com/repos/python/cpython/issues?per_page=5" | jq -r '.[].title'</code></pre>
+  <p><code>jq</code> is a whole language, but one more filter earns its keep: <code>select()</code> filters arrays the way a <code>WHERE</code> clause filters rows. Grab only the open pull requests authored by a bot:</p>
+  <pre><code>curl -s "https://api.github.com/repos/python/cpython/pulls?per_page=20" \
+  | jq -r '.[] | select(.user.type == "Bot") | .title'</code></pre>
+  <h3>Sending data</h3>
+  <p>Reading is <code>GET</code>; writing needs a method, headers, and a body. <code>-X POST</code> sets the verb, <code>-H</code> adds a header, <code>-d</code> sends the body. <a href="https://httpbin.org">httpbin.org</a> is a free service that echoes back whatever you send it — ideal for practice:</p>
+  <pre><code>curl -s -X POST https://httpbin.org/post \
+  -H "Content-Type: application/json" \
+  -d '{"hostname":"lab-nuc-01","cpus":16}' | jq .json</code></pre>
+  <p>And <code>-i</code> shows response headers, which is how you inspect rate limits and content types:</p>
+  <pre><code>curl -si https://api.github.com/rate_limit | head -8</code></pre>
+  <div class="warn"><strong>Footgun:</strong> on Windows, PowerShell aliases <code>curl</code> to <code>Invoke-WebRequest</code> — a different tool that will mangle your flags. Type <code>curl.exe</code> explicitly, and use double quotes around JSON (PowerShell doesn't do single-quoted strings the way bash does).</div>
+  <div class="callout"><strong>Tip:</strong> <code>jq</code>'s <a href="https://jqlang.github.io/jq/manual/">manual</a> is dense but worth skimming once. The three filters you'll use daily: <code>.field</code>, <code>.[]</code> (iterate arrays), and <code>select(...)</code>.</div>
+  <ul class="tldr">
+    <li><code>curl -s</code> fetches; pipe to <code>jq</code> to pretty-print and filter.</li>
+    <li><code>-X</code>, <code>-H</code>, <code>-d</code> let you POST JSON bodies.</li>
+    <li>Windows: it's <code>curl.exe</code>, and quote JSON with double quotes.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch4">
+  <div class="ch-num">Chapter 4</div>
+  <h2>Auth Without Tears</h2>
+  <p>Public APIs (like the GitHub calls above) let anyone in. Most useful APIs don't. Authentication answers "who are you," and there are four patterns you'll meet, in order of how often you'll see them.</p>
+  <p><strong>API keys</strong> are the simplest: a long random string the service hands you, sent as a header (<code>X-API-Key: ...</code>) or query parameter. Easy to use, hard to revoke granularly — anyone holding the key has all of its powers.</p>
+  <p><strong>Bearer tokens</strong> ride in the <code>Authorization</code> header and say "whoever holds this token may act." Same idea as an API key, dressed up in a standard format:</p>
+  <pre><code>curl -s https://api.example.com/v1/messages \
+  -H "Authorization: Bearer $MAIL_API_TOKEN" | jq .</code></pre>
+  <p><strong>Basic auth</strong> is username + password, base64-encoded, sent on every request (<code>curl -u labuser:$API_PASSWORD ...</code>). It's only safe over HTTPS — over plain HTTP it's a postcard with your password on it. You'll still see it on routers, cameras, and older gear.</p>
+  <p><strong>OAuth 2.0</strong> is the valet key for your data. You hand an app a token that starts the car but doesn't open the trunk: it gets <em>scoped</em> permission ("read your inbox, not send as you") and it <em>expires</em>. The dance has two tokens — a short-lived access token that does the work and a refresh token that mints new ones — which is why "Sign in with Google" redirects you through a consent screen instead of asking for your password. The flow, from the app's side: it sends you to the provider ("this app wants to read your inbox — allow?"), you approve, the provider hands the app an authorization code, and the app trades that code — server-to-server, with its own client secret — for the token pair. You never give the app your password at all. That's the whole point, and it's why phishing for OAuth consent screens is a thing: always check <em>which app</em> is asking and <em>which scopes</em> it wants before you click allow.</p>
+  <div class="warn"><strong>Footgun:</strong> credentials live in environment variables or a secrets manager — never in code, never in a chat message, never in a screenshot of your terminal, never committed to git. A token pasted into a public repo is compromised the second you push; rotate it immediately. <code>export MAIL_API_TOKEN="paste-it-here"</code>, then reference <code>$MAIL_API_TOKEN</code>. That's the entire system.</div>
+  <ul class="tldr">
+    <li>API keys and bearer tokens: a secret string in a header. Simple, powerful, guard it.</li>
+    <li>Basic auth: username + password per request — HTTPS only, always.</li>
+    <li>OAuth 2.0 is a valet key: scoped, expiring access — the app never sees your password.</li>
+    <li>Secrets live in environment variables. Never in code, never in git.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch5">
+  <div class="ch-num">Chapter 5</div>
+  <h2>Playing Nice: Limits, Pages, and Webhooks</h2>
+  <p>Calling an API is easy. Calling one <em>well</em> — without getting throttled, missing half your data, or hammering someone's server — is the part that separates scripts that work once from scripts that work for years.</p>
+  <h3>Rate limits and the 429</h3>
+  <p>Every serious API caps how fast you can call it. Blow past the limit and you get a <code>429 Too Many Requests</code>, often with a <code>Retry-After</code> header telling you how long to wait. Good APIs also advertise their budget up front in headers:</p>
+  <pre><code>x-ratelimit-limit: 60
+x-ratelimit-remaining: 58
+x-ratelimit-reset: 1759216800</code></pre>
+  <p>The correct response to a 429 is never "retry immediately in a loop" — that's how you turn a 60-second timeout into an hour-long ban. Sleep for the <code>Retry-After</code> value (or back off exponentially: 1s, 2s, 4s, 8s...), then continue. Write this into every script from day one; it's three lines and it saves you from the most embarrassing class of bug.</p>
+  <h3>Pagination: the thing that breaks every first script</h3>
+  <p>No API returns 40,000 records in one response. List endpoints paginate — typically <code>?page=2&amp;per_page=100</code> or a cursor token — and your first script <em>will</em> fetch page one, declare victory, and silently drop the other 39 pages. Always loop until the response says there's no next page (an empty list, a missing <code>next</code> cursor, or a <code>Link</code> header without a <code>rel="next"</code>). If your script works on a test account and breaks in production, pagination is suspect number one.</p>
+  <h3>Webhooks vs polling</h3>
+  <p>Polling is knocking on the door every minute asking "anything new?" Webhooks flip it around: you give the service a URL, and <em>it</em> calls <em>you</em> when something happens. Polling is simpler and works everywhere; webhooks are efficient and near-instant but require you to run something reachable. Rule of thumb: poll when freshness measured in minutes is fine; webhooks when seconds matter or the API begs you to stop polling.</p>
+  <h3>Error handling that isn't wishful thinking</h3>
+  <p>Check the status code on every response. Parse the error body — APIs usually tell you exactly what's wrong (<code>{"error": "limit must be &lt;= 100"}</code>). Retry 429s and 5xx with backoff; don't blindly retry 4xx — a 400 will fail the same way forever, and retrying a 401 just burns your rate budget while the real problem (bad token) sits there untouched. The backoff pattern in Python is short enough to memorize:</p>
+  <pre><code>import time
+import requests
+
+def get_with_backoff(url, headers, tries=5):
+    delay = 1
+    for attempt in range(tries):
+        resp = requests.get(url, headers=headers, timeout=15)
+        if resp.status_code == 429 or resp.status_code &gt;= 500:
+            time.sleep(delay)
+            delay *= 2  # 1s, 2s, 4s, 8s...
+            continue
+        resp.raise_for_status()
+        return resp.json()
+    raise RuntimeError(f"gave up after {tries} tries on {url}")</code></pre>
+  <div class="callout"><strong>Tip:</strong> log the status code, the endpoint, and the first 200 characters of the error body on every failure. Future-you, debugging at midnight, will be grateful.</div>
+  <ul class="tldr">
+    <li>429 means slow down: honor <code>Retry-After</code>, back off exponentially, never hammer.</li>
+    <li>Every list paginates — loop until there's no next page or you're silently missing data.</li>
+    <li>Poll for minutes-fresh, webhooks for seconds-fresh.</li>
+    <li>Retry 429/5xx with backoff; 4xx (except 429) is a bug in your request, not a retry candidate.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch6">
+  <div class="ch-num">Chapter 6</div>
+  <h2>Build One: An Inbox Lister in Python</h2>
+  <p>Time to put it together: a small script that lists recent inbox messages from a REST API. This uses a <strong>placeholder API</strong> (<code>api.example.com</code> doesn't exist) — the point is the <em>pattern</em>, which is identical for every real API: authenticate, GET, check the status, parse the JSON, print the fields. To aim it at a real service, change <code>BASE_URL</code>, the endpoint path, and the field names to match that service's docs.</p>
+  <pre><code>#!/usr/bin/env python3
+"""inbox.py - list recent messages from any inbox-style REST API.
+
+PLACEHOLDER: api.example.com is not real. Adapt BASE_URL, the endpoint,
+and the JSON field names to a real API's docs. The pattern stays the same.
+"""
+import os
+import sys
+
+import requests
+
+BASE_URL = "https://api.example.com/v1"  # &lt;-- point this at the real API
+TOKEN = os.environ.get("MAIL_API_TOKEN")  # &lt;-- never hardcode the token
+if not TOKEN:
+    sys.exit("error: set the MAIL_API_TOKEN environment variable first")
+
+
+def list_messages(limit=10):
+    resp = requests.get(
+        f"{BASE_URL}/messages",
+        headers={"Authorization": f"Bearer {TOKEN}"},
+        params={"limit": limit},
+        timeout=15,
+    )
+    resp.raise_for_status()  # 4xx/5xx -&gt; raise instead of failing silently
+    return resp.json().get("messages", [])
+
+
+for m in list_messages(10):
+    date = m.get("date", "")[:10]
+    sender = m.get("from", "")[:28]
+    print(f"{date}  {sender:&lt;28}  {m.get('subject', '')}")</code></pre>
+  <p>Run it:</p>
+  <pre><code>pip install requests
+export MAIL_API_TOKEN="paste-your-token-here"
+# PowerShell:  $env:MAIL_API_TOKEN = "paste-your-token-here"
+python3 inbox.py</code></pre>
+  <pre><code>2026-09-29  homelab-alerts@example.com  UPS on battery - runtime 42 min
+2026-09-29  backup@example.com          Nightly backup: OK (212 GB)
+2026-09-28  pve@example.com             Proxmox: all guests running</code></pre>
+  <p>Notice what the script <em>doesn't</em> do: no token in the file, no silent failures (<code>raise_for_status()</code> turns a 401 into an exception with the status code attached instead of an empty list you'd misread as "no mail"), and a timeout so a hung server can't hang your script forever. Those three habits — env-var secrets, loud failures, timeouts — are 80% of "production-ready" for small scripts.</p>
+  <p>To aim it at a real API, the adaptation is mechanical: read that API's docs for the base URL and auth scheme (bearer token? API key header? OAuth?), swap <code>BASE_URL</code> and the <code>headers</code> dict, then fix the field names in the print loop to match the real JSON shape — dump one response with <code>jq .</code> first and read it. Everything else — env-var token, status check, timeout, loop over the list — transfers verbatim. That portability is the payoff of learning the pattern instead of one vendor's SDK.</p>
+  <div class="callout"><strong>Tip:</strong> the <a href="https://requests.readthedocs.io/">requests documentation</a> is famously well-written — its quickstart covers sessions, retries, and streaming in about ten minutes of reading.</div>
+  <h3>The dangerous checklist</h3>
+  <ul class="tldr">
+    <li>Read any API's docs and make your first successful <code>curl</code> call in under five minutes.</li>
+    <li>Carve a JSON response apart with <code>jq</code> and hand someone exactly the field they asked for.</li>
+    <li>Authenticate with a bearer token pulled from an environment variable — nothing secret in code or git history.</li>
+    <li>Write a script that walks every page of a paginated list and backs off politely when it hits a 429.</li>
+    <li>Adapt the inbox script to a real API — your homelab, your monitoring, your inbox — and schedule it.</li>
+  </ul>
+</section>
+
+<nav class="book-nav">
+  <a class="book-prev" href="/guides/terraform.html"><span>&larr; Previous book</span><strong>Terraform</strong></a>
+  <a class="book-next" href="/guides/github.html"><span>Next book &rarr;</span><strong>GitHub</strong></a>
+</nav>
+
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> ScribNet — scribnet.io</p>
+    <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>@scribnetai</span>
+    </a>
+    <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/guides.html">Guides</a><a href="/homelab.html">Homelab</a></nav>
+    <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
+  </footer>
+
+  <style>
+    .guide-hero { padding: 2.5rem 0 0.5rem; max-width: 46rem; }
+    .guide-hero h1 { margin-bottom: 0.5rem; }
+    .guide-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.1rem; }
+    .guide-meta span { font-size: 0.78rem; font-weight: 600; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 999px; padding: 0.35rem 0.85rem;
+      background: var(--surface); }
+    .toc { margin: 2rem 0; padding: 1.4rem 1.6rem; border: 1px solid var(--border);
+      border-radius: 18px; background: linear-gradient(180deg, var(--surface-strong), var(--surface));
+      max-width: 46rem; }
+    .toc-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.7rem; }
+    .toc ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.45rem; }
+    .toc li::marker { color: var(--cyan); font-weight: 700; }
+    .toc a { color: var(--text); text-decoration: none; font-weight: 500; }
+    .toc a:hover { color: var(--cyan); text-decoration: underline; }
+    .chapter { max-width: 46rem; margin: 0 auto 3.5rem; scroll-margin-top: 1.5rem; }
+    .ch-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.4rem; }
+    .chapter h2 { font-size: 1.7rem; letter-spacing: -0.01em; margin-bottom: 1rem; }
+    .chapter h3 { font-size: 1.15rem; margin: 1.8rem 0 0.7rem; }
+    .chapter p { color: var(--text); line-height: 1.75; margin-bottom: 1rem; opacity: 0.92; }
+    .chapter code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.86em; background: rgba(124,108,255,0.12); border: 1px solid rgba(124,108,255,0.25);
+      border-radius: 6px; padding: 0.1em 0.4em; }
+    .chapter pre { background: #0a0e1a; border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.1rem 1.3rem; overflow-x: auto; margin: 1.2rem 0; }
+    .chapter pre code { background: none; border: none; padding: 0; font-size: 0.83rem;
+      line-height: 1.65; color: #dbe4ff; display: block; }
+    .callout, .warn { border-radius: 14px; padding: 1rem 1.25rem; margin: 1.3rem 0;
+      line-height: 1.65; font-size: 0.93rem; }
+    .callout { background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.35); }
+    .warn { background: rgba(255,170,80,0.07); border: 1px solid rgba(255,170,80,0.4); }
+    .callout strong, .warn strong { display: block; margin-bottom: 0.25rem;
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .callout strong { color: var(--cyan); }
+    .warn strong { color: #ffb35c; }
+    .tldr { list-style: none; margin: 1.4rem 0 0; padding: 1.1rem 1.3rem 1.1rem 2.6rem;
+      border: 1px dashed rgba(124,108,255,0.45); border-radius: 14px;
+      background: rgba(124,108,255,0.05); position: relative; }
+    .tldr::before { content: "TL;DR"; position: absolute; left: 1.1rem; top: 1.15rem;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; color: var(--cyan);
+      writing-mode: vertical-rl; }
+    .tldr li { line-height: 1.65; margin-bottom: 0.4rem; font-size: 0.93rem; }
+    .tldr li:last-child { margin-bottom: 0; }
+    .book-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      max-width: 46rem; margin: 1rem auto 3rem; }
+    .book-nav a { border: 1px solid var(--border); border-radius: 16px; padding: 1.1rem 1.3rem;
+      text-decoration: none; background: var(--surface); transition: border-color 0.2s ease, transform 0.2s ease; }
+    .book-nav a:hover { border-color: rgba(124,108,255,0.55); transform: translateY(-2px); }
+    .book-nav span { display: block; font-size: 0.75rem; color: var(--faint); margin-bottom: 0.3rem; }
+    .book-nav strong { color: var(--text); font-size: 1.02rem; }
+    .book-next { text-align: right; }
+    @media (max-width: 640px) { .book-nav { grid-template-columns: 1fr; } .book-next { text-align: left; } }
+
+  </style>
+
+<!-- ScribNet feedback widget: floating button + dialog, sends via user's email client (mailto). Self-contained: no external deps, no reliance on page CSS. -->
+<style>
+.snkf-btn{position:fixed;right:22px;bottom:22px;z-index:9990;display:flex;align-items:center;gap:9px;
+  padding:12px 18px;border-radius:999px;cursor:pointer;font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.2px;color:#fff;
+  background:rgba(20,26,46,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.16);box-shadow:0 8px 28px rgba(0,0,0,.45),0 0 0 1px rgba(124,92,255,.12);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;min-height:46px}
+.snkf-btn:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.55);box-shadow:0 12px 32px rgba(0,0,0,.5),0 0 18px rgba(124,92,255,.35)}
+.snkf-btn:active{transform:translateY(0)}
+.snkf-btn svg{width:18px;height:18px;flex:none}
+.snkf-overlay{position:fixed;inset:0;z-index:9991;display:none;align-items:center;justify-content:center;
+  background:rgba(4,6,12,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:16px}
+.snkf-overlay.open{display:flex}
+.snkf-card{width:420px;max-width:100%;max-height:calc(100vh - 60px);overflow:auto;border-radius:20px;padding:26px 24px 22px;
+  background:rgba(20,26,46,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 70px rgba(0,0,0,.6);
+  font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;color:#eef1f8;
+  animation:snkf-pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes snkf-pop{from{transform:scale(.94) translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.snkf-title{font-size:19px;font-weight:700;margin:0 0 4px}
+.snkf-sub{font-size:13.5px;color:#9aa4c0;margin:0 0 18px;line-height:1.5}
+.snkf-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#8b94b3;margin:0 0 8px}
+.snkf-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.snkf-chip{padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);
+  color:#cfd6ea;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s ease}
+.snkf-chip:hover{border-color:rgba(124,92,255,.6);color:#fff}
+.snkf-chip.sel{background:linear-gradient(135deg,#7c5cff,#38bdf8);border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(124,92,255,.4)}
+.snkf-field{width:100%;box-sizing:border-box;border-radius:12px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);color:#fff;font-family:inherit;font-size:14.5px;padding:11px 13px;margin-bottom:14px;outline:none;
+  transition:border-color .15s ease}
+.snkf-field::placeholder{color:#6b7490}
+.snkf-field:focus{border-color:#7c5cff;box-shadow:0 0 0 3px rgba(124,92,255,.25)}
+textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
+.snkf-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+.snkf-cancel{padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:transparent;
+  color:#cfd6ea;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.snkf-cancel:hover{background:rgba(255,255,255,.07)}
+.snkf-send{padding:11px 22px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#7c5cff,#38bdf8);color:#fff;font-family:inherit;font-size:14px;font-weight:700;
+  box-shadow:0 6px 20px rgba(124,92,255,.45);transition:transform .15s ease,box-shadow .15s ease}
+.snkf-send:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(124,92,255,.6)}
+.snkf-send:disabled{opacity:.45;cursor:default;transform:none}
+.snkf-note{font-size:12px;color:#6b7490;margin:14px 0 0;text-align:center}
+@media (max-width:480px){
+  .snkf-overlay{align-items:flex-end;padding:0}
+  .snkf-card{width:100%;border-radius:22px 22px 0 0;max-height:88vh}
+  .snkf-btn{right:16px;bottom:16px;padding:12px 16px}
+}
+</style>
+<button class="snkf-btn" id="snkfBtn" aria-label="Send feedback" aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  <span>Feedback</span>
+</button>
+<div class="snkf-overlay" id="snkfOverlay" role="dialog" aria-modal="true" aria-labelledby="snkfTitle">
+  <div class="snkf-card">
+    <h2 class="snkf-title" id="snkfTitle">Send feedback</h2>
+    <p class="snkf-sub">Spotted a bug, have an idea, or just want to say hi? I read everything.</p>
+    <p class="snkf-label">What's this about?</p>
+    <div class="snkf-chips" id="snkfChips">
+      <button type="button" class="snkf-chip sel" data-topic="Bug">Bug</button>
+      <button type="button" class="snkf-chip" data-topic="Idea">Idea</button>
+      <button type="button" class="snkf-chip" data-topic="Question">Question</button>
+      <button type="button" class="snkf-chip" data-topic="Praise">Praise</button>
+    </div>
+    <p class="snkf-label">Your name <span style="text-transform:none;letter-spacing:0;opacity:.6">(optional)</span></p>
+    <input class="snkf-field" id="snkfName" type="text" maxlength="80" placeholder="Jane SE" autocomplete="name">
+    <p class="snkf-label">Message</p>
+    <textarea class="snkf-field" id="snkfMsg" maxlength="2000" placeholder="What's on your mind?"></textarea>
+    <div class="snkf-actions">
+      <button type="button" class="snkf-cancel" id="snkfCancel">Cancel</button>
+      <button type="button" class="snkf-send" id="snkfSend" disabled>Send via email</button>
+    </div>
+    <p class="snkf-note">Opens your email app with the message addressed to me.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var TO = "scribnet.ai@gmail.com";
+  var btn = document.getElementById("snkfBtn"),
+      overlay = document.getElementById("snkfOverlay"),
+      cancel = document.getElementById("snkfCancel"),
+      send = document.getElementById("snkfSend"),
+      nameEl = document.getElementById("snkfName"),
+      msgEl = document.getElementById("snkfMsg"),
+      chips = document.getElementById("snkfChips"),
+      topic = "Bug";
+  function open(){ overlay.classList.add("open"); setTimeout(function(){ msgEl.focus(); }, 60); }
+  function close(){ overlay.classList.remove("open"); btn.focus(); }
+  btn.addEventListener("click", open);
+  cancel.addEventListener("click", close);
+  overlay.addEventListener("click", function(e){ if (e.target === overlay) close(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && overlay.classList.contains("open")) close(); });
+  chips.addEventListener("click", function(e){
+    var c = e.target.closest(".snkf-chip"); if (!c) return;
+    chips.querySelectorAll(".snkf-chip").forEach(function(x){ x.classList.remove("sel"); });
+    c.classList.add("sel"); topic = c.getAttribute("data-topic");
+  });
+  msgEl.addEventListener("input", function(){ send.disabled = !msgEl.value.trim(); });
+  send.addEventListener("click", function(){
+    var msg = msgEl.value.trim(); if (!msg) return;
+    var subject = "[Feedback: " + topic + "] " + document.title;
+    var body = msg + "\n\n— " + (nameEl.value.trim() || "Anonymous") + "\nPage: " + location.href;
+    location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    close();
+  });
+})();
+</script>
+
+
+</body>
+</html>

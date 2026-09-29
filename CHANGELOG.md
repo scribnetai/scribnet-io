@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-29 — "Zero to Dangerous" book series
+
+- New `/guides.html`: a four-book beginner series — Kubernetes, Terraform, APIs, GitHub — six chapters each, in the site's design language (hero, chapter TOC, tip/footgun callouts, TL;DR takeaways, prev/next book nav).
+- New pages `/guides/kubernetes.html`, `/guides/terraform.html`, `/guides/apis.html`, `/guides/github.html`.
+- Site nav (topnav + footer) on Apps, Podcast, Uses, and Homelab now links Guides; the homepage gains a "Zero to Dangerous" project card.
+
 ## 2026-09-28 — Podcast page redesign (launcher theme)
 
 - Rebuilt podcast.html in the app-launcher design language: hero, now-playing card with cover art + play/pause overlay, searchable episode tile grid (3D tilt, cursor spotlight, shine sweep), episode count, shared footer, and the fleet feedback widget (previously missing here).
