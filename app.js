@@ -49,15 +49,35 @@ document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
     if (deleting) {
       ci -= 1;
       el.textContent = words[wi].slice(0, ci);
-      if (ci <= 0) { deleting = false; wi = (wi + 1) % words.length; setTimeout(tick, 380); }
-      else setTimeout(tick, 36);
+      if (ci <= 0) { deleting = false; wi = (wi + 1) % words.length; setTimeout(tick, 300); }
+      else setTimeout(tick, 26);
     } else {
       ci += 1;
       var w = words[wi];
       el.textContent = w.slice(0, ci);
-      if (ci >= w.length) { deleting = true; setTimeout(tick, 2200); }
-      else setTimeout(tick, 72);
+      if (ci >= w.length) { deleting = true; setTimeout(tick, 1600); }
+      else setTimeout(tick, 52);
     }
   }
-  setTimeout(tick, 2400);
+  setTimeout(tick, 1700);
+})();
+
+// Build log expander: show the latest 4 entries, toggle the rest.
+(function () {
+  var btn = document.getElementById("logToggle");
+  var extra = document.getElementById("tlExtra");
+  if (!btn || !extra) return;
+  var total = document.querySelectorAll("#buildlog .tl-item").length;
+  function render() {
+    var open = !extra.hasAttribute("hidden");
+    btn.setAttribute("aria-expanded", String(open));
+    btn.innerHTML = open ? 'Show less <span aria-hidden="true">&uarr;</span>'
+                        : 'Show all ' + total + ' <span aria-hidden="true">&darr;</span>';
+  }
+  btn.addEventListener("click", function () {
+    if (extra.hasAttribute("hidden")) extra.removeAttribute("hidden");
+    else extra.setAttribute("hidden", "");
+    render();
+  });
+  render();
 })();

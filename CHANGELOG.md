@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-28 — Build log expander + faster typewriter
+
+- Build log now shows the latest 4 entries with a "Show all N" ghost button that expands the rest with a staggered fade-in (frozen under prefers-reduced-motion).
+- Typewriter sped up: quicker typing/deleting and shorter pauses between words.
 ## 2026-09-28 — Branded social cards (lab direction C)
 
 - Real 1200×630 OG images generated from the actual fleet PWA icons (Direction C, "the fleet"): og-home.png ("ScribNet — Building AI in Public") and og-apps.png ("Ten apps. One tap.").
