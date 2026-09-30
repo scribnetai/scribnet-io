@@ -137,3 +137,8 @@
 
 - **New site top navigation on sub-pages.** Replaced the `← scribnet.io` backlink on apps, podcast, uses, and homelab with a proper nav bar: gradient "S" brand badge linking home plus pill links to Apps / Podcast / Uses / Homelab, with the current page marked (`aria-current`). Brand text collapses to the badge alone on narrow screens. Also removed the redundant decorative "scribnet.io" hero pill on apps and podcast — the nav now owns the brand, so the top of the page isn't saying the same thing twice.
 - Stylesheet cache-buster bumped to `styles.css?v=nav2` so the new top-nav CSS reaches cached browsers (the nav markup shipped before the CSS in some caches).
+
+## 2026-09-29 — Instagram link added to site footer
+
+- Added an Instagram link (@scribnet.ai) next to the GitHub link in the footer on every page that has one, reusing the same pill style. The podcast episode builder was patched so future episodes include it too.
+
