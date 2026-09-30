@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-30 — Lab page: 5 new musefm.lol teardown demos
+
+- Added demos 10-14 to the unlinked visual lab, trialing patterns from the musefm.lol teardown: (10) /links page mockup — one-page link-in-bio hub for the social bio; (11) homepage hero direction mock with a podcast now-playing card and working play/pause toggle (visual only); (12) kicker/eyebrow label before-after comparison for section headers; (13) app tiles with job-to-be-done sub-captions; (14) native <details> FAQ accordion with zero JS.
+- Lede updated: nine live demos → fourteen; borrowed-patterns section now carries nine patterns.
+- Generator change (build-lab-page.py): new CSS/JS blocks for demos 10-14, so future regenerations keep them.
+
 ## 2026-09-30 — Prompts page: 3 new workflow prompts
 
 - Added Homelab Change Planner (homelab, planning, ops): plans any homelab change with a step-by-step runbook, a verification checkpoint and rollback path for every state-changing step.

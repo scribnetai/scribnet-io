@@ -217,6 +217,84 @@
   .check-step.done h4 { text-decoration: line-through; color: var(--muted); }
   .check-step h4 { margin: 0 0 .25rem; font-size: .98rem; font-weight: 600; }
   .check-step p { margin: 0; color: var(--muted); font-size: .86rem; }
+
+  /* 10 — links page mockup */
+  .links-mock { max-width: 480px; margin: 0 auto; text-align: center; }
+  .links-mock .avatar-badge { width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(120deg, var(--violet), var(--cyan));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.9rem; font-weight: 800; color: #0b0b14; margin: 0 auto .8rem; }
+  .links-mock h4 { margin: 0 0 .2rem; font-size: 1.2rem; }
+  .links-mock .handle { color: var(--muted); font-size: .88rem; margin: 0 0 1.4rem; }
+  .link-row { display: flex; align-items: center; gap: .9rem; border: 1px solid var(--border);
+    border-radius: 14px; padding: .9rem 1.1rem; margin-bottom: .7rem; text-align: left;
+    background: rgba(255,255,255,.025); text-decoration: none; color: var(--text);
+    transition: border-color .25s ease, transform .25s ease; }
+  .link-row:hover { border-color: rgba(124,108,255,.55); transform: translateY(-2px); }
+  .link-row .li { width: 2.2rem; height: 2.2rem; border-radius: 10px; flex-shrink: 0;
+    background: linear-gradient(120deg, rgba(124,108,255,.28), rgba(77,225,255,.28));
+    border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: .95rem; color: var(--text); }
+  .link-row .lt b { display: block; font-size: .98rem; font-weight: 600; }
+  .link-row .lt i { font-style: normal; color: var(--muted); font-size: .82rem; }
+  .link-row .arrow { margin-left: auto; color: var(--muted); }
+
+  /* 11 — hero with live demo */
+  .hero-mock { display: grid; grid-template-columns: 1.1fr .9fr; gap: 2rem; align-items: center; }
+  @media (max-width: 700px) { .hero-mock { grid-template-columns: 1fr; } }
+  .hero-mock h4 { font-size: clamp(1.7rem, 4vw, 2.4rem); letter-spacing: -0.02em;
+    margin: 0 0 .6rem; line-height: 1.15; }
+  .hero-mock .sub { color: var(--muted); margin: 0; font-size: .95rem; }
+  .now-playing { border: 1px solid var(--border); border-radius: 16px; padding: 1.1rem 1.2rem;
+    background: rgba(0,0,0,.3); display: flex; gap: 1rem; align-items: center; }
+  .now-playing .art { width: 64px; height: 64px; border-radius: 12px; flex-shrink: 0;
+    background: radial-gradient(120% 140% at 20% 10%, #2a2350 0%, #14121f 55%, #0a0a12 100%);
+    border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+    font-size: .95rem; font-weight: 800; letter-spacing: .08em; color: var(--cyan); }
+  .now-playing .np-meta { min-width: 0; flex: 1; }
+  .now-playing .np-meta .k { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cyan); font-weight: 700; margin: 0 0 .2rem; }
+  .now-playing .np-meta h5 { margin: 0 0 .1rem; font-size: .95rem; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; }
+  .now-playing .np-meta p { margin: 0; color: var(--muted); font-size: .8rem; }
+  .play-btn { width: 52px; height: 52px; border-radius: 50%; border: none; cursor: pointer;
+    background: linear-gradient(120deg, var(--violet), var(--cyan)); color: #0b0b14;
+    font-size: 1.1rem; margin-left: auto; flex-shrink: 0; display: flex;
+    align-items: center; justify-content: center; padding-left: .2rem; }
+  .play-btn.playing { animation: eq-pulse 1.2s ease-in-out infinite; }
+  @keyframes eq-pulse { 50% { transform: scale(1.08); } }
+  @media (prefers-reduced-motion: reduce) { .play-btn.playing { animation: none; } }
+
+  /* 12 — kicker before/after */
+  .kick-demo { border: 1px dashed var(--border); border-radius: 12px; padding: 1.2rem 1.3rem;
+    margin-bottom: 1rem; background: rgba(0,0,0,.18); }
+  .kick-demo .plain { margin: 0; font-size: 1.6rem; }
+  .kick-label { font-size: 12px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--cyan); margin: 0 0 .35rem; }
+  .kick-demo .tight { margin: 0; font-size: 1.6rem; letter-spacing: -0.02em; }
+
+  /* 13 — app tiles with job sub-captions */
+  .app-tile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .app-tile { border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.15rem;
+    background: rgba(255,255,255,.025); transition: transform .25s ease, border-color .25s ease; }
+  .app-tile:hover { transform: translateY(-3px); border-color: rgba(124,108,255,.5); }
+  .app-tile .ab { width: 2.2rem; height: 2.2rem; border-radius: 10px; display: flex;
+    align-items: center; justify-content: center; font-weight: 800; margin-bottom: .6rem;
+    background: linear-gradient(120deg, rgba(124,108,255,.28), rgba(77,225,255,.28));
+    border: 1px solid var(--border); }
+  .app-tile h4 { margin: 0 0 .25rem; font-size: 1rem; }
+  .app-tile .job { margin: 0; color: var(--muted); font-size: .85rem; }
+
+  /* 14 — native details FAQ */
+  .faq details { border: 1px solid var(--border); border-radius: 12px; margin-bottom: .7rem;
+    background: rgba(0,0,0,.2); overflow: hidden; }
+  .faq summary { padding: .95rem 1.1rem; cursor: pointer; font-weight: 600; font-size: .95rem;
+    list-style: none; display: flex; align-items: center; gap: .6rem; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::before { content: "+"; color: var(--cyan); font-weight: 800; font-size: 1.1rem; }
+  .faq details[open] summary::before { content: "2"; }
+  .faq details[open] summary { border-bottom: 1px solid var(--border); }
+  .faq details p { padding: .9rem 1.1rem; margin: 0; color: var(--muted); font-size: .9rem; }
 </style>
 
 </head>
@@ -227,7 +305,7 @@
   <p><span class="pill">Unlinked &middot; playground</span></p>
   <p class="eyebrow">Visual lab</p>
   <h1>Ideas, <span class="grad">live.</span></h1>
-  <p class="lede">Nine live demos below — five visual directions, plus four borrowed patterns on trial. Poke at them, then tell me which ones to ship to the actual pages.</p>
+  <p class="lede">Fourteen live demos below — five visual directions, plus nine borrowed patterns on trial. Poke at them, then tell me which ones to ship to the actual pages.</p>
 
   <section class="lab-demo reveal">
     <h3>1. Site-wide cursor glow</h3>
@@ -313,7 +391,7 @@
   <div class="borrow-div">
     <p class="eyebrow">Borrowed ideas</p>
     <h2>Steal-worthy patterns, <span class="grad">on trial.</span></h2>
-    <p class="lede">Four borrowed patterns, rebuilt here as working demos so they can be kicked around live before anything ships to the real pages.</p>
+    <p class="lede">Nine borrowed patterns, rebuilt here as working demos so they can be kicked around live before anything ships to the real pages.</p>
 
     <section class="lab-demo reveal">
       <h3>6. Install-prompt packaging</h3>
@@ -397,6 +475,105 @@
       <label class="check-step"><input type="checkbox"><div><h4>3. Scan</h4><p>Search for network calls, credential harvesting, exfiltration patterns, obfuscated code. Run SkillSpector where it applies.</p></div></label>
       <label class="check-step"><input type="checkbox"><div><h4>4. Install</h4><p>Least privilege. Scratch or sandbox first when you can.</p></div></label>
       <label class="check-step"><input type="checkbox"><div><h4>5. Verify</h4><p>Run it and watch what it actually does. Check for unexpected network or file access.</p></div></label>
+    </section>
+
+    <section class="lab-demo reveal">
+      <h3>10. /links page — "One page, every door"</h3>
+      <p class="idea">Borrowed idea #5: a link-in-bio hub — one URL for the social bio, every property one line. Mock of what scribnet.io/links could look like.</p>
+      <div class="links-mock">
+        <div class="avatar-badge">S</div>
+        <h4>ScribNet</h4>
+        <p class="handle">Building AI in public &middot; @scribnet.ai</p>
+        <a class="link-row" href="/apps.html"><span class="li">A</span><span class="lt"><b>App Launcher</b><i>All ten apps, one page</i></span><span class="arrow">&rarr;</span></a>
+        <a class="link-row" href="/podcast.html"><span class="li">D</span><span class="lt"><b>Daily Tech News</b><i>The 8-minute AI briefing, every morning</i></span><span class="arrow">&rarr;</span></a>
+        <a class="link-row" href="/guides.html"><span class="li">Z</span><span class="lt"><b>Zero to Dangerous</b><i>Free guides: Kubernetes, Terraform, APIs, GitHub</i></span><span class="arrow">&rarr;</span></a>
+        <a class="link-row" href="/prompts.html"><span class="li">P</span><span class="lt"><b>Prompt Packs</b><i>Installable AI workflows, copy-paste ready</i></span><span class="arrow">&rarr;</span></a>
+        <a class="link-row" href="#"><span class="li">I</span><span class="lt"><b>Instagram</b><i>@scribnet.ai — the face of Sparky</i></span><span class="arrow">&rarr;</span></a>
+        <a class="link-row" href="#"><span class="li">Y</span><span class="lt"><b>YouTube</b><i>ScribNet Labs</i></span><span class="arrow">&rarr;</span></a>
+        <a class="link-row" href="#"><span class="li">C</span><span class="lt"><b>Contact</b><i>Say hi</i></span><span class="arrow">&rarr;</span></a>
+      </div>
+    </section>
+
+    <section class="lab-demo reveal">
+      <h3>11. Homepage hero with a live demo</h3>
+      <p class="idea">Borrowed idea #6: dock the real product in the hero — visitors experience it instead of reading about it. Direction mock: a podcast now-playing card with a working play/pause toggle (visual only, no audio).</p>
+      <div class="hero-mock">
+        <div>
+          <p class="eyebrow">ScribNet</p>
+          <h4>Building AI in <span class="grad">public.</span></h4>
+          <p class="sub">Presales engineer by day, building with AI by night. Ten apps, a daily podcast, and the receipts — shipped in the open.</p>
+        </div>
+        <div class="now-playing">
+          <div class="art">DTN</div>
+          <div class="np-meta">
+            <p class="k">Now playing &middot; Daily Tech News</p>
+            <h5>2026-09-30: the one where agents review agents</h5>
+            <p id="np-status">Paused &middot; 0:00</p>
+          </div>
+          <button class="play-btn" id="play-btn" aria-label="Play">&#9654;</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-demo reveal">
+      <h3>12. Kicker/eyebrow labels on section headers</h3>
+      <p class="idea">Borrowed idea #7: a 12px 800-weight wide-tracked uppercase kicker above the headline — you know what section you're in before reading it. Before vs after:</p>
+      <div class="kick-demo">
+        <p class="kick-note" style="margin: 0 0 .5rem;">Before</p>
+        <h2 class="plain">Shipped this week</h2>
+      </div>
+      <div class="kick-demo">
+        <p class="kick-note" style="margin: 0 0 .5rem;">After</p>
+        <p class="kick-label">Build log</p>
+        <h2 class="tight">Shipped this week</h2>
+      </div>
+      <p class="kick-note">One CSS class, site-wide: build-log timeline, guides index, prompts page.</p>
+    </section>
+
+    <section class="lab-demo reveal">
+      <h3>13. App tiles with job-to-be-done sub-captions</h3>
+      <p class="idea">Borrowed idea #8: give every nav item a sub-caption — names are forgettable, jobs are scannable. Copy-only mock for apps.html:</p>
+      <div class="app-tile-grid">
+        <div class="app-tile">
+          <span class="ab">S</span>
+          <h4>SE Command Center</h4>
+          <p class="job">Vendor intel, deal tools, and the fleet launcher.</p>
+        </div>
+        <div class="app-tile">
+          <span class="ab">T</span>
+          <h4>TCO Calculator</h4>
+          <p class="job">Price the real cost of your stack.</p>
+        </div>
+        <div class="app-tile">
+          <span class="ab">P</span>
+          <h4>Prompts</h4>
+          <p class="job">Installable AI workflows, copy-paste ready.</p>
+        </div>
+        <div class="app-tile">
+          <span class="ab">D</span>
+          <h4>Daily Tech News</h4>
+          <p class="job">The 8-minute AI briefing, every morning.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-demo reveal">
+      <h3>14. Native &lt;details&gt; FAQ accordion</h3>
+      <p class="idea">Borrowed idea #9: native &lt;details&gt; expanders — zero JS, keyboard-accessible, animatable. Proposed for the FAQ and the prompts page "how it works" blocks. Click to expand:</p>
+      <div class="faq">
+        <details>
+          <summary>Is this affiliated with your employer?</summary>
+          <p>No — this is a personal project, built on my own time with my own gear. Nothing here represents my company.</p>
+        </details>
+        <details>
+          <summary>What does ScribNet actually do?</summary>
+          <p>Presales systems engineering by day; building with AI by night. This site is the public workshop: ten apps, a daily podcast, free guides, and every change shipped in the open.</p>
+        </details>
+        <details>
+          <summary>Why no service worker?</summary>
+          <p>Another cache layer would serve stale builds after deploys — the same footgun that bit us once already. iOS "Add to Home Screen" doesn't need one, so the sites stay installable without it.</p>
+        </details>
+      </div>
     </section>
   </div>
 </main>
@@ -651,6 +828,21 @@ SAFETY CHECK — before the first run, confirm:
   if (stepBoxes.length) {
     stepBoxes.forEach(function (cb) { cb.addEventListener("change", updateCheck); });
     updateCheck();
+  }
+
+  // 11 — hero mock play/pause (visual only, no audio)
+  var playBtn = document.getElementById("play-btn");
+  var npStatus = document.getElementById("np-status");
+  if (playBtn) {
+    var playing = false;
+    playBtn.addEventListener("click", function () {
+      playing = !playing;
+      playBtn.classList.toggle("playing", playing);
+      playBtn.innerHTML = playing ? "&#10074;&#10074;" : "&#9654;";
+      playBtn.style.paddingLeft = playing ? "0" : ".2rem";
+      playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
+      if (npStatus) npStatus.textContent = playing ? "Playing · live mock" : "Paused · 0:00";
+    });
   }
 })();
 </script>
