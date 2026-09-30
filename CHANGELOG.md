@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-30 — Prompts page: 3 new workflow prompts
+
+- Added Homelab Change Planner (homelab, planning, ops): plans any homelab change with a step-by-step runbook, a verification checkpoint and rollback path for every state-changing step.
+- Added Deep-Dive Tutor (learning, coaching, research): adaptive tutor that gauges your starting point, explains in layers with a comprehension check after each one, and never moves on until you get it.
+- Added Big Purchase Analyzer (finance, planning, research): stress-tests a planned purchase with total-cost-of-ownership math and a buy/wait/skip verdict, including what would change it.
+- Page now carries 6 workflow prompts; tag filter chips and search pick up the new tags automatically.
+
 ## 2026-09-29 — Prompts page: tag chips now show counts
 
 - Filter chips now read like `news (4)` — each tag's chip shows how many workflows carry it, so tag coverage is comparable at a glance. `All` shows the total workflow count.

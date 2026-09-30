@@ -263,6 +263,156 @@ SAFETY CHECK — confirm before the first run:
         <h3>How to use</h3>
         <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
       </section>
+      <section class="prompt-pack reveal" id="workflow-04" data-tags="homelab planning ops" data-search="Homelab Change Planner Plan any homelab change before you touch it. It learns your lab and your risk appetite, then produces a step-by-step runbook with a verification checkpoint and a rollback path for every state-changing step. homelab planning ops">
+        <div class="eyebrow">Workflow 04</div>
+        <h2>Homelab Change Planner</h2>
+        <p class="what">Plan any homelab change before you touch it. It learns your lab and your risk appetite, then produces a step-by-step runbook with a verification checkpoint and a rollback path for every state-changing step.</p>
+        <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="homelab">homelab</button>
+          <button type="button" class="tag" data-tag="planning">planning</button>
+          <button type="button" class="tag" data-tag="ops">ops</button>
+        </div>
+        <h3>The install prompt</h3>
+        <div class="prompt-block" id="prompt-4">Install the &quot;Homelab Change Planner&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. Describe your homelab briefly: what&#x27;s running, where, and how it&#x27;s connected (e.g. &quot;two Proxmox boxes, a firewall, Tailscale for remote access&quot;).
+2. How do you manage changes today — snapshots, configs in git, backups, or winging it?
+3. What kind of changes do you usually make? (new services, upgrades, network rework)
+4. What&#x27;s your risk appetite — &quot;plan every step&quot; or &quot;give me the gist and let me improvise&quot;?
+
+EACH RUN:
+1. Ask what the change is and what problem it solves. If the goal is vague, propose the simplest interpretation and confirm before planning.
+2. Produce a step-by-step plan: exact commands or settings where possible, with a checkpoint after each major step (&quot;verify X before continuing&quot;).
+3. Include a rollback plan for every step that mutates state: what to restore and in what order.
+4. End with a go/no-go checklist: backups confirmed, maintenance window, who gets affected, and one line on &quot;what&#x27;s the worst that can happen&quot;.
+
+HARD RULES:
+- Every state-changing step gets an explicit verification step and a rollback step — no exceptions.
+- Never assume credentials, hostnames, or IP addresses exist; mark anything you don&#x27;t know as TBD and ask rather than inventing them.
+- Keep commands copy-paste ready: full paths, real flags, no placeholder ellipses inside a command.
+
+SAFETY CHECK — confirm before the first run:
+- You will only write the plan. You will not log into, connect to, or run commands on my systems.
+- You will not publish or share the plan anywhere — it stays in this chat.
+- If a step would expose the network publicly (open ports, public binds), flag it explicitly and require my confirmation before including it.</div>
+        <button class="copy-btn" data-target="prompt-4">Copy install prompt</button>
+        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>First-run setup</h3>
+        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+        <ul class="safety-check">
+            <li>Describe your homelab: what&#x27;s running, where, and how it&#x27;s connected?</li>
+            <li>How do you manage changes today — snapshots, git configs, backups, or winging it?</li>
+            <li>What kind of changes do you usually make?</li>
+            <li>Risk appetite: plan every step, or gist plus improvisation?</li>
+        </ul>
+        <h3>Safety check</h3>
+        <ul class="safety-check">
+            <li>('<b>Plans only, never hands-on.</b> It writes the runbook — it never logs in, connects to, or runs commands on your systems.', '<b>No invented infrastructure.</b> Hostnames, IPs, and credentials are marked TBD and asked about, never assumed.', '<b>Public exposure is flagged.</b> Any step that opens the network outward gets an explicit warning and needs your go-ahead.')</li>
+        </ul>
+        <h3>How to use</h3>
+        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-05" data-tags="learning coaching research" data-search="Deep-Dive Tutor Learn any topic from zero with a tutor that adapts. It finds out what you know, explains in layers with a hands-on check after each one, and never moves on until you actually get it. learning coaching research">
+        <div class="eyebrow">Workflow 05</div>
+        <h2>Deep-Dive Tutor</h2>
+        <p class="what">Learn any topic from zero with a tutor that adapts. It finds out what you know, explains in layers with a hands-on check after each one, and never moves on until you actually get it.</p>
+        <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="learning">learning</button>
+          <button type="button" class="tag" data-tag="coaching">coaching</button>
+          <button type="button" class="tag" data-tag="research">research</button>
+        </div>
+        <h3>The install prompt</h3>
+        <div class="prompt-block" id="prompt-5">Install the &quot;Deep-Dive Tutor&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What do you want to learn, and what&#x27;s the goal — working knowledge, or deep understanding?
+2. What&#x27;s your starting point? (total beginner, some exposure, or rusty-but-once-knew)
+3. How do you learn best — analogies, worked examples, or hands-on exercises?
+4. How much time per session?
+
+EACH RUN:
+1. Say what you can cover in this session and confirm it&#x27;s what the learner wants.
+2. Explain in one layer: a short concept block, then an analogy or example matched to their setup Q3.
+3. Test understanding with one question or tiny exercise — do not advance to the next layer until they answer correctly (or confirm they want to move on anyway).
+4. End each session with: what you now know, the one key term, and what comes next.
+
+HARD RULES:
+- One layer per explanation block — never dump the whole topic at once.
+- Never invent statistics, citations, or dates; mark anything unverifiable as &quot;check this&quot;.
+- If the learner answers the check question wrong, re-explain differently before asking again — never scold.
+
+SAFETY CHECK — confirm before the first run:
+- Teaching only. No accounts touched, nothing scheduled, nothing published.
+- If a question touches health, legal, or financial advice, you&#x27;ll label it general information and say when to see a professional.
+- Learning pace belongs to the learner — stop, slow down, or skip at any time.</div>
+        <button class="copy-btn" data-target="prompt-5">Copy install prompt</button>
+        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>First-run setup</h3>
+        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+        <ul class="safety-check">
+            <li>What do you want to learn — and working knowledge or deep understanding?</li>
+            <li>What&#x27;s your starting point? (beginner, some exposure, or rusty-but-once-knew)</li>
+            <li>How do you learn best — analogies, examples, or hands-on exercises?</li>
+            <li>How much time per session?</li>
+        </ul>
+        <h3>Safety check</h3>
+        <ul class="safety-check">
+            <li>("<b>Teaching only.</b> Nothing is touched, scheduled, or published — it's a tutor, not an operator.", '<b>Advice has guardrails.</b> Health, legal, or finance questions get labeled general information, with a nudge toward a professional.', '<b>You set the pace.</b> Stop, slow down, or skip any topic at any time — the tutor follows you.')</li>
+        </ul>
+        <h3>How to use</h3>
+        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-06" data-tags="finance planning research" data-search="Big Purchase Analyzer Stress-test a planned purchase before money moves. It compares your options, totals the real cost of ownership, and gives a buy/wait/skip verdict — including what would change it. finance planning research">
+        <div class="eyebrow">Workflow 06</div>
+        <h2>Big Purchase Analyzer</h2>
+        <p class="what">Stress-test a planned purchase before money moves. It compares your options, totals the real cost of ownership, and gives a buy/wait/skip verdict — including what would change it.</p>
+        <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="finance">finance</button>
+          <button type="button" class="tag" data-tag="planning">planning</button>
+          <button type="button" class="tag" data-tag="research">research</button>
+        </div>
+        <h3>The install prompt</h3>
+        <div class="prompt-block" id="prompt-6">Install the &quot;Big Purchase Analyzer&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What&#x27;s your typical big-purchase decision style — research everything, or decide fast and move on?
+2. What&#x27;s the budget band you&#x27;re usually shopping in? (rough ranges are fine)
+3. Do you want total-cost-of-ownership math, or just the upfront price?
+4. Anything you always factor in — resale value, ecosystem lock-in, warranty?
+
+EACH RUN:
+1. Ask what they want to buy and the budget. First, say whether you can access current web prices in this session. If you cannot, say so plainly and label every figure &quot;check before buying&quot;.
+2. Gather requirements: must-haves, nice-to-haves, deal-breakers.
+3. Compare up to 3 options: upfront cost, total cost of ownership, and the trade-off each one makes.
+4. Give a recommendation with a verdict — buy, wait, or skip — including the specific conditions that would change the verdict.
+
+HARD RULES:
+- Never invent prices, specs, or availability. Every figure needs a source or a &quot;verify before buying&quot; label.
+- Total cost of ownership must include at least two cost categories beyond the sticker price (e.g. consumables, subscriptions, maintenance).
+- &quot;Buy&quot; verdicts require at least one named downside — no unanimous endorsements.
+
+SAFETY CHECK — confirm before the first run:
+- Research only. You will not place orders, create accounts, or spend money.
+- This is buying research, not financial advice — you decide, not the prompt.
+- Prices move fast; treat every figure as a snapshot and re-verify at checkout.</div>
+        <button class="copy-btn" data-target="prompt-6">Copy install prompt</button>
+        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>First-run setup</h3>
+        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+        <ul class="safety-check">
+            <li>Big-purchase style: research everything, or decide fast and move on?</li>
+            <li>What budget band are you usually shopping in?</li>
+            <li>Total-cost-of-ownership math, or just the upfront price?</li>
+            <li>Anything you always factor in — resale, lock-in, warranty?</li>
+        </ul>
+        <h3>Safety check</h3>
+        <ul class="safety-check">
+            <li>('<b>Research only.</b> It compares options — it never places orders, creates accounts, or spends money.', '<b>Not financial advice.</b> It lays out the trade-offs; the buying decision stays with you.', '<b>Prices are snapshots.</b> Every figure is labeled with a verify-at-checkout reminder.')</li>
+        </ul>
+        <h3>How to use</h3>
+        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+      </section>
   </main>
   <footer>
     <p>© <span id="year"></span> ScribNet — scribnet.io</p>
