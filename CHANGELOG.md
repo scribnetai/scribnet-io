@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-01 — Prompts page: safety-check rendering fix
+
+- Fixed safety-check bullets rendering as a Python tuple repr (e.g. `('**...**', ...)`) on every workflow card. Root cause was in the page builder: `WORKFLOWS` stores safety as a list holding one 3-tuple while `pack()` iterated the outer list. The builder now flattens the inner tuple before rendering.
+
 ## 2026-09-30 — Lab page: 5 new musefm.lol teardown demos
 
 - Added demos 10-14 to the unlinked visual lab, trialing patterns from the musefm.lol teardown: (10) /links page mockup — one-page link-in-bio hub for the social bio; (11) homepage hero direction mock with a podcast now-playing card and working play/pause toggle (visual only); (12) kicker/eyebrow label before-after comparison for section headers; (13) app tiles with job-to-be-done sub-captions; (14) native <details> FAQ accordion with zero JS.
