@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-01 — Prompts page: 2 new workflow prompts (07–08)
+
+- Published two approved prompt-forge drafts: (07) Job Offer Scorecard — compare offers on one scoreboard with year-one/year-four math and labeled assumptions; (08) Code Review Buddy — risk-ranked diff review that flags secrets without quoting them. Both merged into the page builder and deployed.
+
 ## 2026-10-01 — Prompts page: safety-check rendering fix
 
 - Fixed safety-check bullets rendering as a Python tuple repr (e.g. `('**...**', ...)`) on every workflow card. Root cause was in the page builder: `WORKFLOWS` stores safety as a list holding one 3-tuple while `pack()` iterated the outer list. The builder now flattens the inner tuple before rendering.

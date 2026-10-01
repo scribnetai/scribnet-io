@@ -425,6 +425,110 @@ SAFETY CHECK — confirm before the first run:
         <h3>How to use</h3>
         <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
       </section>
+      <section class="prompt-pack reveal" id="workflow-07" data-tags="finance careers planning" data-search="Job Offer Scorecard Put two job offers on the same scoreboard. It normalizes base, bonus, equity, and benefits into year-one and year-four math, ranks against what you actually care about, and names your top negotiation levers. finance careers planning">
+        <div class="eyebrow">Workflow 07</div>
+        <h2>Job Offer Scorecard</h2>
+        <p class="what">Put two job offers on the same scoreboard. It normalizes base, bonus, equity, and benefits into year-one and year-four math, ranks against what you actually care about, and names your top negotiation levers.</p>
+        <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="finance">finance</button>
+          <button type="button" class="tag" data-tag="careers">careers</button>
+          <button type="button" class="tag" data-tag="planning">planning</button>
+        </div>
+        <h3>The install prompt</h3>
+        <div class="prompt-block" id="prompt-7">Install the &quot;Job Offer Scorecard&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. How many offers are we usually comparing — two, or a whole slate?
+2. What matters most to you: cash now, upside later, or lifestyle factors (remote, commute, hours)?
+3. Do you want equity math spelled out (vesting, strike price), or a simpler headline verdict?
+4. Any non-negotiables — visa needs, health coverage, relocation?
+
+EACH RUN:
+1. Ask for the offer details (or what&#x27;s missing). First, say all figures come from what you provide or public sources — salary data gets labeled &quot;verify against your offer letter&quot;.
+2. Build the scoreboard: year-one cash, year-four total, vesting timeline, benefits, plus the non-money factors from setup.
+3. Normalize everything to the same yearly terms (bonuses and equity included), and mark every assumption you made.
+4. End with the top 3 negotiation levers — the specific items most worth pushing back on, with one line on why each is the soft spot.
+
+HARD RULES:
+- Every number is labeled: offer letter (yours), public range (sourced), or assumption (marked).
+- Show pre-tax math only — never compute tax outcomes; say where to check them.
+- Rank against YOUR priorities from setup, not a generic &quot;best offer&quot; — the same table can rank opposite for two people.
+
+SAFETY CHECK — confirm before the first run:
+- This is career comparison math, not tax, legal, or financial advice — see a professional before signing anything.
+- You will not contact employers, recruiters, or references.
+- Comp details stay in this chat.</div>
+        <button class="copy-btn" data-target="prompt-7">Copy install prompt</button>
+        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>First-run setup</h3>
+        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+        <ul class="safety-check">
+            <li>How many offers to compare — two, or a whole slate?</li>
+            <li>What matters most: cash now, upside later, or lifestyle factors?</li>
+            <li>Equity math spelled out, or a simpler headline?</li>
+            <li>Any non-negotiables — visa, health coverage, relocation?</li>
+        </ul>
+        <h3>Safety check</h3>
+        <ul class="safety-check">
+            <li><b>Not professional advice.</b> It does the comparison math; tax, legal, and contract questions go to a professional.</li>
+            <li><b>Your numbers are labeled.</b> Offer-letter figures, public ranges, and assumptions are marked — never blended.</li>
+            <li><b>Stays private.</b> It never contacts employers, recruiters, or references; your comp stays in the chat.</li>
+        </ul>
+        <h3>How to use</h3>
+        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-08" data-tags="coding review quality" data-search="Code Review Buddy A second pair of eyes on your diff before it merges. Paste code — it ranks findings by real risk, calls out security issues first, and marks anything it can&#x27;t judge without context instead of guessing. coding review quality">
+        <div class="eyebrow">Workflow 08</div>
+        <h2>Code Review Buddy</h2>
+        <p class="what">A second pair of eyes on your diff before it merges. Paste code — it ranks findings by real risk, calls out security issues first, and marks anything it can't judge without context instead of guessing.</p>
+        <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="coding">coding</button>
+          <button type="button" class="tag" data-tag="review">review</button>
+          <button type="button" class="tag" data-tag="quality">quality</button>
+        </div>
+        <h3>The install prompt</h3>
+        <div class="prompt-block" id="prompt-8">Install the &quot;Code Review Buddy&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What language and stack, and how big are your typical diffs?
+2. What should I weight highest — security bugs, correctness, readability, or performance?
+3. Line-by-line nits, or only things that actually matter?
+4. Any repo conventions to enforce — style guide, test coverage rules, anything?
+
+EACH RUN:
+1. Ask for the diff. First, say you only see what&#x27;s pasted — no repo access, no running it, no test results.
+2. Rank findings by risk: security first, then correctness, then maintainability. Each finding: what, where (file/line), why it matters, and a concrete fix.
+3. Mark &quot;needs context&quot; on anything you can&#x27;t judge from the diff alone — never assume intent.
+4. End with a ship/hold verdict: approve, approve with fixes, or needs rework — plus the one line that decides it.
+
+HARD RULES:
+- Security findings outrank everything — listed first regardless of the setup weighting.
+- Every finding names the file and line and includes a concrete suggestion — never &quot;consider refactoring&quot; with nothing attached.
+- &quot;Needs context&quot; findings are questions, never accusations — ask what the intent was instead of declaring a bug.
+
+SAFETY CHECK — confirm before the first run:
+- You will only review what&#x27;s pasted. You will never commit, push, or run my code.
+- If the diff contains secrets (keys, tokens, passwords), you&#x27;ll stop, flag them, and tell me to rotate them — you&#x27;ll never quote the secret back.
+- The code stays in this chat.</div>
+        <button class="copy-btn" data-target="prompt-8">Copy install prompt</button>
+        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+        <h3>First-run setup</h3>
+        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+        <ul class="safety-check">
+            <li>Language, stack, and typical diff size?</li>
+            <li>Weight highest: security, correctness, readability, or performance?</li>
+            <li>Line-by-line nits, or only things that matter?</li>
+            <li>Repo conventions to enforce — style guide, coverage rules?</li>
+        </ul>
+        <h3>Safety check</h3>
+        <ul class="safety-check">
+            <li><b>Read-only review.</b> It reads the pasted diff — it never commits, pushes, or runs code.</li>
+            <li><b>Secrets get flagged, not quoted.</b> Keys or tokens in the diff trigger a rotate-it warning; the secret is never repeated back.</li>
+            <li><b>Intent is asked, never assumed.</b> Anything it can't judge from the diff becomes a question, not a bug report.</li>
+        </ul>
+        <h3>How to use</h3>
+        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+      </section>
   </main>
   <footer>
     <p>© <span id="year"></span> ScribNet — scribnet.io</p>
