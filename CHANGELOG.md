@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-02 — Prompts page overhaul: accordion cards, category tabs, new-this-week strip, deep links, copy analytics
+
+- Accordion pack cards: one open at a time, collapsed by default, so the 10-pack page scans instead of scrolling forever.
+- Coarse category tabs above search (Work / Money / Learn / Create / Homelab / Life), generated from each pack's category — combine with search and tag chips.
+- "New this week" strip under the hero: compact cards for the 4 most-recently-added packs (auto-hides once the newest pack is >21 days old).
+- Per-pack deep links: 🔗 button copies the full URL with #workflow-NN; opening one auto-expands that pack.
+- Umami `prompt-copy` custom event on every install-prompt copy, so future pack ordering can follow actual installs instead of guesses.
+
 ## 2026-10-02 — Prompts page: 2 new workflow prompts (09–10)
 
 - Published two approved prompt-forge drafts: (09) Weekly Review Ritual — Friday loop-closing review that triages the week into done/open-loops/noise and produces a ranked next-week plan; (10) Claim Checker — graded true-to-false verdicts on claims against independent sources, with explicit watch-outs on what's missing. Both merged into the page builder and deployed.

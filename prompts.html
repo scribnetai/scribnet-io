@@ -87,7 +87,37 @@
 .tag{background:rgba(124,92,255,.14);border:1px solid rgba(124,92,255,.4);color:#cfc2ff;border-radius:999px;padding:.22rem .7rem;font-size:.78rem;cursor:pointer;font-family:inherit}
 .tag:hover{background:rgba(124,92,255,.28)}
 .prompt-pack[hidden]{display:none}
-@media(max-width:640px){.pf-search{max-width:none}}
+/* Accordion: the section is now just a wrapper; the card chrome lives on the
+   header button + collapsible body so 10 expanded packs stop owning the page. */
+.prompt-pack{background:none;border:0;padding:0;margin:0 0 1rem}
+.pack-head{display:flex;align-items:stretch;gap:.6rem}
+.pack-toggle{flex:1;min-width:0;display:flex;align-items:center;gap:.9rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:1rem;padding:.95rem 1.15rem;cursor:pointer;color:inherit;font:inherit;text-align:left}
+.pack-toggle:hover{border-color:rgba(124,92,255,.55)}
+.pack-toggle[aria-expanded="true"]{border-radius:1rem 1rem 0 0;border-bottom-color:transparent;background:rgba(124,92,255,.07)}
+.ph-num{font-size:1.5rem;font-weight:800;line-height:1;background:linear-gradient(135deg,#7c5cff,#38e1ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ph-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:.15rem}
+.ph-eyebrow{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.ph-title{font-size:1.1rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph-date{font-size:.78rem;color:rgba(255,255,255,.45);white-space:nowrap}
+.ph-chev{color:rgba(255,255,255,.6);transition:transform .2s;font-size:.9rem}
+.pack-toggle[aria-expanded="true"] .ph-chev{transform:rotate(180deg)}
+.ph-link{flex:none;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:.8rem;color:inherit;cursor:pointer;padding:0 .8rem;font-size:.95rem;font-family:inherit}
+.ph-link:hover{border-color:rgba(255,255,255,.4)}
+.pack-body{border:1px solid rgba(255,255,255,.1);border-top:0;border-radius:0 0 1rem 1rem;padding:1.2rem 1.4rem 1.4rem;background:rgba(255,255,255,.015)}
+.pack-body[hidden]{display:none}
+/* New-this-week strip */
+.new-strip{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin:1.6rem 0 .4rem}
+.ns-label{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:#38e1ff;font-weight:700;margin-right:.3rem}
+.ns-card{display:flex;align-items:center;gap:.55rem;background:rgba(56,225,255,.06);border:1px solid rgba(56,225,255,.3);border-radius:.8rem;padding:.5rem .9rem;color:inherit;text-decoration:none;font-size:.85rem}
+.ns-card:hover{border-color:rgba(56,225,255,.7)}
+.ns-num{font-weight:800;color:#38e1ff}
+.ns-date{color:rgba(255,255,255,.45);font-size:.78rem}
+/* Category tabs (coarse filter above search) */
+.pf-cats{display:flex;flex-wrap:wrap;gap:.5rem}
+.pf-cat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);color:inherit;border-radius:999px;padding:.35rem .9rem;font-size:.85rem;cursor:pointer;font-family:inherit}
+.pf-cat:hover{border-color:rgba(255,255,255,.35)}
+.pf-cat.on{background:linear-gradient(135deg,#7c5cff,#38e1ff);border-color:transparent;color:#060913;font-weight:600}
+@media(max-width:640px){.pf-search{max-width:none}.ph-date{display:none}}
 </style>
 
 </head>
@@ -111,7 +141,16 @@
     <p class="lede">Each prompt below installs a real workflow into any AI assistant — no accounts, no API keys, no setup docs. Every prompt opens with a short setup interview (up to five questions, one at a time), so the workflow configures itself to <em>your</em> world: your topics, your show, your taste in music. Every prompt is tested from a fresh chat, and every prompt ships with its safety checklist, stated up front.</p>
     <p class="section-note">The standard is simple — tested prompts, setup that adapts to you, and safety checks that are real.</p>
 
+    <div class="new-strip" aria-label="New workflows">
+      <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-10"><span class="ns-num">10</span><span class="ns-title">Claim Checker</span><span class="ns-date">Oct 2</span></a>
+      <a class="ns-card" href="#workflow-09"><span class="ns-num">09</span><span class="ns-title">Weekly Review Ritual</span><span class="ns-date">Oct 2</span></a>
+      <a class="ns-card" href="#workflow-08"><span class="ns-num">08</span><span class="ns-title">Code Review Buddy</span><span class="ns-date">Oct 1</span></a>
+      <a class="ns-card" href="#workflow-07"><span class="ns-num">07</span><span class="ns-title">Job Offer Scorecard</span><span class="ns-date">Oct 1</span></a>
+    </div>
+
     <div class="prompt-filters">
+      <div class="pf-cats" id="cat-tabs" role="group" aria-label="Filter by category"></div>
       <label class="pf-search" for="prompt-search">
         <span aria-hidden="true">&#x1F50D;</span>
         <input id="prompt-search" type="search" placeholder="Search workflows&hellip;" autocomplete="off" aria-label="Search workflows">
@@ -121,17 +160,28 @@
     </div>
     <p class="pf-empty" id="prompt-empty" hidden>No workflows match &mdash; try a different search or tag.</p>
 
-      <section class="prompt-pack reveal" id="workflow-01" data-tags="news research productivity" data-search="Daily Briefing Your morning briefing, on your beat. Tell it your topics, companies, or industries — it researches the last 24 hours, keeps only what you can actually use, and flags what&#x27;s unverified. news research productivity">
-        <div class="eyebrow">Workflow 01</div>
-        <h2>Daily Briefing</h2>
-        <p class="what">Your morning briefing, on your beat. Tell it your topics, companies, or industries — it researches the last 24 hours, keeps only what you can actually use, and flags what's unverified.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-01" data-cat="Work" data-tags="news research productivity" data-search="Daily Briefing Your morning briefing, on your beat. Tell it your topics, companies, or industries — it researches the last 24 hours, keeps only what you can actually use, and flags what&#x27;s unverified. news research productivity">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-01">
+            <span class="ph-num">01</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 01 &middot; Work</span>
+              <span class="ph-title">Daily Briefing</span>
+            </span>
+            <span class="ph-date" title="Added 2026-09-29">Sep 29</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-01" title="Copy link to this workflow" aria-label="Copy link to workflow 01">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-01" hidden>
+          <p class="what">Your morning briefing, on your beat. Tell it your topics, companies, or industries — it researches the last 24 hours, keeps only what you can actually use, and flags what's unverified.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="news">news</button>
           <button type="button" class="tag" data-tag="research">research</button>
           <button type="button" class="tag" data-tag="productivity">productivity</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-1">Install the &quot;Daily Briefing&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-1">Install the &quot;Daily Briefing&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. What should the briefing cover? (topics, companies, or industries — up to 7; e.g. &quot;electric vehicles, Tesla, Rivian, battery tech&quot;)
@@ -153,36 +203,48 @@ HARD RULES:
 SAFETY CHECK — confirm before the first run:
 - You will only read public sources. You will not touch my accounts, inbox, or files.
 - If any step needs credentials or private data, stop and ask me first.</div>
-        <button class="copy-btn" data-target="prompt-1">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-1">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>What should the briefing cover? (topics, companies, industries — up to 7)</li>
             <li>What do you do, and what makes a story useful to you?</li>
             <li>A 5-minute scan or a 15-minute read?</li>
             <li>Anything to always leave out?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Public sources only.</b> It reads the open web — never your accounts, inbox, or files.</li>
             <li><b>Stop on credentials.</b> Anything needing a login or private data stops and asks you first.</li>
             <li><b>NOT FOUND over invented.</b> It marks what it can't verify instead of guessing, and every briefing ends with an honest-caveats block.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
-      <section class="prompt-pack reveal" id="workflow-02" data-tags="content writing audio" data-search="Podcast Script Studio A two-host show from yesterday&#x27;s news. You define the topic, the hosts, and their personalities — it picks the stories, writes a conversational script that actually sounds like them, and marks rumor vs confirmed. content writing audio">
-        <div class="eyebrow">Workflow 02</div>
-        <h2>Podcast Script Studio</h2>
-        <p class="what">A two-host show from yesterday's news. You define the topic, the hosts, and their personalities — it picks the stories, writes a conversational script that actually sounds like them, and marks rumor vs confirmed.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-02" data-cat="Create" data-tags="content writing audio" data-search="Podcast Script Studio A two-host show from yesterday&#x27;s news. You define the topic, the hosts, and their personalities — it picks the stories, writes a conversational script that actually sounds like them, and marks rumor vs confirmed. content writing audio">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-02">
+            <span class="ph-num">02</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 02 &middot; Create</span>
+              <span class="ph-title">Podcast Script Studio</span>
+            </span>
+            <span class="ph-date" title="Added 2026-09-29">Sep 29</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-02" title="Copy link to this workflow" aria-label="Copy link to workflow 02">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-02" hidden>
+          <p class="what">A two-host show from yesterday's news. You define the topic, the hosts, and their personalities — it picks the stories, writes a conversational script that actually sounds like them, and marks rumor vs confirmed.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="content">content</button>
           <button type="button" class="tag" data-tag="writing">writing</button>
           <button type="button" class="tag" data-tag="audio">audio</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-2">Install the &quot;Podcast Script Studio&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-2">Install the &quot;Podcast Script Studio&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. What&#x27;s the show about, and who&#x27;s listening? (topic focus + target audience)
@@ -203,36 +265,48 @@ HARD RULES:
 SAFETY CHECK — confirm before the first run:
 - Script only. You will not publish, upload, or schedule anything — I handle recording and posting.
 - If a story involves a security vulnerability, include the vendor&#x27;s patch guidance, not exploit detail.</div>
-        <button class="copy-btn" data-target="prompt-2">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-2">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>What&#x27;s the show about, and who&#x27;s listening?</li>
             <li>Who are the hosts? (two names, one-line personality each)</li>
             <li>How long is an episode?</li>
             <li>Tone guardrails — anything off-limits?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Script only, never publish.</b> It writes the script — recording, uploading, and posting stay in human hands.</li>
             <li><b>No exploit detail.</b> Vulnerability stories get the vendor's patch guidance, not how-tos.</li>
             <li><b>Fresh every run.</b> The cold open and segment order vary — no formulaic, interchangeable episodes.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
-      <section class="prompt-pack reveal" id="workflow-03" data-tags="music discovery playlists" data-search="Music Discovery New songs in your lane, on repeat. Name your reference artists or describe the sound — it hunts down tracks you haven&#x27;t heard, tells you why each fits, and what to listen for. music discovery playlists">
-        <div class="eyebrow">Workflow 03</div>
-        <h2>Music Discovery</h2>
-        <p class="what">New songs in your lane, on repeat. Name your reference artists or describe the sound — it hunts down tracks you haven't heard, tells you why each fits, and what to listen for.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-03" data-cat="Life" data-tags="music discovery playlists" data-search="Music Discovery New songs in your lane, on repeat. Name your reference artists or describe the sound — it hunts down tracks you haven&#x27;t heard, tells you why each fits, and what to listen for. music discovery playlists">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-03">
+            <span class="ph-num">03</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 03 &middot; Life</span>
+              <span class="ph-title">Music Discovery</span>
+            </span>
+            <span class="ph-date" title="Added 2026-09-29">Sep 29</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-03" title="Copy link to this workflow" aria-label="Copy link to workflow 03">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-03" hidden>
+          <p class="what">New songs in your lane, on repeat. Name your reference artists or describe the sound — it hunts down tracks you haven't heard, tells you why each fits, and what to listen for.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="music">music</button>
           <button type="button" class="tag" data-tag="discovery">discovery</button>
           <button type="button" class="tag" data-tag="playlists">playlists</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-3">Install the &quot;Music Discovery&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-3">Install the &quot;Music Discovery&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. What&#x27;s your lane? Name up to 3 reference artists, or describe the sound (e.g. &quot;pop-punk-infused metalcore, emo&quot;).
@@ -251,35 +325,47 @@ HARD RULES:
 SAFETY CHECK — confirm before the first run:
 - Recommendations only. You will not play, buy, or stream anything.
 - You will never modify any playlist — you suggest; the listener adds.</div>
-        <button class="copy-btn" data-target="prompt-3">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-3">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>What&#x27;s your lane? (up to 3 reference artists, or describe the sound)</li>
             <li>New releases, deep cuts, or both?</li>
             <li>How many picks per run?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Recommendations only.</b> It won't play, buy, or stream anything on your behalf.</li>
             <li><b>Your playlists are read-only.</b> It suggests; you add. Nothing gets modified.</li>
             <li><b>No invented tracks.</b> If it can't verify a song exists, it drops it and picks another — never pads the list.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
-      <section class="prompt-pack reveal" id="workflow-04" data-tags="homelab planning ops" data-search="Homelab Change Planner Plan any homelab change before you touch it. It learns your lab and your risk appetite, then produces a step-by-step runbook with a verification checkpoint and a rollback path for every state-changing step. homelab planning ops">
-        <div class="eyebrow">Workflow 04</div>
-        <h2>Homelab Change Planner</h2>
-        <p class="what">Plan any homelab change before you touch it. It learns your lab and your risk appetite, then produces a step-by-step runbook with a verification checkpoint and a rollback path for every state-changing step.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-04" data-cat="Homelab" data-tags="homelab planning ops" data-search="Homelab Change Planner Plan any homelab change before you touch it. It learns your lab and your risk appetite, then produces a step-by-step runbook with a verification checkpoint and a rollback path for every state-changing step. homelab planning ops">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-04">
+            <span class="ph-num">04</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 04 &middot; Homelab</span>
+              <span class="ph-title">Homelab Change Planner</span>
+            </span>
+            <span class="ph-date" title="Added 2026-09-30">Sep 30</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-04" title="Copy link to this workflow" aria-label="Copy link to workflow 04">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-04" hidden>
+          <p class="what">Plan any homelab change before you touch it. It learns your lab and your risk appetite, then produces a step-by-step runbook with a verification checkpoint and a rollback path for every state-changing step.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="homelab">homelab</button>
           <button type="button" class="tag" data-tag="planning">planning</button>
           <button type="button" class="tag" data-tag="ops">ops</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-4">Install the &quot;Homelab Change Planner&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-4">Install the &quot;Homelab Change Planner&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. Describe your homelab briefly: what&#x27;s running, where, and how it&#x27;s connected (e.g. &quot;two Proxmox boxes, a firewall, Tailscale for remote access&quot;).
@@ -302,36 +388,48 @@ SAFETY CHECK — confirm before the first run:
 - You will only write the plan. You will not log into, connect to, or run commands on my systems.
 - You will not publish or share the plan anywhere — it stays in this chat.
 - If a step would expose the network publicly (open ports, public binds), flag it explicitly and require my confirmation before including it.</div>
-        <button class="copy-btn" data-target="prompt-4">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-4">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>Describe your homelab: what&#x27;s running, where, and how it&#x27;s connected?</li>
             <li>How do you manage changes today — snapshots, git configs, backups, or winging it?</li>
             <li>What kind of changes do you usually make?</li>
             <li>Risk appetite: plan every step, or gist plus improvisation?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Plans only, never hands-on.</b> It writes the runbook — it never logs in, connects to, or runs commands on your systems.</li>
             <li><b>No invented infrastructure.</b> Hostnames, IPs, and credentials are marked TBD and asked about, never assumed.</li>
             <li><b>Public exposure is flagged.</b> Any step that opens the network outward gets an explicit warning and needs your go-ahead.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
-      <section class="prompt-pack reveal" id="workflow-05" data-tags="learning coaching research" data-search="Deep-Dive Tutor Learn any topic from zero with a tutor that adapts. It finds out what you know, explains in layers with a hands-on check after each one, and never moves on until you actually get it. learning coaching research">
-        <div class="eyebrow">Workflow 05</div>
-        <h2>Deep-Dive Tutor</h2>
-        <p class="what">Learn any topic from zero with a tutor that adapts. It finds out what you know, explains in layers with a hands-on check after each one, and never moves on until you actually get it.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-05" data-cat="Learn" data-tags="learning coaching research" data-search="Deep-Dive Tutor Learn any topic from zero with a tutor that adapts. It finds out what you know, explains in layers with a hands-on check after each one, and never moves on until you actually get it. learning coaching research">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-05">
+            <span class="ph-num">05</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 05 &middot; Learn</span>
+              <span class="ph-title">Deep-Dive Tutor</span>
+            </span>
+            <span class="ph-date" title="Added 2026-09-30">Sep 30</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-05" title="Copy link to this workflow" aria-label="Copy link to workflow 05">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-05" hidden>
+          <p class="what">Learn any topic from zero with a tutor that adapts. It finds out what you know, explains in layers with a hands-on check after each one, and never moves on until you actually get it.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="learning">learning</button>
           <button type="button" class="tag" data-tag="coaching">coaching</button>
           <button type="button" class="tag" data-tag="research">research</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-5">Install the &quot;Deep-Dive Tutor&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-5">Install the &quot;Deep-Dive Tutor&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. What do you want to learn, and what&#x27;s the goal — working knowledge, or deep understanding?
@@ -354,36 +452,48 @@ SAFETY CHECK — confirm before the first run:
 - Teaching only. No accounts touched, nothing scheduled, nothing published.
 - If a question touches health, legal, or financial advice, you&#x27;ll label it general information and say when to see a professional.
 - Learning pace belongs to the learner — stop, slow down, or skip at any time.</div>
-        <button class="copy-btn" data-target="prompt-5">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-5">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>What do you want to learn — and working knowledge or deep understanding?</li>
             <li>What&#x27;s your starting point? (beginner, some exposure, or rusty-but-once-knew)</li>
             <li>How do you learn best — analogies, examples, or hands-on exercises?</li>
             <li>How much time per session?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Teaching only.</b> Nothing is touched, scheduled, or published — it's a tutor, not an operator.</li>
             <li><b>Advice has guardrails.</b> Health, legal, or finance questions get labeled general information, with a nudge toward a professional.</li>
             <li><b>You set the pace.</b> Stop, slow down, or skip any topic at any time — the tutor follows you.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
-      <section class="prompt-pack reveal" id="workflow-06" data-tags="finance planning research" data-search="Big Purchase Analyzer Stress-test a planned purchase before money moves. It compares your options, totals the real cost of ownership, and gives a buy/wait/skip verdict — including what would change it. finance planning research">
-        <div class="eyebrow">Workflow 06</div>
-        <h2>Big Purchase Analyzer</h2>
-        <p class="what">Stress-test a planned purchase before money moves. It compares your options, totals the real cost of ownership, and gives a buy/wait/skip verdict — including what would change it.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-06" data-cat="Money" data-tags="finance planning research" data-search="Big Purchase Analyzer Stress-test a planned purchase before money moves. It compares your options, totals the real cost of ownership, and gives a buy/wait/skip verdict — including what would change it. finance planning research">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-06">
+            <span class="ph-num">06</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 06 &middot; Money</span>
+              <span class="ph-title">Big Purchase Analyzer</span>
+            </span>
+            <span class="ph-date" title="Added 2026-09-30">Sep 30</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-06" title="Copy link to this workflow" aria-label="Copy link to workflow 06">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-06" hidden>
+          <p class="what">Stress-test a planned purchase before money moves. It compares your options, totals the real cost of ownership, and gives a buy/wait/skip verdict — including what would change it.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="finance">finance</button>
           <button type="button" class="tag" data-tag="planning">planning</button>
           <button type="button" class="tag" data-tag="research">research</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-6">Install the &quot;Big Purchase Analyzer&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-6">Install the &quot;Big Purchase Analyzer&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. What&#x27;s your typical big-purchase decision style — research everything, or decide fast and move on?
@@ -406,36 +516,48 @@ SAFETY CHECK — confirm before the first run:
 - Research only. You will not place orders, create accounts, or spend money.
 - This is buying research, not financial advice — you decide, not the prompt.
 - Prices move fast; treat every figure as a snapshot and re-verify at checkout.</div>
-        <button class="copy-btn" data-target="prompt-6">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-6">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>Big-purchase style: research everything, or decide fast and move on?</li>
             <li>What budget band are you usually shopping in?</li>
             <li>Total-cost-of-ownership math, or just the upfront price?</li>
             <li>Anything you always factor in — resale, lock-in, warranty?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Research only.</b> It compares options — it never places orders, creates accounts, or spends money.</li>
             <li><b>Not financial advice.</b> It lays out the trade-offs; the buying decision stays with you.</li>
             <li><b>Prices are snapshots.</b> Every figure is labeled with a verify-at-checkout reminder.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
-      <section class="prompt-pack reveal" id="workflow-07" data-tags="finance careers planning" data-search="Job Offer Scorecard Put two job offers on the same scoreboard. It normalizes base, bonus, equity, and benefits into year-one and year-four math, ranks against what you actually care about, and names your top negotiation levers. finance careers planning">
-        <div class="eyebrow">Workflow 07</div>
-        <h2>Job Offer Scorecard</h2>
-        <p class="what">Put two job offers on the same scoreboard. It normalizes base, bonus, equity, and benefits into year-one and year-four math, ranks against what you actually care about, and names your top negotiation levers.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-07" data-cat="Money" data-tags="finance careers planning" data-search="Job Offer Scorecard Put two job offers on the same scoreboard. It normalizes base, bonus, equity, and benefits into year-one and year-four math, ranks against what you actually care about, and names your top negotiation levers. finance careers planning">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-07">
+            <span class="ph-num">07</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 07 &middot; Money</span>
+              <span class="ph-title">Job Offer Scorecard</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-01">Oct 1</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-07" title="Copy link to this workflow" aria-label="Copy link to workflow 07">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-07" hidden>
+          <p class="what">Put two job offers on the same scoreboard. It normalizes base, bonus, equity, and benefits into year-one and year-four math, ranks against what you actually care about, and names your top negotiation levers.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="finance">finance</button>
           <button type="button" class="tag" data-tag="careers">careers</button>
           <button type="button" class="tag" data-tag="planning">planning</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-7">Install the &quot;Job Offer Scorecard&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-7">Install the &quot;Job Offer Scorecard&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. How many offers are we usually comparing — two, or a whole slate?
@@ -458,36 +580,48 @@ SAFETY CHECK — confirm before the first run:
 - This is career comparison math, not tax, legal, or financial advice — see a professional before signing anything.
 - You will not contact employers, recruiters, or references.
 - Comp details stay in this chat.</div>
-        <button class="copy-btn" data-target="prompt-7">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-7">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>How many offers to compare — two, or a whole slate?</li>
             <li>What matters most: cash now, upside later, or lifestyle factors?</li>
             <li>Equity math spelled out, or a simpler headline?</li>
             <li>Any non-negotiables — visa, health coverage, relocation?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Not professional advice.</b> It does the comparison math; tax, legal, and contract questions go to a professional.</li>
             <li><b>Your numbers are labeled.</b> Offer-letter figures, public ranges, and assumptions are marked — never blended.</li>
             <li><b>Stays private.</b> It never contacts employers, recruiters, or references; your comp stays in the chat.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
-      <section class="prompt-pack reveal" id="workflow-08" data-tags="coding review quality" data-search="Code Review Buddy A second pair of eyes on your diff before it merges. Paste code — it ranks findings by real risk, calls out security issues first, and marks anything it can&#x27;t judge without context instead of guessing. coding review quality">
-        <div class="eyebrow">Workflow 08</div>
-        <h2>Code Review Buddy</h2>
-        <p class="what">A second pair of eyes on your diff before it merges. Paste code — it ranks findings by real risk, calls out security issues first, and marks anything it can't judge without context instead of guessing.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-08" data-cat="Work" data-tags="coding review quality" data-search="Code Review Buddy A second pair of eyes on your diff before it merges. Paste code — it ranks findings by real risk, calls out security issues first, and marks anything it can&#x27;t judge without context instead of guessing. coding review quality">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-08">
+            <span class="ph-num">08</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 08 &middot; Work</span>
+              <span class="ph-title">Code Review Buddy</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-01">Oct 1</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-08" title="Copy link to this workflow" aria-label="Copy link to workflow 08">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-08" hidden>
+          <p class="what">A second pair of eyes on your diff before it merges. Paste code — it ranks findings by real risk, calls out security issues first, and marks anything it can't judge without context instead of guessing.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="coding">coding</button>
           <button type="button" class="tag" data-tag="review">review</button>
           <button type="button" class="tag" data-tag="quality">quality</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-8">Install the &quot;Code Review Buddy&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-8">Install the &quot;Code Review Buddy&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. What language and stack, and how big are your typical diffs?
@@ -510,36 +644,48 @@ SAFETY CHECK — confirm before the first run:
 - You will only review what&#x27;s pasted. You will never commit, push, or run my code.
 - If the diff contains secrets (keys, tokens, passwords), you&#x27;ll stop, flag them, and tell me to rotate them — you&#x27;ll never quote the secret back.
 - The code stays in this chat.</div>
-        <button class="copy-btn" data-target="prompt-8">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-8">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>Language, stack, and typical diff size?</li>
             <li>Weight highest: security, correctness, readability, or performance?</li>
             <li>Line-by-line nits, or only things that matter?</li>
             <li>Repo conventions to enforce — style guide, coverage rules?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Read-only review.</b> It reads the pasted diff — it never commits, pushes, or runs code.</li>
             <li><b>Secrets get flagged, not quoted.</b> Keys or tokens in the diff trigger a rotate-it warning; the secret is never repeated back.</li>
             <li><b>Intent is asked, never assumed.</b> Anything it can't judge from the diff becomes a question, not a bug report.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
-      <section class="prompt-pack reveal" id="workflow-09" data-tags="productivity planning review" data-search="Weekly Review Ritual A Friday ritual that closes loops instead of carrying them. It walks through your week — wins, open items, next week&#x27;s calendar — and turns the mess into a ranked next-week plan with one unanswered question at the end. productivity planning review">
-        <div class="eyebrow">Workflow 09</div>
-        <h2>Weekly Review Ritual</h2>
-        <p class="what">A Friday ritual that closes loops instead of carrying them. It walks through your week — wins, open items, next week's calendar — and turns the mess into a ranked next-week plan with one unanswered question at the end.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-09" data-cat="Work" data-tags="productivity planning review" data-search="Weekly Review Ritual A Friday ritual that closes loops instead of carrying them. It walks through your week — wins, open items, next week&#x27;s calendar — and turns the mess into a ranked next-week plan with one unanswered question at the end. productivity planning review">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-09">
+            <span class="ph-num">09</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 09 &middot; Work</span>
+              <span class="ph-title">Weekly Review Ritual</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-02">Oct 2</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-09" title="Copy link to this workflow" aria-label="Copy link to workflow 09">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-09" hidden>
+          <p class="what">A Friday ritual that closes loops instead of carrying them. It walks through your week — wins, open items, next week's calendar — and turns the mess into a ranked next-week plan with one unanswered question at the end.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="productivity">productivity</button>
           <button type="button" class="tag" data-tag="planning">planning</button>
           <button type="button" class="tag" data-tag="review">review</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-9">Install the &quot;Weekly Review Ritual&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-9">Install the &quot;Weekly Review Ritual&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. What does your week usually contain — work, side projects, personal life? What should the review cover?
@@ -562,36 +708,48 @@ SAFETY CHECK — confirm before the first run:
 - You will only read what I paste. You will never touch my accounts, inbox, calendars, or task apps.
 - You will never move, close, or schedule anything — you propose the plan as text; I execute it.
 - My week stays in this chat.</div>
-        <button class="copy-btn" data-target="prompt-9">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-9">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>What does your week usually contain — work, projects, personal life?</li>
             <li>Where do your tasks live — an app, a notebook, or just your head?</li>
             <li>A 20-minute sweep or a full hour?</li>
             <li>Fresh plan for next week, or also a check-in on energy and time?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Read-only review.</b> It works from what you paste in — never your accounts, inbox, calendars, or task apps.</li>
             <li><b>Proposes, never executes.</b> It drafts the plan as text; you move, close, and schedule things yourself.</li>
             <li><b>Your week stays private.</b> Nothing leaves this chat.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
-      <section class="prompt-pack reveal" id="workflow-10" data-tags="research news fact-check" data-search="Claim Checker Paste a claim, get a verdict. It checks headlines and viral takes against independent sources, traces them to origin when it can, and tells you exactly what would change its mind. research news fact-check">
-        <div class="eyebrow">Workflow 10</div>
-        <h2>Claim Checker</h2>
-        <p class="what">Paste a claim, get a verdict. It checks headlines and viral takes against independent sources, traces them to origin when it can, and tells you exactly what would change its mind.</p>
-        <div class="tag-row" aria-label="Tags">
+      <section class="prompt-pack reveal" id="workflow-10" data-cat="Life" data-tags="research news fact-check" data-search="Claim Checker Paste a claim, get a verdict. It checks headlines and viral takes against independent sources, traces them to origin when it can, and tells you exactly what would change its mind. research news fact-check">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-10">
+            <span class="ph-num">10</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 10 &middot; Life</span>
+              <span class="ph-title">Claim Checker</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-02">Oct 2</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-10" title="Copy link to this workflow" aria-label="Copy link to workflow 10">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-10" hidden>
+          <p class="what">Paste a claim, get a verdict. It checks headlines and viral takes against independent sources, traces them to origin when it can, and tells you exactly what would change its mind.</p>
+          <div class="tag-row" aria-label="Tags">
           <button type="button" class="tag" data-tag="research">research</button>
           <button type="button" class="tag" data-tag="news">news</button>
           <button type="button" class="tag" data-tag="fact-check">fact-check</button>
-        </div>
-        <h3>The install prompt</h3>
-        <div class="prompt-block" id="prompt-10">Install the &quot;Claim Checker&quot; workflow in this chat.
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-10">Install the &quot;Claim Checker&quot; workflow in this chat.
 
 SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
 1. What kind of claims will you bring — news headlines, health advice, product claims, finance?
@@ -614,24 +772,25 @@ SAFETY CHECK — confirm before the first run:
 - Research only. You will not publish, post, or reply to anything on my behalf.
 - If a claim touches medical, legal, or financial decisions, you&#x27;ll say when to check with a professional.
 - You judge the claim&#x27;s evidence, not the person making it — no dossiers, no contact info.</div>
-        <button class="copy-btn" data-target="prompt-10">Copy install prompt</button>
-        <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
-        <h3>First-run setup</h3>
-        <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
-        <ul class="safety-check">
+          <button class="copy-btn" data-target="prompt-10">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
             <li>What kind of claims — news, health advice, product claims, finance?</li>
             <li>Fast verdict, or full breakdown with sources?</li>
             <li>Quick 2-3 source scan, or a multi-source dig?</li>
             <li>Any sources you trust or distrust by default?</li>
-        </ul>
-        <h3>Safety check</h3>
-        <ul class="safety-check">
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
             <li><b>Research only.</b> It never publishes, posts, or replies to anything on your behalf.</li>
             <li><b>No single-source confirmations.</b> If the only source is the one making the claim, the verdict is "unverifiable".</li>
             <li><b>Professional call-outs.</b> Medical, legal, or financial claims get a nudge toward a real professional.</li>
-        </ul>
-        <h3>How to use</h3>
-        <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
       </section>
   </main>
   <footer>
@@ -766,7 +925,15 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
       if (!block) return;
       var text = block.textContent;
       var note = btn.parentElement.querySelector(".copy-note");
-      function done() { if (note) note.textContent = "Copied — paste it into any fresh assistant chat."; }
+      function done() {
+        if (note) note.textContent = "Copied — paste it into any fresh assistant chat.";
+        // Usage analytics: which packs actually get installed. Guarded so the
+        // button works fine when Umami is blocked or still loading.
+        var packEl = btn.closest(".prompt-pack");
+        if (typeof umami !== "undefined" && umami && typeof umami.track === "function") {
+          try { umami.track("prompt-copy", { pack: packEl ? packEl.id : "unknown" }); } catch (e) {}
+        }
+      }
       function fallback() {
         var ta = document.createElement("textarea");
         ta.value = text; document.body.appendChild(ta); ta.select();
@@ -787,6 +954,7 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
   var packs = Array.prototype.slice.call(document.querySelectorAll(".prompt-pack"));
   var search = document.getElementById("prompt-search");
   var chipsBox = document.getElementById("tag-chips");
+  var catsBox = document.getElementById("cat-tabs");
   var count = document.getElementById("prompt-count");
   var empty = document.getElementById("prompt-empty");
   if (!packs.length || !search || !chipsBox) return;
@@ -796,13 +964,22 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
   });
   var tags = Object.keys(counts).sort();
   var activeTag = "";
+  // Coarse category tabs, generated from each pack's data-cat like the tags.
+  var catCounts = {};
+  packs.forEach(function (p) {
+    var c = p.getAttribute("data-cat") || "";
+    if (c) catCounts[c] = (catCounts[c] || 0) + 1;
+  });
+  var cats = Object.keys(catCounts).sort();
+  var activeCat = "";
   function apply() {
     var q = search.value.trim().toLowerCase();
     var shown = 0;
     packs.forEach(function (p) {
       var hay = (p.getAttribute("data-search") || "").toLowerCase();
       var ptags = (p.getAttribute("data-tags") || "").split(" ");
-      var ok = (!q || hay.indexOf(q) !== -1) && (!activeTag || ptags.indexOf(activeTag) !== -1);
+      var pcat = p.getAttribute("data-cat") || "";
+      var ok = (!q || hay.indexOf(q) !== -1) && (!activeTag || ptags.indexOf(activeTag) !== -1) && (!activeCat || pcat === activeCat);
       p.hidden = !ok;
       if (ok) shown++;
     });
@@ -835,8 +1012,76 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
     });
   });
   search.addEventListener("input", apply);
+  function renderCats() {
+    if (!catsBox) return;
+    catsBox.innerHTML = "";
+    function cat(label, c, n) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "pf-cat" + (activeCat === c ? " on" : "");
+      b.textContent = label + " (" + n + ")";
+      b.setAttribute("aria-pressed", activeCat === c ? "true" : "false");
+      b.addEventListener("click", function () {
+        activeCat = (activeCat === c) ? "" : c;
+        renderCats(); apply();
+      });
+      catsBox.appendChild(b);
+    }
+    cat("All", "", packs.length);
+    cats.forEach(function (c) { cat(c, c, catCounts[c]); });
+  }
   renderChips();
+  renderCats();
   apply();
+})();
+</script>
+<script>
+(function () {
+  // Accordion: one open pack at a time keeps a 10-pack page scannable.
+  var packs = Array.prototype.slice.call(document.querySelectorAll(".prompt-pack"));
+  function setOpen(sec, open) {
+    var btn = sec.querySelector(".pack-toggle");
+    var body = sec.querySelector(".pack-body");
+    if (!btn || !body) return;
+    body.hidden = !open;
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  packs.forEach(function (sec) {
+    var btn = sec.querySelector(".pack-toggle");
+    if (btn) btn.addEventListener("click", function () {
+      var willOpen = sec.querySelector(".pack-body").hidden;
+      packs.forEach(function (s) { setOpen(s, false); });
+      setOpen(sec, willOpen);
+    });
+  });
+  // Per-pack "copy link" buttons.
+  document.querySelectorAll(".ph-link").forEach(function (b) {
+    b.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var url = location.origin + location.pathname + "#" + b.getAttribute("data-deep");
+      var orig = b.innerHTML;
+      function done() {
+        b.innerHTML = "&#x2713;";
+        setTimeout(function () { b.innerHTML = orig; }, 1500);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done, function () {});
+      }
+    });
+  });
+  // Deep links: opening .../prompts.html#workflow-NN expands that pack.
+  function fromHash() {
+    var id = (location.hash || "").replace("#", "");
+    if (id.indexOf("workflow-") !== 0) return;
+    var sec = document.getElementById(id);
+    if (!sec) return;
+    packs.forEach(function (s) { setOpen(s, false); });
+    setOpen(sec, true);
+    setTimeout(function () { sec.scrollIntoView({ block: "start" }); }, 50);
+  }
+  window.addEventListener("hashchange", fromHash);
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fromHash);
+  else fromHash();
 })();
 </script>
 
