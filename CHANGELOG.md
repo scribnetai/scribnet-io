@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-02 — Prompts page: 2 new workflow prompts (09–10)
+
+- Published two approved prompt-forge drafts: (09) Weekly Review Ritual — Friday loop-closing review that triages the week into done/open-loops/noise and produces a ranked next-week plan; (10) Claim Checker — graded true-to-false verdicts on claims against independent sources, with explicit watch-outs on what's missing. Both merged into the page builder and deployed.
+
 ## 2026-10-01 — Prompts page: 2 new workflow prompts (07–08)
 
 - Published two approved prompt-forge drafts: (07) Job Offer Scorecard — compare offers on one scoreboard with year-one/year-four math and labeled assumptions; (08) Code Review Buddy — risk-ranked diff review that flags secrets without quoting them. Both merged into the page builder and deployed.
