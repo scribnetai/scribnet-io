@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-02 — Weekly shipped summary: build log updated
+
+- Compiled the week's material changelog entries from all 11 fleet repos into the homepage build log (24 items at the cap): five launches (Battlecards, Deal Pack, Server Sizer v1, TCO Calculator, Statement Analyzer), the /prompts.html and Zero to Dangerous book launches, the fleet SEO pass, Cargo Foundry polish week, and fresh battlecard intel.
+- Curated 19 new items; dropped routine/trivial and launch-subsumed entries to hold the 24-item cap.
+- Fixed the "Show all N" expander: it was a dead button with a hardcoded count — added a small script that toggles the overflow entries and counts the label from the live item total.
+
+
 ## 2026-10-02 — Prompts page overhaul: accordion cards, category tabs, new-this-week strip, deep links, copy analytics
 
 - Accordion pack cards: one open at a time, collapsed by default, so the 10-pack page scans instead of scrolling forever.
