@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-03 — Prompts page: 2 new workflow prompts (11–12)
+
+- Published two approved prompt-forge drafts: (11) Project README Forge — turns pasted project facts into a tight quick-start README, flags secrets instead of quoting them, hands back a TBD list; (12) Debt Payoff Ladder — avalanche-vs-snowball comparison on your real numbers with payoff months and a named first target. Both merged into the page builder and deployed.
+
 ## 2026-10-02 — Weekly shipped summary: build log updated
 
 - Compiled the week's material changelog entries from all 11 fleet repos into the homepage build log (24 items at the cap): five launches (Battlecards, Deal Pack, Server Sizer v1, TCO Calculator, Statement Analyzer), the /prompts.html and Zero to Dangerous book launches, the fleet SEO pass, Cargo Foundry polish week, and fresh battlecard intel.

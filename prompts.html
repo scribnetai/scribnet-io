@@ -143,10 +143,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-12"><span class="ns-num">12</span><span class="ns-title">Debt Payoff Ladder</span><span class="ns-date">Oct 3</span></a>
+      <a class="ns-card" href="#workflow-11"><span class="ns-num">11</span><span class="ns-title">Project README Forge</span><span class="ns-date">Oct 3</span></a>
       <a class="ns-card" href="#workflow-10"><span class="ns-num">10</span><span class="ns-title">Claim Checker</span><span class="ns-date">Oct 2</span></a>
       <a class="ns-card" href="#workflow-09"><span class="ns-num">09</span><span class="ns-title">Weekly Review Ritual</span><span class="ns-date">Oct 2</span></a>
-      <a class="ns-card" href="#workflow-08"><span class="ns-num">08</span><span class="ns-title">Code Review Buddy</span><span class="ns-date">Oct 1</span></a>
-      <a class="ns-card" href="#workflow-07"><span class="ns-num">07</span><span class="ns-title">Job Offer Scorecard</span><span class="ns-date">Oct 1</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -792,6 +792,138 @@ SAFETY CHECK — confirm before the first run:
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
         </div>
       </section>
+      <section class="prompt-pack reveal" id="workflow-11" data-cat="Work" data-tags="coding writing docs" data-search="Project README Forge Turn project facts into a README people actually read. It drafts a tight quick-start doc from what you paste, flags secrets instead of quoting them, and hands you a TBD list for everything you still need to fill in. coding writing docs">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-11">
+            <span class="ph-num">11</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 11 &middot; Work</span>
+              <span class="ph-title">Project README Forge</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-03">Oct 3</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-11" title="Copy link to this workflow" aria-label="Copy link to workflow 11">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-11" hidden>
+          <p class="what">Turn project facts into a README people actually read. It drafts a tight quick-start doc from what you paste, flags secrets instead of quoting them, and hands you a TBD list for everything you still need to fill in.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="coding">coding</button>
+          <button type="button" class="tag" data-tag="writing">writing</button>
+          <button type="button" class="tag" data-tag="docs">docs</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-11">Install the &quot;Project README Forge&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What does the project do — one plain sentence, the way you&#x27;d tell a friend?
+2. Who&#x27;s the reader — end users installing it, developers contributing, or both?
+3. Stack and how it&#x27;s run — language, install command, how it starts? (Only what you paste; I won&#x27;t assume your toolchain.)
+4. Public or private repo — and what license, if any?
+5. Tone: friendly README, minimal developer doc, or sales-y landing style?
+
+EACH RUN:
+1. Ask for the project facts: what it does, install steps, how to use it, config. First, state the limits: you only know what&#x27;s pasted — you won&#x27;t guess the toolchain, and every unverified claim is marked TBD.
+2. Scan for secrets: if the pasted material contains anything shaped like a key, token, or password, stop, flag it, and tell the user to rotate it before continuing — never quote it back.
+3. Draft the README in this order: title + one-line pitch, quick start, usage, configuration, license — real commands only, taken from what was provided.
+4. End with the TBD list: every placeholder the owner must fill before publishing (real install URL, version badges, contact info).
+
+HARD RULES:
+- Every install step, command, and URL comes from the pasted material or is marked TBD — never invented or filled in from training data.
+- Secrets are flagged, never quoted — anything key-shaped gets a rotate-it warning and stops the draft.
+- The README is one document, not a tour of the codebase — max 5 sections unless the setup asked for more.
+- &quot;Works with any...&quot; claims are banned unless a version was provided — scope claims to what&#x27;s stated.
+
+SAFETY CHECK — confirm before the first run:
+- Writing only. It drafts the document — it never commits, pushes, or publishes anything.
+- It flags secrets and stops; it never repeats them back or folds them into the draft.
+- It only knows what you paste — unknown facts become TBD placeholders, never guesses.</div>
+          <button class="copy-btn" data-target="prompt-11">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>What does the project do, in one plain sentence?</li>
+            <li>Reader: end users, contributors, or both?</li>
+            <li>Stack, install command, how it starts?</li>
+            <li>Public or private repo — and what license?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Writing only.</b> It drafts the document — it never commits, pushes, or publishes anything.</li>
+            <li><b>Secrets get flagged, not quoted.</b> Anything key-shaped stops the draft with a rotate-it warning; the secret is never repeated.</li>
+            <li><b>No invented facts.</b> Unknown install steps and URLs become TBD placeholders, never guesses from training data.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-12" data-cat="Money" data-tags="finance debt planning" data-search="Debt Payoff Ladder See your debt payoff order, both ways. It compares avalanche vs snowball on your real numbers, shows the total interest each costs and the payoff month per debt, and names the one to attack first. finance debt planning">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-12">
+            <span class="ph-num">12</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 12 &middot; Money</span>
+              <span class="ph-title">Debt Payoff Ladder</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-03">Oct 3</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-12" title="Copy link to this workflow" aria-label="Copy link to workflow 12">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-12" hidden>
+          <p class="what">See your debt payoff order, both ways. It compares avalanche vs snowball on your real numbers, shows the total interest each costs and the payoff month per debt, and names the one to attack first.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="finance">finance</button>
+          <button type="button" class="tag" data-tag="debt">debt</button>
+          <button type="button" class="tag" data-tag="planning">planning</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-12">Install the &quot;Debt Payoff Ladder&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What&#x27;s on the payoff list — credit cards, loans, lines of credit? (I&#x27;ll work from what you paste; I never log into accounts.)
+2. For each debt: balance, APR, minimum payment. Anything you can&#x27;t look up gets labeled UNKNOWN, never estimated.
+3. How much extra can you put toward debt each month, above the minimums?
+4. Strategy preference — avalanche (highest APR first, cheapest mathematically) or snowball (smallest balance first, fastest wins)? If &quot;skip&quot;, I&#x27;ll show both.
+5. Windfalls — tax refund, bonus — pay down debt, or keep separate?
+
+EACH RUN:
+1. Ask for the current debt list: balance, APR, minimum payment per debt. First, state the limits: no account access, and every figure comes from what you provide or is labeled UNKNOWN.
+2. Show both payoff orders side by side: avalanche and snowball, with per-debt payoff month and total interest paid under each. All math is shown, not just the verdict.
+3. Name the one debt to attack first under each strategy and the exact monthly payment — minimums on everything else.
+4. End with the guardrail check: total minimums vs monthly income — if minimums exceed 20% of take-home, flag it and say to talk to a professional.
+
+HARD RULES:
+- Every balance, APR, and payment is either quoted from you or labeled UNKNOWN — never estimated or quietly rounded into the math.
+- Minimums are paid on every debt before any extra hits the target — the plan never pays less than a minimum anywhere.
+- The avalanche-vs-snowball comparison always shows both totals — never presents one strategy without the other.
+- Payoff dates are labeled &quot;based on these numbers, no new spending&quot; — the assumption is stated, not buried.
+
+SAFETY CHECK — confirm before the first run:
+- Math and comparison only. It never logs into accounts, moves money, or contacts lenders.
+- Not financial advice — it lays out the orders and the math; the strategy choice stays with you.
+- Every figure is either yours or labeled UNKNOWN; assumptions are stated aloud, never hidden.</div>
+          <button class="copy-btn" data-target="prompt-12">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>What&#x27;s on the payoff list — cards, loans, lines of credit?</li>
+            <li>Balance, APR, and minimum payment for each debt?</li>
+            <li>How much extra per month can go toward debt?</li>
+            <li>Avalanche, snowball, or show both?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Math and comparison only.</b> It never logs into accounts, moves money, or contacts lenders.</li>
+            <li><b>Not financial advice.</b> It lays out the orders and the math; the strategy choice stays with you.</li>
+            <li><b>Your numbers or UNKNOWN.</b> Every figure comes from what you provide or is labeled UNKNOWN — assumptions are stated aloud, never hidden.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
   </main>
   <footer>
     <p>© <span id="year"></span> ScribNet — scribnet.io</p>
@@ -912,6 +1044,24 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
     location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     close();
   });
+})();
+</script>
+
+<script>
+// Build log expander: the button label counts itself from the live tl-item
+// total (no hardcoded N); toggles the overflow entries.
+(function(){
+  var btn = document.getElementById('logToggle'), extra = document.getElementById('tlExtra');
+  if(!btn || !extra) return;
+  var total = document.querySelectorAll('.tl-item').length;
+  function render(open){
+    if(open){ extra.removeAttribute('hidden'); } else { extra.setAttribute('hidden',''); }
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.innerHTML = open ? 'Show less <span aria-hidden="true">&uarr;</span>'
+                        : 'Show all ' + total + ' <span aria-hidden="true">&darr;</span>';
+  }
+  render(false);
+  btn.addEventListener('click', function(){ render(btn.getAttribute('aria-expanded') !== 'true'); });
 })();
 </script>
 
