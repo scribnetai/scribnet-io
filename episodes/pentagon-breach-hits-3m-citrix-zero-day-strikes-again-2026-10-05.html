@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pentagon Breach Hits 3M, Citrix Zero-Day Strikes Again &mdash; Daily Tech News &middot; ScribNet</title>
+  <meta name="description" content="Alex and Jordan break down a massive Pentagon data breach affecting nearly three million people, a fresh Citrix NetScaler zero-day, Amazon ditching data center NDAs, and Nvidia-backed Reflection&#x27;s open-weight AI model.">
+  <link rel="canonical" href="https://scribnet.io/episodes/pentagon-breach-hits-3m-citrix-zero-day-strikes-again-2026-10-05.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=nav2">
+<!-- PWA: installable home-screen app -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#05070c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ScribNet">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2338bdf8'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='71' font-size='62' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>S</text></svg>">
+<!-- Analytics: Umami (cookieless, no consent banner) -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="025bed5c-dced-450a-a701-95f7cd065922"></script>
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ScribNet">
+  <meta property="og:title" content="Pentagon Breach Hits 3M, Citrix Zero-Day Strikes Again &mdash; Daily Tech News">
+  <meta property="og:description" content="Alex and Jordan break down a massive Pentagon data breach affecting nearly three million people, a fresh Citrix NetScaler zero-day, Amazon ditching data center NDAs, and Nvidia-backed Reflection&#x27;s open-weight AI model.">
+  <meta property="og:url" content="https://scribnet.io/episodes/pentagon-breach-hits-3m-citrix-zero-day-strikes-again-2026-10-05.html">
+  <meta property="og:image" content="https://scribnet.io/podcast-cover.webp">
+  <meta property="article:published_time" content="2026-10-05">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pentagon Breach Hits 3M, Citrix Zero-Day Strikes Again &mdash; Daily Tech News">
+  <meta name="twitter:description" content="Alex and Jordan break down a massive Pentagon data breach affecting nearly three million people, a fresh Citrix NetScaler zero-day, Amazon ditching data center NDAs, and Nvidia-backed Reflection&#x27;s open-weight AI model.">
+  <meta name="twitter:image" content="https://scribnet.io/podcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name": "Pentagon Breach Hits 3M, Citrix Zero-Day Strikes Again",
+  "description": "Alex and Jordan break down a massive Pentagon data breach affecting nearly three million people, a fresh Citrix NetScaler zero-day, Amazon ditching data center NDAs, and Nvidia-backed Reflection's open-weight AI model.",
+  "datePublished": "2026-10-05",
+  "duration": "PT7M42S",
+  "url": "https://scribnet.io/episodes/pentagon-breach-hits-3m-citrix-zero-day-strikes-again-2026-10-05.html",
+  "associatedMedia": {
+    "@type": "MediaObject",
+    "contentUrl": "https://scribnet.io/audio/pentagon-breach-hits-3m-citrix-zero-day-strikes-again-2026-10-05.mp3",
+    "encodingFormat": "audio/mpeg"
+  },
+  "partOfSeries": {
+    "@type": "PodcastSeries",
+    "name": "Daily Tech News",
+    "url": "https://scribnet.io/podcast.html"
+  }
+}
+  </script>
+  <style>
+    .ep-hero { max-width: 860px; margin: 0 auto; padding: 3rem 1.25rem 0; }
+    .ep-hero .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.9rem; }
+    .ep-hero h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1rem; }
+    .ep-hero .subtitle { color: var(--muted); font-size: 1.02rem; line-height: 1.6; }
+    .ep-player { max-width: 860px; margin: 2rem auto 0; padding: 0 1.25rem; }
+    .ep-player-card { display: flex; gap: 1.25rem; align-items: center;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px; padding: 1.25rem; }
+    .ep-player-card img { width: 96px; height: 96px; border-radius: 16px; flex: none; }
+    .ep-player-card audio { width: 100%; margin-top: 0.6rem; }
+    .ep-player-meta { font-size: 0.82rem; color: var(--muted); }
+    .ep-player-body { flex: 1; min-width: 0; }
+    .ep-section { max-width: 860px; margin: 2.5rem auto 0; padding: 0 1.25rem; }
+    .ep-section h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem;
+      letter-spacing: -0.01em; }
+    .ep-topics { list-style: none; padding: 0; display: grid; gap: 0.7rem; }
+    .ep-topics li { background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 12px;
+      padding: 0.8rem 1rem; font-size: 0.94rem; line-height: 1.55; }
+    .ep-transcript p { line-height: 1.75; margin-bottom: 1rem; font-size: 0.97rem;
+      color: #d7dce6; }
+    .ep-transcript .spk { font-weight: 700; }
+    .ep-transcript .spk.alex { color: #7c8cff; }
+    .ep-transcript .spk.jordan { color: #34d399; }
+    .ep-nav { max-width: 860px; margin: 3rem auto 0; padding: 0 1.25rem 3rem;
+      display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .ep-nav a { font-weight: 700; font-size: 0.92rem; }
+    .ep-nav .dim { color: var(--muted); font-weight: 400; }
+    @media (max-width: 560px) {
+      .ep-player-card { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="topnav">
+      <a class="topnav-brand" href="/" aria-label="ScribNet home">
+        <span class="topnav-badge">S</span><span>scribnet.io</span>
+      </a>
+      <nav class="topnav-links" aria-label="Site">
+      <a href="/apps.html">Apps</a>
+      <a href="/podcast.html" aria-current="page">Podcast</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/prompts.html">Prompts</a>
+      <a href="/uses.html">Uses</a>
+      <a href="/homelab.html">Homelab</a>
+      </nav>
+    </header>
+    <div class="ep-hero">
+      <div class="eyebrow">Daily Tech News &mdash; October 05, 2026</div>
+      <h1>Pentagon Breach Hits 3M, Citrix Zero-Day Strikes Again</h1>
+      <p class="subtitle">Alex and Jordan break down a massive Pentagon data breach affecting nearly three million people, a fresh Citrix NetScaler zero-day, Amazon ditching data center NDAs, and Nvidia-backed Reflection&#x27;s open-weight AI model.</p>
+    </div>
+
+    <div class="ep-player">
+      <div class="ep-player-card">
+        <img src="/podcast-cover.webp" alt="Daily Tech News cover art">
+        <div class="ep-player-body">
+          <div class="ep-player-meta">October 05, 2026 &middot; 7:42 &middot; with Alex &amp; Jordan</div>
+          <audio controls preload="none" src="https://scribnet.io/audio/pentagon-breach-hits-3m-citrix-zero-day-strikes-again-2026-10-05.mp3"></audio>
+        </div>
+      </div>
+    </div>
+
+    <section class="ep-section" aria-label="In this episode">
+      <h2>In this episode</h2>
+      <ul class="ep-topics">
+<li>Pentagon data breach (confirmed Oct 4-5): 2.76M living + ~294K deceased people affected; Defense Manpower Data Center information system breached via file-sharing vulnerability; unauthorized access from Oct 2025 to July 2026 before discovery/patch; data unencrypted — names, SSNs, birth dates, contact details, demographic + military occupational info; Pentagon reports no evidence of misuse; one year of credit monitoring + identity restoration offered; framed as a Capitol Hill liability with years-long phishing/fraud tail</li>
+<li>Citrix NetScaler NEW zero-day CVE-2026-88779 (CVSS 8.7, Oct 5): SAML memory overflow in NetScaler ADC/Gateway causing denial of service; only SAML SP/IdP configurations exposed; confirmed targeted attacks on unpatched deployments; CISA KEV with Oct 7 federal patch deadline; credited to Bishop Fox and watchTowr (reproduced within hours); framed as the latest in the F5 → Citrix → Cisco → Fortinet edge-device zero-day streak — distinct from the Sept 30 CVE-2026-88771/88772 NetScaler RCEs already covered</li>
+<li>Amazon drops data center NDAs with government agencies (Oct 4, WIRED): governance transparency move — deals negotiated under NDA after the fact angered residents; follows Garman&#x27;s Data Center Commitment and Built Together community program; 100+ moratoriums under consideration nationwide; issue now about who negotiates and what infrastructure is promised, not just megawatts</li>
+<li>Goldman Sachs data center reality check (Sunday Oct 4 note): political opposition has limited near-term impact — 2026 year-end US capacity forecast raised 5 GW to 64 GW, 2027 trimmed to 90 GW; US DC power demand +38% (~12 GW) in 2026 and +38% (~17 GW) in 2027; only 14% of Americans would support a data center in their community (June Reuters/Ipsos); flagged as midterm-election political challenge for Republicans (Nov 3)</li>
+<li>Reflection AI open-weight model imminent (Axios scoop, Oct 4): Nvidia-backed startup founded by two ex-DeepMind researchers about to release first open-weight foundation model — framed as US answer to DeepSeek/Qwen; no name, size, license, or benchmarks published yet; $7B+ compute committed through 2029; expected to trail top closed US models but compete with Chinese open models; enterprises can download + customize with private data</li>
+<li>Cloudflare launches Clef / Clef-flash open-source decision models (Oct 1): typed answers with probabilities, no text generation; 27B and 9B post-trained from Qwen bases; Apache 2.0 license; Jev API-compatible, vision inputs, 64K context; Clef leads Jev Decision Index, Clef-flash 38.8 ms median latency; RL fine-tuning service; llama.cpp added native decision-model support via /v1/systemone API for local private inference — framed as the agent economy&#x27;s need for cheap, fast decision engines for thousands of small agent decisions</li>
+<li>Quick hits: Suno Speech beta (Oct 1) — spoken voice + original background music generated as one cohesive track, now open to all users on web/iOS/Android; Microsoft Oct 7 Surface and Windows event this Wednesday; APAC datacenter build-out gap (Tech Week Singapore) — McKinsey tracking $200B+ announced A-PAC investment since 2024, base case ~90 GW by 2030, converting announcements to live capacity is the bottleneck</li>
+      </ul>
+    </section>
+
+    <section class="ep-section ep-transcript" aria-label="Full transcript">
+      <h2>Full transcript</h2>
+<p><span class="spk alex">Alex:</span> Good morning, and welcome to Daily Tech News for Monday, October fifth, twenty twenty-six. I&#x27;m Alex.</p>
+<p><span class="spk jordan">Jordan:</span> And I&#x27;m Jordan. Big weekend in tech news, Alex. We&#x27;ve got a massive Pentagon data breach, another Citrix zero-day, and the data center wars heating up in Washington.</p>
+<p><span class="spk alex">Alex:</span> Let&#x27;s start with the big one. The Pentagon has confirmed a data breach affecting more than two point seven six million living people, plus roughly two hundred ninety-four thousand deceased individuals. Jordan, that is nearly three million records.</p>
+<p><span class="spk jordan">Jordan:</span> And the details are rough. The breach hit a Defense Manpower Data Center information system through a file-sharing vulnerability. Access reportedly ran from October of twenty twenty-five through July of this year, when the Pentagon finally found and patched it. And the data involved is the worst kind, Alex. Names, Social Security numbers, birth dates, contact details, demographic data, and military occupational information, all reportedly unencrypted.</p>
+<p><span class="spk alex">Alex:</span> So nine months of unauthorized access before anyone noticed. Unencrypted, in twenty twenty-six, at the Defense Department. That is genuinely hard to believe.</p>
+<p><span class="spk jordan">Jordan:</span> The Pentagon says it has seen no evidence of misuse so far, but identity data doesn&#x27;t expire. The phishing, fraud, and impersonation risk from this runs for years. They&#x27;re offering a year of credit monitoring and identity restoration services to the people affected.</p>
+<p><span class="spk alex">Alex:</span> One year of credit monitoring for nine months of unencrypted access to Social Security numbers. Okay. This one is going to have legs on Capitol Hill, I think.</p>
+<p><span class="spk jordan">Jordan:</span> Almost certainly. And it lands right in the middle of a brutal stretch for network edge gear. Citrix has a brand new zero-day, Alex, and it&#x27;s already being exploited in targeted attacks.</p>
+<p><span class="spk alex">Alex:</span> Wait, didn&#x27;t we just cover Citrix zero-days a few days ago? The NetScaler R C E flaws?</p>
+<p><span class="spk jordan">Jordan:</span> We did, and this is a different one. Tracked as C V E twenty twenty-six eighty-eight seven seven nine. It&#x27;s a memory overflow in NetScaler A D C and NetScaler Gateway, tied to SAML authentication configurations.</p>
+<p><span class="spk alex">Alex:</span> So only some deployments are exposed?</p>
+<p><span class="spk jordan">Jordan:</span> Right. Only deployments configured as a SAML service provider or identity provider. But Citrix confirmed targeted attacks against unpatched systems, and the U S Cybersecurity and Infrastructure Security Agency has already added it to its known exploited vulnerabilities catalog, with a federal patch deadline of October seventh.</p>
+<p><span class="spk alex">Alex:</span> That&#x27;s Wednesday. Two days away.</p>
+<p><span class="spk jordan">Jordan:</span> Exactly. Now the silver lining here is that this one causes denial of service rather than data theft. Citrix says its analysis shows no impact on the confidentiality or integrity of customer data. But if attackers keep hitting an authentication gateway repeatedly, they can keep it offline. Knocking out the front door to your apps is still a serious problem.</p>
+<p><span class="spk alex">Alex:</span> F five, Citrix, Cisco, Fortinet. That is a brutal few weeks for network edge gear.</p>
+<p><span class="spk jordan">Jordan:</span> The network edge is getting hammered.</p>
+<p><span class="spk alex">Alex:</span> It really is. Let&#x27;s pivot to the data center wars, because according to WIRED, Amazon is dropping non-disclosure agreements with government agencies around its data center projects.</p>
+<p><span class="spk jordan">Jordan:</span> This is a governance change, not a construction change. Amazon still has its big build-out plans. But historically, a lot of these deals with local governments were negotiated under N D A, so residents found out about massive power and water commitments after the fact.</p>
+<p><span class="spk alex">Alex:</span> And residents are not happy. We have seen moratoriums under consideration in more than a hundred communities.</p>
+<p><span class="spk jordan">Jordan:</span> Right. The issue has shifted from just how many megawatts a campus uses to who is negotiating with local government and what infrastructure promises are being made. Amazon&#x27;s move puts at least one part of that process into public view, after months of backlash and local permitting fights.</p>
+<p><span class="spk alex">Alex:</span> And Goldman Sachs just weighed in with a Sunday note that is almost a reality check on all this. They say rising political opposition to U S data centers has had limited near-term impact on the rapid expansion. They raised the twenty twenty-six capacity forecast to sixty-four gigawatts while trimming twenty twenty-seven to ninety.</p>
+<p><span class="spk jordan">Jordan:</span> The numbers behind that are wild. Goldman forecasts U S data center power demand to grow thirty-eight percent in twenty twenty-six, adding about twelve gigawatts, and another thirty-eight percent in twenty twenty-seven, adding roughly seventeen gigawatts.</p>
+<p><span class="spk alex">Alex:</span> Thirty-eight percent growth two years running. But here&#x27;s the tension, Jordan. A June Reuters Ipsos poll found only fourteen percent of Americans would support a data center being built in their community.</p>
+<p><span class="spk jordan">Jordan:</span> Fourteen percent. So the industry is growing capacity nearly forty percent a year while roughly seven in eight neighbors don&#x27;t want one next door. Goldman flags this as a political challenge for Republicans heading into the midterm elections on November third.</p>
+<p><span class="spk alex">Alex:</span> It really is the defining enterprise tech story of the moment. The money says build, the voters say not here. And Amazon dropping N D As is a signal they know the transparency fight is now as important as the power grid fight.</p>
+<p><span class="spk jordan">Jordan:</span> Agreed. Now let&#x27;s talk about A I model news, because we have an Axios scoop worth watching. Reflection A I, a startup backed by Nvidia and founded by two former Google DeepMind researchers, is about to release its first open-weight model.</p>
+<p><span class="spk alex">Alex:</span> And the framing is that this is America&#x27;s answer to DeepSeek and Qwen, the Chinese systems that currently lead the open-weight leaderboards.</p>
+<p><span class="spk jordan">Jordan:</span> That&#x27;s the positioning. What we know for sure: nothing about the name, the size, the license, or any benchmarks has been published yet. What&#x27;s confirmed is that a release is reportedly imminent, expected this month, and that Reflection has more than seven billion dollars in committed compute through twenty twenty-nine. That&#x27;s the serious bet for a first release, and enterprises will reportedly be able to download and customize the model with private data once it lands. Analysts expect it to trail the top closed U S models at first but compete with the leading Chinese open ones. We&#x27;ll believe the benchmarks when we see them.</p>
+<p><span class="spk alex">Alex:</span> Meanwhile, Cloudflare took a very different swing. They launched Clef and Clef-flash, open-source decision models built for fast, structured A I decision-making in agentic workflows.</p>
+<p><span class="spk jordan">Jordan:</span> This one is interesting because it&#x27;s not a chatbot model. Decision models produce typed answers with probabilities instead of generating text. Clef-flash hits a median latency of just thirty-eight point eight milliseconds.</p>
+<p><span class="spk alex">Alex:</span> So for an agent that needs to decide yes or no, approve or route, next action A or B, you don&#x27;t need a full language model. You need a fast, cheap decision engine.</p>
+<p><span class="spk jordan">Jordan:</span> They&#x27;re released under the Apache two point oh license, they&#x27;re Jev A P I compatible, and they handle vision inputs and a sixty-four thousand token context window. The open-source community is already moving. The latest llama dot cpp builds added native support for decision models, so you can run this kind of inference locally and privately.</p>
+<p><span class="spk alex">Alex:</span> I like this trend. The agent economy doesn&#x27;t just need bigger models, it needs cheaper, faster infrastructure for all the little decisions agents make thousands of times a day.</p>
+<p><span class="spk jordan">Jordan:</span> That&#x27;s the story. Time for quick hits, Alex. First, Suno can talk now. The A I music company opened Speech beta to all users on web, i O S, and Android. It generates a spoken voice and original background music together as one track. Bedtime stories over soft piano, hype speeches over stadium drums.</p>
+<p><span class="spk alex">Alex:</span> Voice notes with unnecessarily epic scores. I know exactly which of our listeners is going to do that.</p>
+<p><span class="spk jordan">Jordan:</span> Also on the calendar, Microsoft&#x27;s October seventh Surface and Windows event is this Wednesday, and McKinsey&#x27;s A P A C data center research keeps showing the same gap: over two hundred billion dollars announced since twenty twenty-four, and turning announcements into energized capacity is the hard part.</p>
+<p><span class="spk alex">Alex:</span> Announced is easy, energized is hard. That is the whole data center story in one sentence.</p>
+<p><span class="spk jordan">Jordan:</span> That is a wrap for Monday&#x27;s episode. I&#x27;m Jordan.</p>
+<p><span class="spk alex">Alex:</span> And I&#x27;m Alex. We&#x27;ll see you tomorrow morning.</p>
+    </section>
+
+    <nav class="ep-nav" aria-label="More episodes">
+      <span><span class="dim">&larr; Newer: none</span></span>
+      <span><a href="/podcast.html">All episodes</a></span>
+      <span><a href="/episodes/nvidia-hits-57t-as-regulators-circle-openai-microsofts-x-hijacked-2026-10-04.html" rel="next">Older &rarr;: Nvidia Hits 5.7T as Regulators Circle OpenAI, Microsoft&#x27;s X Hijacked</a></span>
+    </nav>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="year"></span> ScribNet &mdash; scribnet.io</p>
+    <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>@scribnetai</span>
+    </a>
+    <a class="gh-link" href="https://instagram.com/scribnet.ai" target="_blank" rel="noopener" aria-label="ScribNet on Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <span>@scribnet.ai</span>
+    </a>
+    <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/homelab.html">Homelab</a><a href="/guides.html">Guides</a><a href="/prompts.html">Prompts</a></nav>
+    <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
