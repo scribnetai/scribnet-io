@@ -73,6 +73,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://scribnet.io/episodes/memphis-data-center-chaos-penguin-beats-pwn2own-day-one-2026-10-07.html</loc>
+    <lastmod>2026-10-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://scribnet.io/episodes/beam-battles-chinese-ai-mistrals-new-model-nyc-grills-ai-execs-2026-10-06.html</loc>
     <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>
