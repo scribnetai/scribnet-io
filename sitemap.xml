@@ -73,6 +73,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://scribnet.io/episodes/haiku-55-cuts-ai-prices-90-oracle-breach-exposes-20-million-2026-10-08.html</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://scribnet.io/episodes/memphis-data-center-chaos-penguin-beats-pwn2own-day-one-2026-10-07.html</loc>
     <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
