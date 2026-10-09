@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-09 — Weekly shipped summary: build log updated
+
+- Compiled the week's material changelog entries into the homepage build log (24 items at the cap): three new items (Battlecards: Zscaler vs Palo Alto Prisma Access vulnerability-shielding row, Nutanix vs Broadcom VMware AI-infrastructure row + vSphere Standard update; scribnet.io workflow prompts 11–12) plus prior weeks' entries; dropped the 3 oldest to hold the 24-item cap.
+
 ## 2026-10-03 — Prompts page: 2 new workflow prompts (11–12)
 
 - Published two approved prompt-forge drafts: (11) Project README Forge — turns pasted project facts into a tight quick-start README, flags secrets instead of quoting them, hands back a TBD list; (12) Debt Payoff Ladder — avalanche-vs-snowball comparison on your real numbers with payoff months and a named first target. Both merged into the page builder and deployed.
