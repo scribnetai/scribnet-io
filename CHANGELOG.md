@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-12 — Prompts page: 1 new workflow prompt (13)
+
+- Published one approved prompt-forge draft: (13) API Design Reviewer — pasted API design reviewed for naming consistency, auth on every route, pagination, and error shapes, with breaking-change traps flagged and a fix list ranked by cost-of-later, not aesthetics. Merged into the page builder and deployed.
+
 ## 2026-10-09 — Weekly shipped summary: build log updated
 
 - Compiled the week's material changelog entries into the homepage build log (24 items at the cap): three new items (Battlecards: Zscaler vs Palo Alto Prisma Access vulnerability-shielding row, Nutanix vs Broadcom VMware AI-infrastructure row + vSphere Standard update; scribnet.io workflow prompts 11–12) plus prior weeks' entries; dropped the 3 oldest to hold the 24-item cap.

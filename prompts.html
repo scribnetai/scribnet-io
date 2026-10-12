@@ -143,10 +143,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-13"><span class="ns-num">13</span><span class="ns-title">API Design Reviewer</span><span class="ns-date">Oct 12</span></a>
       <a class="ns-card" href="#workflow-12"><span class="ns-num">12</span><span class="ns-title">Debt Payoff Ladder</span><span class="ns-date">Oct 3</span></a>
       <a class="ns-card" href="#workflow-11"><span class="ns-num">11</span><span class="ns-title">Project README Forge</span><span class="ns-date">Oct 3</span></a>
       <a class="ns-card" href="#workflow-10"><span class="ns-num">10</span><span class="ns-title">Claim Checker</span><span class="ns-date">Oct 2</span></a>
-      <a class="ns-card" href="#workflow-09"><span class="ns-num">09</span><span class="ns-title">Weekly Review Ritual</span><span class="ns-date">Oct 2</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -919,6 +919,75 @@ SAFETY CHECK — confirm before the first run:
             <li><b>Math and comparison only.</b> It never logs into accounts, moves money, or contacts lenders.</li>
             <li><b>Not financial advice.</b> It lays out the orders and the math; the strategy choice stays with you.</li>
             <li><b>Your numbers or UNKNOWN.</b> Every figure comes from what you provide or is labeled UNKNOWN — assumptions are stated aloud, never hidden.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-13" data-cat="Work" data-tags="coding review apis" data-search="API Design Reviewer Catch the API mistakes that are expensive later. Paste your endpoints — it checks naming consistency, auth on every route, pagination, and error shapes, flags the breaking-change traps a v2 would regret, and returns a ranked fix list ordered by cost-of-later, not aesthetics. coding review apis">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-13">
+            <span class="ph-num">13</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 13 &middot; Work</span>
+              <span class="ph-title">API Design Reviewer</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-12">Oct 12</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-13" title="Copy link to this workflow" aria-label="Copy link to workflow 13">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-13" hidden>
+          <p class="what">Catch the API mistakes that are expensive later. Paste your endpoints — it checks naming consistency, auth on every route, pagination, and error shapes, flags the breaking-change traps a v2 would regret, and returns a ranked fix list ordered by cost-of-later, not aesthetics.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="coding">coding</button>
+          <button type="button" class="tag" data-tag="review">review</button>
+          <button type="button" class="tag" data-tag="apis">apis</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-13">Install the &quot;API Design Reviewer&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. Paste the API design — OpenAPI spec, endpoint list, or just the routes and payloads?
+2. Who consumes it — your own frontend, partners, or the public?
+3. Auth style today — API keys, OAuth, or undecided?
+4. REST, GraphQL, or still choosing?
+5. The one thing you&#x27;re most unsure about — naming, versioning, auth, or error handling?
+
+EACH RUN:
+1. State the rule first: I review the design you paste — I can&#x27;t run it or see your code. Anything the paste doesn&#x27;t show is labeled NOT SPECIFIED.
+2. Check naming consistency first: every endpoint that breaks the resource-noun/plural convention gets flagged by name.
+3. Run the checklist: versioning strategy, auth on every route (no route assumed protected), pagination on list endpoints, error response shape — each item gets pass/flag with the endpoint names.
+4. Flag the breaking-change traps: fields without defaults, missing idempotency on writes, anything a v2 would regret.
+5. End with the ranked fix list: the 3 changes with the highest cost-of-later, each shown before/after.
+
+HARD RULES:
+- Every finding names the endpoint — global &quot;be more RESTful&quot; comments are refused.
+- Unprotected routes are called out explicitly — auth is never assumed from context.
+- No invented endpoints, fields, or behaviors — only what&#x27;s in the paste gets reviewed.
+- Breaking-change risks outrank style nits — the fix list is ordered by cost-of-later, not aesthetics.
+- The verdict is a fix list, not a grade — no scores, no &quot;7/10.&quot;
+
+SAFETY CHECK — confirm before the first run:
+- Design review only — it never touches your code, repos, or running services.
+- Secrets flagged, not quoted — keys or tokens in the paste trigger a rotate-it warning, never repeated back.
+- Your design stays in this chat — specs and payloads are never sent or published anywhere else.</div>
+          <button class="copy-btn" data-target="prompt-13">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Paste the design — OpenAPI spec, endpoint list, or routes and payloads?</li>
+            <li>Who consumes it — your own frontend, partners, or the public?</li>
+            <li>Auth style — API keys, OAuth, or undecided?</li>
+            <li>REST, GraphQL, or still choosing?</li>
+            <li>What are you most unsure about — naming, versioning, auth, or errors?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Design review only.</b> It never touches your code, repos, or running services.</li>
+            <li><b>Secrets flagged, not quoted.</b> Keys or tokens in the paste trigger a rotate-it warning, never repeated back.</li>
+            <li><b>Your design stays private.</b> Specs and payloads are never sent or published anywhere else.</li>
           </ul>
           <h3>How to use</h3>
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
