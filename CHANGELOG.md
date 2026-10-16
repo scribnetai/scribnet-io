@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-16 — Weekly shipped summary: build log updated
+
+- Compiled the week's material changelog entries (Oct 10–16) into the homepage build log (24 items at the cap): five new items — Battlecards Palo Alto vs Fortinet dated wins (Atos global alliance for Fortinet, NHS England Secure Boundary for Palo Alto), the Nutanix vs VMware HyperArmor hypervisor-security row, the Cohesity vs Rubrik Code Guardian row plus NetApp vs Everpure AIDE/Keystone update, and workflow prompt (13) API Design Reviewer; dropped the 5 oldest to hold the 24-item cap. Routine SE Command Center morning briefings excluded.
+
+
 ## 2026-10-12 — Prompts page: 1 new workflow prompt (13)
 
 - Published one approved prompt-forge draft: (13) API Design Reviewer — pasted API design reviewed for naming consistency, auth on every route, pagination, and error shapes, with breaking-change traps flagged and a fix list ranked by cost-of-later, not aesthetics. Merged into the page builder and deployed.
