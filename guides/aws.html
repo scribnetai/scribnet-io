@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS — Zero to Dangerous · ScribNet</title>
+  <meta name="description" content="Zero to Dangerous: AWS — moving a real homelab server to EC2: instance anatomy, security groups, cloud-init, and a lockdown that sticks.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=prompts1">
+<!-- PWA: installable home-screen app -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#05070c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ScribNet">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2338bdf8'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='71' font-size='62' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>S</text></svg>">
+<!-- Analytics: Umami (cookieless, no consent banner) -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="025bed5c-dced-450a-a701-95f7cd065922"></script>
+  <style>
+    /* Demure animated aurora — three slow-drifting blurred blobs, very faint. */
+    .aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .aurora i { position: absolute; display: block; border-radius: 50%; filter: blur(90px); will-change: transform; }
+    .aurora .a1 { width: 640px; height: 640px; left: -180px; top: -200px; background: #7c6cff; opacity: .13; animation: drift1 30s ease-in-out infinite alternate; }
+    .aurora .a2 { width: 760px; height: 760px; right: -240px; top: -140px; background: #4de1ff; opacity: .08; animation: drift2 38s ease-in-out infinite alternate; }
+    .aurora .a3 { width: 580px; height: 580px; left: 32%; bottom: -280px; background: #7c6cff; opacity: .09; animation: drift3 46s ease-in-out infinite alternate; }
+    @keyframes drift1 { to { transform: translate(130px, 90px) scale(1.15); } }
+    @keyframes drift2 { to { transform: translate(-150px, 110px) scale(1.08); } }
+    @keyframes drift3 { to { transform: translate(100px, -80px) scale(1.18); } }
+    /* Typewriter caret for the rotating hero word. */
+    .caret { display: inline-block; width: 3px; height: 0.95em; margin-left: 3px; vertical-align: -0.1em;
+      border-radius: 2px; background: var(--cyan); animation: blink 1.1s steps(2, start) infinite; }
+    @keyframes blink { to { visibility: hidden; } }
+    @media (prefers-reduced-motion: reduce) { .aurora, .caret { display: none; } }
+  </style>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ScribNet">
+  <meta property="og:title" content="AWS — Zero to Dangerous">
+  <meta property="og:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
+  <meta property="og:url" content="https://scribnet.io/guides/aws.html">
+  <meta property="og:image" content="https://scribnet.io/og/og-apps.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AWS — Zero to Dangerous">
+  <meta name="twitter:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
+  <meta name="twitter:image" content="https://scribnet.io/og/og-apps.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://scribnet.io/#org",
+        "name": "ScribNet",
+        "url": "https://scribnet.io/",
+        "description": "ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.",
+        "sameAs": ["https://github.com/scribnetai"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://scribnet.io/#website",
+        "url": "https://scribnet.io/",
+        "name": "ScribNet",
+        "publisher": {"@id": "https://scribnet.io/#org"}
+      }
+    ]
+  }
+  </script>
+<link rel="canonical" href="https://scribnet.io/guides/aws.html">
+</head>
+<body>
+<div id="read-progress"></div>
+  <div class="chrome-top"><div class="chrome-inner">
+    <header class="topnav">
+      <a class="topnav-brand" href="/" aria-label="ScribNet home">
+        <span class="topnav-badge">S</span><span>scribnet.io</span>
+      </a>
+      <nav class="topnav-links" aria-label="Site">
+      <a href="/apps.html">Apps</a>
+      <a href="/podcast.html">Podcast</a>
+      <a href="/guides.html" aria-current="page">Guides</a>
+      <a href="/uses.html">Uses</a>
+      <a href="/homelab.html">Homelab</a>
+      </nav>
+    </header>
+  </div></div>
+  <main>
+<div class="guide-hero">
+  <div class="eyebrow">Zero to Dangerous</div>
+  <h1>AWS</h1>
+  <p class="subtitle">Move a real server from a budget hoster to EC2 — same compose file, same data, same name — and learn instances, security groups, cloud-init, and billing by moving something you actually care about.</p>
+  <div class="guide-meta"><span>6 chapters</span><span>~30 min read</span><span>Beginner</span></div>
+</div>
+
+<nav class="toc" aria-label="Chapters">
+  <div class="toc-title">Chapters</div>
+  <ol>
+    <li><a href="#ch1">The Portable Server: Design for the Exit</a></li>
+    <li><a href="#ch2">EC2 Anatomy: Reading the Instance Menu</a></li>
+    <li><a href="#ch3">The Front Door: Keys, Security Groups, and the Bill</a></li>
+    <li><a href="#ch4">cloud-init: The All-or-Nothing Bootstrap</a></li>
+    <li><a href="#ch5">Moving Day: Backup, Restore, Rename</a></li>
+    <li><a href="#ch6">Lock It Down, Kill the Old Box</a></li>
+  </ol>
+</nav>
+
+<section class="chapter" id="ch1">
+  <div class="ch-num">Chapter 1</div>
+  <h2>The Portable Server: Design for the Exit</h2>
+  <p>The workload in this book is deliberately unglamorous: one uptime monitor — Uptime Kuma, in the build this book is based on — running on a small VPS at a budget hoster, watching a homelab from outside the house. The job is to move it to AWS EC2. Not because the old hoster failed. As a <em>proof of concept</em>: the migration is the lesson, and the monitor is just important enough that doing it wrong would sting.</p>
+  <p>Honest framing up front, because AWS deserves it: this move does not save money. The AWS equivalent of a bargain VPS lands a few dollars a month <em>higher</em>, not lower. What you're buying is the skill set — EC2, security groups, EBS, key pairs, user data — learned on a workload where a mistake costs you an afternoon, not a business.</p>
+  <h3>Why the move was boring (by design)</h3>
+  <p>The whole migration kit fits in one directory, and none of it mentions a provider:</p>
+  <ul>
+    <li>A <strong>Docker Compose file</strong> declaring the service: image, restart policy, port binding, volume mount.</li>
+    <li>A <strong>named volume</strong> holding all the app's data — every monitor, every heartbeat, the admin account.</li>
+    <li>A <strong>backup script</strong> that tars the volume into a timestamped file, and a matching restore script.</li>
+    <li>A <strong>cloud-init file</strong> that bootstraps any fresh host into "the server" (chapter 4).</li>
+  </ul>
+  <p>Here's the heart of it — the compose file that ran on the old hoster, unchanged on AWS:</p>
+  <pre><code>services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    container_name: uptime-kuma
+    restart: unless-stopped
+    ports:
+      # localhost only -- exposure is someone else's job (chapter 5)
+      - "127.0.0.1:3001:3001"
+    volumes:
+      - kuma-data:/app/data
+
+volumes:
+  kuma-data:
+    name: kuma-data   # explicit name: scripts find it on any host</code></pre>
+  <p>Two decisions in that file do the heavy lifting. The app binds to <code>127.0.0.1</code> only — it never faces a network directly; a separate layer decides who may reach it. And the volume's name is pinned explicitly instead of accepting Compose's auto-generated project-prefixed name, so <code>backup.sh</code> and <code>restore.sh</code> find <code>kuma-data</code> on any machine, in any directory.</p>
+  <p>The backup itself is one idea: mount the volume read-only into a throwaway container and tar it up.</p>
+  <pre><code>docker run --rm \
+  -v kuma-data:/data:ro \
+  -v "$PWD/backups:/backup" \
+  alpine:3 tar czf "/backup/kuma-data-$(date +%Y%m%d-%H%M%S).tgz" -C /data .</code></pre>
+  <p>One analogy, then the principle: this is the difference between moving house and furnishing a hotel room. If your possessions live in labeled boxes (the volume) and the furniture list is written down (the compose file), the moving truck does not care which city it's driving to. The cheapest day to design your exit from a provider is the day you deploy — every shortcut you take on day one ("I'll just configure it in their panel") is a hostage you negotiate with on moving day.</p>
+  <div class="warn"><strong>Footgun:</strong> a backup that exists only on the box it backs up is not a backup — it's a souvenir. The tarball gets copied <em>off</em> the server before anything else happens (chapter 5). Until that copy exists somewhere else, your rollback is theoretical.</div>
+  <ul class="tldr">
+    <li>The migration kit is four provider-agnostic files: compose, named volume, backup/restore scripts, cloud-init.</li>
+    <li>Bind apps to localhost and pin volume names explicitly — portability is a day-one decision.</li>
+    <li>Design for the exit when you deploy; it's the cheapest that decision will ever be.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch2">
+  <div class="ch-num">Chapter 2</div>
+  <h2>EC2 Anatomy: Reading the Instance Menu</h2>
+  <p>The EC2 launch wizard is the first boss fight: hundreds of instance types with names like <code>c7gn.2xlarge</code>. The trick is that the name is a compressed spec sheet — once you can read it, the menu stops being intimidating. This migration's pick, decoded:</p>
+  <pre><code>t4g.small
+t  = family: burstable general purpose
+4  = generation (newer = faster silicon, usually cheaper per unit of work)
+g  = Graviton: AWS's own ARM processors (no letter = Intel, a = AMD)
+.small = size step; each step up roughly doubles the RAM</code></pre>
+  <p>The families worth knowing cold: <code>t</code> burstable general purpose, <code>m</code> balanced general purpose, <code>c</code> compute-heavy, <code>r</code> memory-heavy. For a homelab-scale service, you'll live in <code>t</code> and visit the others when a workload actually demands it.</p>
+  <h3>Nitro: the offload you don't choose</h3>
+  <p>Under nearly every modern instance family sits the Nitro system: networking, storage, and virtualization work is offloaded from the main CPUs onto dedicated Nitro cards. If you've sold datacenter gear, you already know this shape — it's the DPU/SmartNIC idea. The hypervisor tax mostly disappears, the host silicon spends its cycles on <em>your</em> workload, and it's why a two-vCPU cloud instance feels closer to bare metal than it has any right to. You never select Nitro — it comes with the family and generation you pick.</p>
+  <h3>Burstable: honest sizing for lazy workloads</h3>
+  <p>The <code>t</code> family is cheap because it's <em>burstable</em>: each instance is guaranteed a baseline slice of CPU and <em>banks</em> CPU credits while it idles, spending them when load spikes — a capped entitlement with a savings account. An uptime monitor asleep 99% of the time between checks is the perfect burstable tenant; a sustained render farm would be the worst. Match the family to the duty cycle, not to your hopes.</p>
+  <h3>ARM without fear, and storage without regret</h3>
+  <p>The <code>g</code> raises the only real question: will my software run on ARM? For containers, usually yes — a modern image tag points at a <em>manifest list</em> covering several architectures, and the engine pulls the build that matches the host. Verify before migration day, not during:</p>
+  <pre><code>docker buildx imagetools inspect louislam/uptime-kuma:2
+# check the platform list: you want linux/arm64 next to linux/amd64</code></pre>
+  <p>Storage is an EBS volume — network block storage, in hypervisor terms a VMDK that lives on the storage fabric instead of the host. The default choice, <code>gp3</code>, prices simply: a flat per-GB monthly rate (around $0.08/GB-month) with baseline performance included, so at this scale you're paying for gigabytes, not IOPS. One asymmetry rules every sizing decision: <strong>EBS volumes can be grown online, but never shrunk.</strong> Choose like you're pouring concrete — 20 GB with room to grow beats 40 GB of ego, and beating the 8 GB default matters because Docker image churn eats small disks. If you undersize, growing is a console edit plus a filesystem extend. If you oversize, shrinking is a rebuild.</p>
+  <div class="callout"><strong>Tip:</strong> size to what the workload actually uses, not to the old box's spec sheet — the old VPS's 2 GB was a product tier, not a measurement. Check real usage (<code>free -h</code>, <code>df -h</code>) and buy the smallest honest size — for this monitor, <code>t4g.small</code> (2 vCPU, 2 GB).</div>
+  <ul class="tldr">
+    <li>Instance names are spec sheets: family.generation+architecture.size.</li>
+    <li>Nitro is SmartNIC-style offload under everything modern; burstable t-family suits idle-mostly workloads.</li>
+    <li>Multi-arch images make ARM safe — verify platforms before you migrate, not during.</li>
+    <li>EBS grows but never shrinks; size for the workload you measured.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch3">
+  <div class="ch-num">Chapter 3</div>
+  <h2>The Front Door: Keys, Security Groups, and the Bill</h2>
+  <p>Three things get settled <em>before</em> the launch button gets pressed, because each is roughly ten times more annoying to retrofit afterward: how you'll authenticate, what the firewall allows, and how you'll know what it costs. In that order.</p>
+  <h3>Key pairs: download once, gone forever</h3>
+  <p>EC2 key pairs are asymmetric SSH keys where AWS keeps the public half and hands you the private half — a <code>.pem</code> file — <strong>exactly once</strong>, at creation. AWS does not retain a copy it can show you later. Lose the file and that door is simply gone. (This is less catastrophic than it sounds if your cloud-init installs your <em>own</em> key for your admin user, chapter 4 — two independent doors is an accident worth engineering on purpose.) Treat the <code>.pem</code> like any other secret: into the password manager, never into git, never into a chat window.</p>
+  <h3>Security groups: a stateful allow-list</h3>
+  <p>A security group is a firewall policy wrapped around the instance. Three properties define it. It's an <strong>allow-list only</strong> — there are no deny rules; anything not explicitly allowed is dropped. It's <strong>stateful</strong> — if your box initiates a connection outbound, the replies are allowed back automatically, unlike a stateless ACL where you'd have to write the return rule yourself. And it evaluates <strong>before</strong> traffic reaches the host, so it protects the box even from its own misconfigurations. For bootstrap, exactly one rule — SSH, from your current public IP, expressed as a <code>/32</code>:</p>
+  <pre><code>aws ec2 authorize-security-group-ingress \
+  --group-id sg-0123456789abcdef0 \
+  --protocol tcp --port 22 --cidr 192.0.2.10/32</code></pre>
+  <p>Read that rule the paranoid way: port 22, one source address on Earth. Not <code>0.0.0.0/0</code> "just for setup" — in production and homelabs alike, temporary rules are the most permanent kind.</p>
+  <div class="warn"><strong>Footgun:</strong> the launch wizard cheerfully offers "Allow HTTPS traffic from the internet" and "Allow HTTP traffic from the internet" checkboxes. For a box whose whole design is tailnet-only access, the only correct state for those boxes is <em>unchecked</em>. Most exposed cloud boxes weren't hacked through genius — they were born exposed by a checkbox somebody meant to revisit.</div>
+  <h3>The bill: IPv4 rent and the tripwire</h3>
+  <p>Two facts about AWS billing surprise everyone exactly once. First: since February 2024, <strong>every public IPv4 address costs about $0.005/hour — roughly $3.65 a month — whether it's attached to a running instance or sitting idle.</strong> The era of free spare addresses is over; an address is a metered resource, which will matter again in chapter 6. Second: your <em>account</em> type changes the math. Brand-new accounts may sit on a free plan with starter credits — genuinely useful, but read the terms: free-plan accounts can auto-close when the credits or the plan window run out unless upgraded. An account you've held for years is a plain paid account with a card on file and no credits to burn. Either way, open the Billing console and know which one you have <em>before</em> the first launch — it decides whether your POC is effectively free or honestly metered.</p>
+  <p>Then install the tripwire: an <strong>AWS Budget</strong>. Set a monthly cost budget slightly above the expected run-rate (expected ≈ $19/month, budget = $20), with email alerts at 80% and 100% of it. Five minutes in the console, and the worst case for a forgotten instance or a pricing misunderstanding becomes an email instead of a statement surprise. A proof of concept without a budget alarm isn't an experiment — it's an open tab.</p>
+  <ul class="tldr">
+    <li>The .pem downloads once; AWS can't re-show it. Vault it like a password.</li>
+    <li>Security groups: allow-list only, stateful, evaluated before the host. Bootstrap rule = 22/tcp from your IP/32, nothing else.</li>
+    <li>Public IPv4 costs ~$3.65/month each since Feb 2024 — addresses are metered now.</li>
+    <li>Check your plan type in Billing, and set a budget alarm <em>before</em> launching anything.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch4">
+  <div class="ch-num">Chapter 4</div>
+  <h2>cloud-init: The All-or-Nothing Bootstrap</h2>
+  <p>cloud-init is the bootstrap contract between you and any cloud. At launch you hand the provider a block of <em>user data</em> — a YAML file starting with <code>#cloud-config</code> — and on first boot the instance reads it and builds itself: users, packages, files, commands, firewall. It's what turns a VM from a pet you raise by hand into cattle you can recreate from a file in your repo.</p>
+  <h3>Anatomy of the file</h3>
+  <pre><code>#cloud-config
+hostname: monitor
+manage_etc_hosts: true
+
+users:
+  - name: labuser
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ssh-ed25519 TODO_REPLACE_WITH_YOUR_PUBLIC_KEY monitor
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - ca-certificates
+  - curl
+  - gnupg
+  - ufw
+  - jq
+
+runcmd:
+  # Docker from the official apt repo (keyring + source lines omitted here)
+  - apt-get update -y
+  - apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  - usermod -aG docker labuser
+  # Tailscale
+  - curl -fsSL https://tailscale.com/install.sh | sh
+  # Host firewall: deny inbound by default
+  - ufw default deny incoming
+  - ufw allow 22/tcp
+  - ufw allow in on tailscale0
+  - ufw --force enable</code></pre>
+  <p>Read it top-down: identity first (hostname, the admin user with <em>your</em> public key — note this is independent of the EC2 key pair from chapter 3), then packages, then <code>runcmd</code> for everything that's really a shell script in a trench coat: install Docker, install Tailscale, raise the host firewall. When it works, you SSH in a few minutes after launch to a finished machine. Verify by <em>outcomes</em>, not vibes:</p>
+  <pre><code>id labuser            # the user exists
+docker --version      # Docker answers
+tailscale version     # Tailscale answers
+sudo ufw status       # active, default deny, 22 + tailscale0 allowed
+hostname              # says monitor -- remember this one</code></pre>
+  <h3>The launch where nothing happened</h3>
+  <p>First launch of this migration: the instance booted, SSH answered, <code>cloud-init status</code> cheerfully reported <code>done</code> — and <em>none</em> of the config had applied. No <code>labuser</code>. No Docker, no Tailscale. And the tell, hiding in the shell prompt: the hostname was still the provider default, not <code>monitor</code>. cloud-init had finished — it just hadn't run <em>our</em> file.</p>
+  <p>Diagnosis rule: debug from the ground truth on the box, not the file on your laptop. The instance keeps exactly what it received:</p>
+  <pre><code>sudo head -25 /var/lib/cloud/instance/user-data.txt</code></pre>
+  <p>The file was all there — right user, right key, right packages. But two comment lines showed mojibake where em-dashes belonged. The file had been edited and saved on a Windows workstation, and the editor saved it in legacy <strong>ANSI encoding</strong> instead of UTF-8. The em-dash characters became invalid UTF-8 bytes. cloud-init's YAML loader decodes the <em>entire stream</em> before parsing — one bad byte, even inside a harmless comment, and the whole document is rejected. cloud-init shrugs, falls back to defaults, and still reports <code>done</code>, because from its perspective it did its job: it ran the (empty) config it could read.</p>
+  <p>The fix was boring on purpose: regenerate the user data as <strong>pure ASCII</strong> (em-dashes typed as <code>--</code>, no smart quotes, nothing an editor can corrupt), with the real SSH key <strong>pre-baked</strong> so the launch takes zero hand edits — every hand edit at paste time is a fresh chance to break the file. Then terminate the instance and relaunch from scratch rather than hand-repairing the broken one. A hand-fixed box is a snowflake that proves nothing about your bootstrap; the entire point of the POC was the bootstrap. Ten minutes lost, and the relaunched box passed every checker in the list above.</p>
+  <div class="warn"><strong>Footgun:</strong> <code>cloud-init status: done</code> means cloud-init finished, not that your config applied. A green status line next to a default hostname is a rejected config until proven otherwise. Verify outcomes — user, hostname, packages — every single time.</div>
+  <div class="callout"><strong>Tip:</strong> keep user data ASCII-only as a standing rule. It removes an entire failure class — no editor, clipboard, or console paste path can corrupt characters that aren't there.</div>
+  <ul class="tldr">
+    <li>User data is a first-boot contract: users, packages, files, runcmd, firewall — the host as a file.</li>
+    <li>cloud-init is all-or-nothing: one invalid byte rejects the whole config, and status still says "done".</li>
+    <li>Debug from <code>/var/lib/cloud/instance/user-data.txt</code> — what the instance received beats what you think you sent.</li>
+    <li>Fix by regenerating clean ASCII with the key pre-baked, then relaunch. Cattle, not pets.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch5">
+  <div class="ch-num">Chapter 5</div>
+  <h2>Moving Day: Backup, Restore, Rename</h2>
+  <p>Moving day is a sequence, and the order is the safety:</p>
+  <pre><code># on the OLD box, inside the project directory
+./backup.sh
+# on your workstation: pull the tarball down (this copy IS the rollback)
+scp labuser@&lt;old-box&gt;:~/homelab/backups/kuma-data-&lt;stamp&gt;.tgz .
+# on the NEW box (after chapter 4's bootstrap checks pass)
+git clone https://github.com/&lt;your-org&gt;/homelab.git
+# push the tarball up into the clone's backups/ folder, then:
+cd homelab
+./restore.sh backups/kuma-data-&lt;stamp&gt;.tgz
+docker compose ps        # service up, bound to 127.0.0.1:3001</code></pre>
+  <p>The restore script stops the service, empties the named volume, untars your data into it from a throwaway container, and starts the service again. Then comes the only verification that actually matters: open the dashboard and get a <strong>login prompt instead of a setup wizard</strong>. Log in with the admin credentials from the old box and there it all is — every monitor, every setting, the full heartbeat history, with one gap in the timeline covering the move itself. The gap is the migration, fossilized. This works because chapter 1 did its job: the data never lived in the container, so swapping the entire machine under it is just plumbing.</p>
+  <h3>What does not migrate: Tailscale</h3>
+  <p>Everything about the app moved in a tarball. Nothing about the network identity did, and forcing it to would be a mistake. A Tailscale node's identity lives in a state file (<code>/var/lib/tailscale/tailscaled.state</code>) holding its machine key — deliberately <em>not</em> copied, because two machines claiming one identity on the same tailnet is a conflict, not a shortcut. The new box enrolls as what it is: a new node, with a new tailnet IP, using a pre-authorized key generated in the admin console. (Auth keys are time-boxed — generate yours on moving-day morning, not last week.)</p>
+  <p>Two consequences follow from that, and both are one-liners once you know them. First, <code>tailscale serve</code> configuration is per-node state, so the command that exposes the app on the tailnet must be re-run on the new box:</p>
+  <pre><code>sudo tailscale serve --bg http://127.0.0.1:3001</code></pre>
+  <p>What does <em>not</em> need repeating: the HTTPS approval. Enabling HTTPS certificates is a tailnet-wide setting in the admin console — flip it once, ever, and each new node's certificate is issued automatically. Per-node config re-runs; tailnet-wide settings persist. Knowing which is which saves a confused half-hour.</p>
+  <h3>The rename trick, and its two traps</h3>
+  <p>Your bookmarks, scripts, and muscle memory all point at the node's MagicDNS name — so move the <em>name</em>, not the habits. In the admin console, rename the old node to <code>monitor-old</code>, then give the new node the name <code>monitor</code>. From your workstation, <code>ssh labuser@monitor</code> now lands on AWS. Same name, different continent of infrastructure, zero broken references.</p>
+  <p>Trap one lives on the <em>old</em> box: renaming a node does not move its serve registration. The old node's serve endpoint stays bound to its previous name, so its dashboard starts answering with an invalid-response error — the node is healthy, the nameplate on its web endpoint is stale. The fix is to re-register serve under the current name:</p>
+  <pre><code>sudo tailscale serve reset
+sudo tailscale serve --bg http://127.0.0.1:3001
+tailscale serve status   # should now show the node's CURRENT name</code></pre>
+  <p>Trap two lives on <em>your</em> machine. The first SSH to the reused name gets you the full-screen warning: <strong>REMOTE HOST IDENTIFICATION HAS CHANGED</strong>. It is not an attack — it's your own migration looking back at you; the name legitimately points at a new machine with a new host key. But "it's probably fine" is not a verification method. Do it properly: the warning prints the new key's SHA256 fingerprint, and the EC2 console's <em>Get system log</em> for the instance printed the host key fingerprints at first boot. Match them, then clear the stale entry and reconnect:</p>
+  <pre><code>ssh-keygen -R monitor</code></pre>
+  <div class="callout"><strong>Tip:</strong> identify nodes by tailnet IP when renaming — console lists can make two same-named Linux boxes look identical. Match the address from <code>tailscale ip -4</code> on the new box to the machine you're about to rename, and the rename goes to the right machine every time.</div>
+  <ul class="tldr">
+    <li>Backup off the old box first — the tarball on your workstation is the rollback.</li>
+    <li>Login prompt, not setup wizard: that's the restore proving itself, history and all.</li>
+    <li>Tailscale identity doesn't migrate: new node, fresh enrollment, serve re-run; HTTPS enablement is tailnet-wide and persists.</li>
+    <li>Renames move names, not serve registrations — and the known_hosts alarm afterward is you, verified via the console system log.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="ch6">
+  <div class="ch-num">Chapter 6</div>
+  <h2>Lock It Down, Kill the Old Box</h2>
+  <p>The instance was born with one public door: the bootstrap SSH rule from chapter 3. That door existed so you could reach the box before Tailscale was up. Tailscale is up — you've been SSHing through it and the dashboard loads over it — so the door has finished its only job. Delete the security group's inbound rule. The group now contains <strong>zero inbound rules</strong>, and the box's posture changes category: not "well-firewalled," but <em>unreachable</em>.</p>
+  <p>Verify like you mean it, in a fresh terminal:</p>
+  <pre><code>ssh labuser@&lt;public-ip&gt;   # expect: hangs, then times out -- nothing answers
+ssh labuser@monitor         # over the tailnet: works
+# and the monitor's checks are still landing green</code></pre>
+  <p>Learn to read that timeout: a <em>refusal</em> would mean something received your packet and answered "no." A timeout means silence — the security group dropped it and the internet's scanners get exactly the same nothing. The host's own ufw default-deny (chapter 4) remains as a second layer underneath, so cloud firewall and host firewall agree: nobody knocks, because there's no door.</p>
+  <h3>Why the public IP stays</h3>
+  <p>Your next instinct will be to finish the job — release the public IP entirely. Resist it, because in the default VPC that address is doing double duty: it is also the box's <strong>only outbound path</strong>. There is no NAT gateway in this network, so every packet the box sends — the monitor's checks, package updates, and Tailscale's own connection to its control plane and relays — leaves through that public IP. Release it and the box doesn't become private; it becomes <em>dark</em>, tailnet included, and your only way back in is the provider console. The AWS-native alternative, a managed NAT gateway, runs roughly $32 a month — about ten times the $3.65 the address itself costs — to solve a problem the empty security group already solved. Exposure is a property of <em>rules</em>, not of addresses: an assigned IP behind zero inbound rules accepts connections from nobody.</p>
+  <h3>Burn-in, then the kill</h3>
+  <p>Both boxes are now running the same monitor independently, and that overlap is the burn-in: a chosen window — 24 to 48 hours covers full day/night check cycles for a workload like this — where the new box has to prove itself while the old one stands by as instant rollback and independent witness. How long is a judgment call about blast radius: a single uptime monitor earns a shorter fuse than a production database would. But make it a <em>decision</em>, written down, not an oversight you rationalize later.</p>
+  <p>When the window closes: delete the old server in the provider's console, remove the <code>monitor-old</code> node from the Tailscale admin console, and keep the final tarball archived on your workstation. One tail to tie off: deleting the server is not closing the account. Providers typically require every product cancelled <em>and</em> the final invoice — issued on their billing cycle, days later — paid before account deactivation is even offered. Set a reminder for that date now, while you still remember the sequence exists, instead of rediscovering a zombie account next year.</p>
+  <h3>The dangerous checklist</h3>
+  <ul class="tldr">
+    <li>Read any EC2 instance type name as a spec sheet — family, generation, architecture, size — and know when burstable is the honest, cheap answer.</li>
+    <li>Bootstrap a server with zero post-launch clicking: cloud-init user data that creates the user, installs Docker and Tailscale, and raises the host firewall — verified by outcomes, not status lines.</li>
+    <li>Diagnose a silent bootstrap failure from ground truth: compare hostnames, read the user-data file the instance actually received, and recognize encoding as a failure class.</li>
+    <li>Move a stateful service between providers with a tarball — data, admin account, and history intact — then move its tailnet name so no bookmark breaks.</li>
+    <li>Take a cloud box completely off the public internet — zero-inbound security group, tailnet-only access — and explain why the public IP stays anyway.</li>
+  </ul>
+</section>
+
+<nav class="book-nav">
+  <a class="book-prev" href="/guides/terraform.html"><span>&larr; Previous book</span><strong>Terraform</strong></a>
+  <a class="book-next" href="/guides/apis.html"><span>Next book &rarr;</span><strong>APIs</strong></a>
+</nav>
+
+  </main>
+
+  <div class="chrome-bottom"><div class="chrome-inner">
+  <footer>
+    <p>© <span id="year"></span> ScribNet — scribnet.io</p>
+    <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>@scribnetai</span>
+    </a>
+    <a class="gh-link" href="https://instagram.com/scribnet.ai" target="_blank" rel="noopener" aria-label="ScribNet on Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <span>@scribnet.ai</span>
+    </a>
+    <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/guides.html">Guides</a><a href="/homelab.html">Homelab</a><a href="/guides.html">Guides</a><a href="/prompts.html">Prompts</a></nav>
+    <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
+  </footer>
+  </div></div>
+
+  <style>/* ============================================================
+   Zero to Dangerous — "Paper" reading theme
+   A warm, editorial book theme for the guides. Deliberately NOT
+   the site's dark neon system: this is meant to be read.
+   ============================================================ */
+
+:root {
+  --paper: #FAF7F0;
+  --paper-deep: #F2ECDD;
+  --paper-card: #FFFDF8;
+  --ink: #1C1712;
+  --ink-2: #4A4238;
+  --muted: #857A69;
+  --line: #E4DAC6;
+  --accent: #B0512C;
+  --accent-deep: #8A3D1F;
+  --accent-soft: #F7E8DB;
+  --tip-ink: #1E5B3C;
+  --tip-bg: #E9F3EB;
+  --tip-line: #2F7D52;
+  --warn-ink: #8A3D1F;
+  --warn-bg: #FAEEE1;
+  --warn-line: #B0512C;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); }
+::selection { background: #F0D6BC; }
+
+/* ---- reading progress ---- */
+#read-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent), #D98A4B);
+  z-index: 200;
+}
+
+/* ---- site chrome bands: header/footer match the site exactly ---- */
+.chrome-top { background: #05070c; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.chrome-bottom { background: #05070c; border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: 4rem; }
+.chrome-inner { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+.chrome-top .topnav { margin-bottom: 0; padding: 1.1rem 0; }
+.chrome-bottom footer { margin-top: 0; border-top: none; padding-bottom: 2.5rem; }
+
+/* ---- title page hero ---- */
+.guide-hero { text-align: center; max-width: 44rem; margin: 0 auto; padding: 3.5rem 0 2.75rem; }
+.guide-hero .eyebrow {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);
+  display: flex; align-items: center; justify-content: center; gap: 1.1rem;
+}
+.guide-hero .eyebrow::before, .guide-hero .eyebrow::after {
+  content: ""; height: 1px; width: 3.5rem; background: var(--line);
+}
+.guide-hero h1 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(2.75rem, 7vw, 4.25rem);
+  letter-spacing: -0.02em; line-height: 1.04; color: var(--ink);
+  margin: 1.1rem 0 0.9rem;
+}
+.guide-hero .subtitle {
+  font-family: var(--serif); font-style: italic; font-size: 1.22rem;
+  line-height: 1.6; color: var(--ink-2); max-width: 36rem; margin: 0 auto;
+}
+.guide-meta { display: flex; gap: 0.55rem; justify-content: center; flex-wrap: wrap; margin-top: 1.6rem; }
+.guide-meta span {
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 600; color: var(--ink-2);
+  border: 1px solid var(--line); background: var(--paper-card);
+  border-radius: 999px; padding: 0.42rem 0.95rem;
+}
+
+/* ---- table of contents ---- */
+.toc {
+  max-width: 42rem; margin: 0 auto 3.5rem; background: var(--paper-card);
+  border: 1px solid var(--line); border-radius: 18px; padding: 1.75rem 2rem 1.5rem;
+  box-shadow: 0 18px 40px -28px rgba(90, 70, 40, 0.35);
+}
+.toc-title {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 0.9rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--line);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; counter-reset: ch; }
+.toc li { counter-increment: ch; }
+.toc li a {
+  display: flex; align-items: baseline; gap: 0.9rem;
+  padding: 0.55rem 0.4rem; border-radius: 8px;
+  text-decoration: none; color: var(--ink);
+  font-family: var(--serif); font-size: 1.08rem; font-weight: 500;
+}
+.toc li a::before {
+  content: counter(ch, decimal-leading-zero);
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 800; color: var(--accent);
+  min-width: 1.6rem;
+}
+.toc li a::after {
+  content: ""; flex: 1; border-bottom: 1px dotted #D5C8AE; transform: translateY(-5px);
+  min-width: 1.5rem;
+}
+.toc li a:hover { color: var(--accent-deep); background: var(--accent-soft); }
+
+/* ---- chapters ---- */
+.chapter { max-width: 42rem; margin: 0 auto 4.5rem; scroll-margin-top: 1.5rem; }
+.ch-num {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);
+  display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.8rem;
+}
+.ch-num::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+.chapter h2 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  letter-spacing: -0.015em; line-height: 1.12; color: var(--ink);
+  margin: 0 0 1.3rem;
+}
+.chapter > h2 + p { font-size: 1.24rem; line-height: 1.7; color: var(--ink-2); }
+.chapter h3 {
+  font-family: var(--sans); font-size: 1.04rem; font-weight: 700;
+  letter-spacing: -0.01em; color: var(--ink); margin: 2.4rem 0 0.8rem;
+}
+.chapter p {
+  font-family: var(--serif); font-size: 1.12rem; line-height: 1.8;
+  color: var(--ink); margin: 0 0 1.15rem;
+}
+.chapter ul:not(.tldr), .chapter ol:not(.tldr) {
+  font-family: var(--serif); font-size: 1.08rem; line-height: 1.75;
+  color: var(--ink); margin: 0 0 1.3rem; padding-left: 1.4rem;
+}
+.chapter li { margin-bottom: 0.45rem; }
+.chapter li::marker { color: var(--accent); font-weight: 700; }
+.chapter a {
+  color: var(--accent-deep); text-decoration: underline;
+  text-decoration-color: #E4BFA1; text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+.chapter a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.chapter strong { font-weight: 600; }
+
+/* ---- code ---- */
+.chapter code {
+  font-family: var(--mono); font-size: 0.8em; color: var(--accent-deep);
+  background: var(--paper-deep); border: 1px solid var(--line);
+  border-radius: 6px; padding: 0.14em 0.45em; white-space: nowrap;
+}
+.chapter pre {
+  position: relative; background: #2A231A; border: 1px solid #3D3423;
+  border-radius: 14px; padding: 1.15rem 1.3rem; margin: 1.5rem 0;
+  overflow-x: auto; box-shadow: 0 16px 34px -24px rgba(40, 30, 15, 0.5);
+}
+.chapter pre code {
+  background: none; border: none; padding: 0; border-radius: 0;
+  color: #F0E7D3; font-size: 0.84rem; line-height: 1.7;
+  display: block; white-space: pre;
+}
+.copy-btn {
+  position: absolute; top: 0.65rem; right: 0.65rem;
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
+  color: #CFC3AB; background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px;
+  padding: 0.32rem 0.7rem; cursor: pointer; opacity: 0; transition: opacity 0.2s ease;
+}
+.chapter pre:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+.copy-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.14); }
+@media (hover: none) { .copy-btn { opacity: 1; } }
+
+/* ---- callouts ---- */
+.callout, .warn {
+  border-radius: 12px; padding: 1.05rem 1.3rem 1.05rem 1.4rem; margin: 1.6rem 0;
+  font-family: var(--sans); font-size: 0.93rem; line-height: 1.66;
+  border: 1px solid; border-left-width: 4px;
+}
+.callout { background: var(--tip-bg); border-color: #CFE3D6; border-left-color: var(--tip-line); color: #274434; }
+.warn { background: var(--warn-bg); border-color: #F0D6B8; border-left-color: var(--warn-line); color: #5C3A20; }
+.callout strong, .warn strong {
+  display: block; font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.35rem;
+}
+.callout strong { color: var(--tip-ink); }
+.warn strong { color: var(--warn-ink); }
+.callout code, .warn code { background: rgba(255, 255, 255, 0.65); white-space: normal; }
+
+/* ---- takeaways + checklist ---- */
+.tldr {
+  list-style: none; margin: 1.8rem 0 0; padding: 1.3rem 1.5rem 1.3rem;
+  background: var(--paper-card); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: 0 12px 30px -24px rgba(90, 70, 40, 0.4);
+}
+.tldr::before {
+  content: "Key takeaways";
+  display: block; font-family: var(--sans); font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 0.85rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--line);
+}
+.tldr li {
+  position: relative; font-family: var(--sans); font-size: 0.94rem; line-height: 1.62;
+  color: var(--ink-2); padding-left: 1.9rem; margin-bottom: 0.55rem;
+}
+.tldr li:last-child { margin-bottom: 0; }
+.tldr li::before {
+  content: "✓"; position: absolute; left: 0.1rem; top: 0.02rem;
+  color: var(--tip-line); font-weight: 800;
+}
+/* the final "dangerous checklist" becomes interactive */
+.tldr.checklist::before { content: "The dangerous checklist — tap to check off"; }
+.tldr.checklist li { cursor: pointer; padding-left: 2.2rem; border-radius: 8px; }
+.tldr.checklist li::before {
+  content: ""; width: 1.05rem; height: 1.05rem; top: 0.22rem; left: 0.15rem;
+  border: 1.5px solid var(--muted); border-radius: 6px; background: #fff;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.tldr.checklist li.done { color: var(--muted); text-decoration: line-through; text-decoration-color: #C9BCA4; }
+.tldr.checklist li.done::before {
+  content: "✓"; background: var(--tip-line); border-color: var(--tip-line); color: #fff;
+  font-size: 0.72rem; font-weight: 800; line-height: 1.05rem; text-align: center;
+}
+
+/* ---- prev / next book nav ---- */
+.book-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 42rem; margin: 2.5rem auto 4rem; }
+.book-nav a {
+  display: block; background: var(--paper-card); border: 1px solid var(--line);
+  border-radius: 16px; padding: 1.25rem 1.4rem; text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.book-nav a:hover { transform: translateY(-3px); border-color: #D8C39E; box-shadow: 0 18px 38px -22px rgba(90, 70, 40, 0.45); }
+.book-nav span {
+  display: block; font-family: var(--sans); font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem;
+}
+.book-nav strong { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); }
+.book-prev span::before { content: "← "; color: var(--accent); }
+.book-next { text-align: right; }
+.book-next span::after { content: " →"; color: var(--accent); }
+
+/* ---- responsive ---- */
+@media (max-width: 640px) {
+  .guide-hero { padding: 2.5rem 0 2rem; }
+  .guide-hero .eyebrow::before, .guide-hero .eyebrow::after { width: 2rem; }
+  .toc { padding: 1.3rem 1.35rem 1.1rem; margin-bottom: 2.75rem; }
+  .toc li a { font-size: 1rem; }
+  .chapter { margin-bottom: 3.5rem; }
+  .chapter p { font-size: 1.06rem; }
+  .chapter > h2 + p { font-size: 1.14rem; }
+  .chapter pre code { font-size: 0.8rem; }
+  .book-nav { grid-template-columns: 1fr; }
+  .book-next { text-align: left; }
+}
+@media (max-width: 560px) {
+  .topnav-links { flex-wrap: wrap; justify-content: flex-end; row-gap: 0.15rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+/* ---- print: it's a book, let it print like one ---- */
+@media print {
+  .topnav, #read-progress, footer, .book-nav, .snkf-btn, .copy-btn { display: none !important; }
+  body { background: #fff; }
+  .guide-hero { padding-top: 0; }
+  .chapter, .toc { max-width: 100%; box-shadow: none; }
+  .chapter pre { background: #f5f5f5; border-color: #ddd; box-shadow: none; }
+  .chapter pre code { color: #222; }
+}
+
+  </style>
+
+<!-- ScribNet feedback widget: floating button + dialog, sends via user's email client (mailto). Self-contained: no external deps, no reliance on page CSS. -->
+<style>
+.snkf-btn{position:fixed;right:22px;bottom:22px;z-index:9990;display:flex;align-items:center;gap:9px;
+  padding:12px 18px;border-radius:999px;cursor:pointer;font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.2px;color:#fff;
+  background:rgba(20,26,46,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.16);box-shadow:0 8px 28px rgba(0,0,0,.45),0 0 0 1px rgba(124,92,255,.12);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;min-height:46px}
+.snkf-btn:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.55);box-shadow:0 12px 32px rgba(0,0,0,.5),0 0 18px rgba(124,92,255,.35)}
+.snkf-btn:active{transform:translateY(0)}
+.snkf-btn svg{width:18px;height:18px;flex:none}
+.snkf-overlay{position:fixed;inset:0;z-index:9991;display:none;align-items:center;justify-content:center;
+  background:rgba(4,6,12,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:16px}
+.snkf-overlay.open{display:flex}
+.snkf-card{width:420px;max-width:100%;max-height:calc(100vh - 60px);overflow:auto;border-radius:20px;padding:26px 24px 22px;
+  background:rgba(20,26,46,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 70px rgba(0,0,0,.6);
+  font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;color:#eef1f8;
+  animation:snkf-pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes snkf-pop{from{transform:scale(.94) translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.snkf-title{font-size:19px;font-weight:700;margin:0 0 4px}
+.snkf-sub{font-size:13.5px;color:#9aa4c0;margin:0 0 18px;line-height:1.5}
+.snkf-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#8b94b3;margin:0 0 8px}
+.snkf-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.snkf-chip{padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);
+  color:#cfd6ea;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s ease}
+.snkf-chip:hover{border-color:rgba(124,92,255,.6);color:#fff}
+.snkf-chip.sel{background:linear-gradient(135deg,#7c5cff,#38bdf8);border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(124,92,255,.4)}
+.snkf-field{width:100%;box-sizing:border-box;border-radius:12px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);color:#fff;font-family:inherit;font-size:14.5px;padding:11px 13px;margin-bottom:14px;outline:none;
+  transition:border-color .15s ease}
+.snkf-field::placeholder{color:#6b7490}
+.snkf-field:focus{border-color:#7c5cff;box-shadow:0 0 0 3px rgba(124,92,255,.25)}
+textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
+.snkf-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+.snkf-cancel{padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:transparent;
+  color:#cfd6ea;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.snkf-cancel:hover{background:rgba(255,255,255,.07)}
+.snkf-send{padding:11px 22px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#7c5cff,#38bdf8);color:#fff;font-family:inherit;font-size:14px;font-weight:700;
+  box-shadow:0 6px 20px rgba(124,92,255,.45);transition:transform .15s ease,box-shadow .15s ease}
+.snkf-send:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(124,92,255,.6)}
+.snkf-send:disabled{opacity:.45;cursor:default;transform:none}
+.snkf-note{font-size:12px;color:#6b7490;margin:14px 0 0;text-align:center}
+@media (max-width:480px){
+  .snkf-overlay{align-items:flex-end;padding:0}
+  .snkf-card{width:100%;border-radius:22px 22px 0 0;max-height:88vh}
+  .snkf-btn{right:16px;bottom:16px;padding:12px 16px}
+}
+</style>
+<button class="snkf-btn" id="snkfBtn" aria-label="Send feedback" aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  <span>Feedback</span>
+</button>
+<div class="snkf-overlay" id="snkfOverlay" role="dialog" aria-modal="true" aria-labelledby="snkfTitle">
+  <div class="snkf-card">
+    <h2 class="snkf-title" id="snkfTitle">Send feedback</h2>
+    <p class="snkf-sub">Spotted a bug, have an idea, or just want to say hi? I read everything.</p>
+    <p class="snkf-label">What's this about?</p>
+    <div class="snkf-chips" id="snkfChips">
+      <button type="button" class="snkf-chip sel" data-topic="Bug">Bug</button>
+      <button type="button" class="snkf-chip" data-topic="Idea">Idea</button>
+      <button type="button" class="snkf-chip" data-topic="Question">Question</button>
+      <button type="button" class="snkf-chip" data-topic="Praise">Praise</button>
+    </div>
+    <p class="snkf-label">Your name <span style="text-transform:none;letter-spacing:0;opacity:.6">(optional)</span></p>
+    <input class="snkf-field" id="snkfName" type="text" maxlength="80" placeholder="Jane SE" autocomplete="name">
+    <p class="snkf-label">Message</p>
+    <textarea class="snkf-field" id="snkfMsg" maxlength="2000" placeholder="What's on your mind?"></textarea>
+    <div class="snkf-actions">
+      <button type="button" class="snkf-cancel" id="snkfCancel">Cancel</button>
+      <button type="button" class="snkf-send" id="snkfSend" disabled>Send via email</button>
+    </div>
+    <p class="snkf-note">Opens your email app with the message addressed to me.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var TO = "scribnet.ai@gmail.com";
+  var btn = document.getElementById("snkfBtn"),
+      overlay = document.getElementById("snkfOverlay"),
+      cancel = document.getElementById("snkfCancel"),
+      send = document.getElementById("snkfSend"),
+      nameEl = document.getElementById("snkfName"),
+      msgEl = document.getElementById("snkfMsg"),
+      chips = document.getElementById("snkfChips"),
+      topic = "Bug";
+  function open(){ overlay.classList.add("open"); setTimeout(function(){ msgEl.focus(); }, 60); }
+  function close(){ overlay.classList.remove("open"); btn.focus(); }
+  btn.addEventListener("click", open);
+  cancel.addEventListener("click", close);
+  overlay.addEventListener("click", function(e){ if (e.target === overlay) close(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && overlay.classList.contains("open")) close(); });
+  chips.addEventListener("click", function(e){
+    var c = e.target.closest(".snkf-chip"); if (!c) return;
+    chips.querySelectorAll(".snkf-chip").forEach(function(x){ x.classList.remove("sel"); });
+    c.classList.add("sel"); topic = c.getAttribute("data-topic");
+  });
+  msgEl.addEventListener("input", function(){ send.disabled = !msgEl.value.trim(); });
+  send.addEventListener("click", function(){
+    var msg = msgEl.value.trim(); if (!msg) return;
+    var subject = "[Feedback: " + topic + "] " + document.title;
+    var body = msg + "\n\n— " + (nameEl.value.trim() || "Anonymous") + "\nPage: " + location.href;
+    location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    close();
+  });
+})();
+</script>
+
+<script>
+// Build log expander: the button label counts itself from the live tl-item
+// total (no hardcoded N); toggles the overflow entries.
+(function(){
+  var btn = document.getElementById('logToggle'), extra = document.getElementById('tlExtra');
+  if(!btn || !extra) return;
+  var total = document.querySelectorAll('.tl-item').length;
+  function render(open){
+    if(open){ extra.removeAttribute('hidden'); } else { extra.setAttribute('hidden',''); }
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.innerHTML = open ? 'Show less <span aria-hidden="true">&uarr;</span>'
+                        : 'Show all ' + total + ' <span aria-hidden="true">&darr;</span>';
+  }
+  render(false);
+  btn.addEventListener('click', function(){ render(btn.getAttribute('aria-expanded') !== 'true'); });
+})();
+</script>
+
+
+<script>
+  var _yr = document.getElementById("year");
+  if (_yr) _yr.textContent = new Date().getFullYear();
+
+  /* Reading progress bar */
+  (function () {
+    var bar = document.getElementById("read-progress"), ticking = false;
+    function update() {
+      ticking = false;
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  })();
+
+  /* Copy buttons on code blocks */
+  document.querySelectorAll(".chapter pre").forEach(function (pre) {
+    var btn = document.createElement("button");
+    btn.className = "copy-btn"; btn.type = "button"; btn.textContent = "Copy";
+    btn.addEventListener("click", function () {
+      var code = pre.querySelector("code");
+      var text = code ? code.innerText : pre.innerText;
+      function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* Interactive "dangerous checklist" — tap to check off, remembered per book */
+  (function () {
+    var store = null;
+    try { store = window.localStorage; } catch (e) {}
+    var key = "ztd-checklist:" + location.pathname;
+    document.querySelectorAll(".chapter h3").forEach(function (h) {
+      if (h.textContent.toLowerCase().indexOf("dangerous checklist") === -1) return;
+      var ul = h.nextElementSibling;
+      if (!ul || !ul.classList || !ul.classList.contains("tldr")) return;
+      ul.classList.add("checklist");
+      var saved = {};
+      try { saved = JSON.parse(store.getItem(key) || "{}"); } catch (e) {}
+      ul.querySelectorAll("li").forEach(function (li, i) {
+        if (saved[i]) li.classList.add("done");
+        li.addEventListener("click", function () {
+          li.classList.toggle("done");
+          if (!store) return;
+          var s = {};
+          ul.querySelectorAll("li").forEach(function (x, j) {
+            if (x.classList.contains("done")) s[j] = 1;
+          });
+          try { store.setItem(key, JSON.stringify(s)); } catch (e) {}
+        });
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

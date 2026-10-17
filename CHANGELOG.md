@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-17 — "Zero to Dangerous" grows: AWS book
+
+- New `/guides/aws.html`: the fifth book — moving a real homelab server to EC2 (instance anatomy, key pairs & security groups, cloud-init, Tailscale, lockdown & decommission). Six chapters drawn from an actual migration performed the same day.
+- `/guides.html` index gains the AWS card; series order is now Kubernetes → Terraform → AWS → APIs → GitHub (Terraform's next-book and APIs' previous-book links re-pointed).
+
 ## 2026-10-16 — Weekly shipped summary: build log updated
 
 - Compiled the week's material changelog entries (Oct 10–16) into the homepage build log (24 items at the cap): five new items — Battlecards Palo Alto vs Fortinet dated wins (Atos global alliance for Fortinet, NHS England Secure Boundary for Palo Alto), the Nutanix vs VMware HyperArmor hypervisor-security row, the Cohesity vs Rubrik Code Guardian row plus NetApp vs Everpure AIDE/Keystone update, and workflow prompt (13) API Design Reviewer; dropped the 5 oldest to hold the 24-item cap. Routine SE Command Center morning briefings excluded.

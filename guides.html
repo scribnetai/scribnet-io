@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zero to Dangerous — ScribNet Guides</title>
-  <meta name="description" content="Zero to Dangerous: beginner books on Kubernetes, Terraform, APIs, and GitHub. Six chapters each, zero dumb questions.">
+  <meta name="description" content="Zero to Dangerous: beginner books on Kubernetes, Terraform, AWS, APIs, and GitHub. Six chapters each, zero dumb questions.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -125,6 +125,20 @@
         </article>
         <article class="card reveal book-card" style="animation-delay:140ms">
           <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">6 chapters</span></div>
+          <h3>AWS</h3>
+          <p>Move a real server to EC2 without the horror stories: instance anatomy, security groups, cloud-init, and a lockdown that sticks.</p>
+          <ol class="book-chapters">
+              <li>The portable server</li>
+              <li>EC2 anatomy</li>
+              <li>The front door</li>
+              <li>cloud-init: the all-or-nothing bootstrap</li>
+              <li>Moving day</li>
+              <li>Lock it down, kill the old box</li>
+          </ol>
+          <a class="card-link" href="/guides/aws.html">Read the book →</a>
+        </article>
+        <article class="card reveal book-card" style="animation-delay:210ms">
+          <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">6 chapters</span></div>
           <h3>APIs</h3>
           <p>The 20% of REST, HTTP, auth, and curl that covers 80% of real work. Ends with you scripting an API like you mean it.</p>
           <ol class="book-chapters">
@@ -137,7 +151,7 @@
           </ol>
           <a class="card-link" href="/guides/apis.html">Read the book →</a>
         </article>
-        <article class="card reveal book-card" style="animation-delay:210ms">
+        <article class="card reveal book-card" style="animation-delay:280ms">
           <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">6 chapters</span></div>
           <h3>GitHub</h3>
           <p>Git&#x27;s mental model, Pages hosting, Actions, and the API — plus keeping your repos clean enough to show people.</p>
@@ -303,6 +317,24 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
     location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     close();
   });
+})();
+</script>
+
+<script>
+// Build log expander: the button label counts itself from the live tl-item
+// total (no hardcoded N); toggles the overflow entries.
+(function(){
+  var btn = document.getElementById('logToggle'), extra = document.getElementById('tlExtra');
+  if(!btn || !extra) return;
+  var total = document.querySelectorAll('.tl-item').length;
+  function render(open){
+    if(open){ extra.removeAttribute('hidden'); } else { extra.setAttribute('hidden',''); }
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.innerHTML = open ? 'Show less <span aria-hidden="true">&uarr;</span>'
+                        : 'Show all ' + total + ' <span aria-hidden="true">&darr;</span>';
+  }
+  render(false);
+  btn.addEventListener('click', function(){ render(btn.getAttribute('aria-expanded') !== 'true'); });
 })();
 </script>
 

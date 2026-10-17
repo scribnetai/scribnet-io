@@ -336,7 +336,7 @@ resource "vm_clone" "adopted" {
 
 <nav class="book-nav">
   <a class="book-prev" href="/guides/kubernetes.html"><span>&larr; Previous book</span><strong>Kubernetes</strong></a>
-  <a class="book-next" href="/guides/apis.html"><span>Next book &rarr;</span><strong>APIs</strong></a>
+  <a class="book-next" href="/guides/aws.html"><span>Next book &rarr;</span><strong>AWS</strong></a>
 </nav>
 
   </main>
@@ -730,6 +730,24 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
     location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     close();
   });
+})();
+</script>
+
+<script>
+// Build log expander: the button label counts itself from the live tl-item
+// total (no hardcoded N); toggles the overflow entries.
+(function(){
+  var btn = document.getElementById('logToggle'), extra = document.getElementById('tlExtra');
+  if(!btn || !extra) return;
+  var total = document.querySelectorAll('.tl-item').length;
+  function render(open){
+    if(open){ extra.removeAttribute('hidden'); } else { extra.setAttribute('hidden',''); }
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.innerHTML = open ? 'Show less <span aria-hidden="true">&uarr;</span>'
+                        : 'Show all ' + total + ' <span aria-hidden="true">&darr;</span>';
+  }
+  render(false);
+  btn.addEventListener('click', function(){ render(btn.getAttribute('aria-expanded') !== 'true'); });
 })();
 </script>
 
