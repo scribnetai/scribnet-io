@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-17 — "Zero to Dangerous" grows: Agentic Markdowns book
+
+- New `/guides/agentic-markdowns.html`: the sixth book — personas, skills, and memory as plain-text files that travel between AI tools. Six chapters: why Markdown won, the AGENTS.md and Agent Skills standards, anatomy of a persona, how agents learn, making them experts, and the working library (validator, bundle builder, changelog discipline). Public edition of the Agentic Markdown Handbook; sanitized per the series rules (assembler sanity scan clean).
+- `/guides.html` index gains the Agentic Markdowns card; series order is now Kubernetes → Terraform → AWS → APIs → GitHub → Agentic Markdowns (GitHub's next-book link re-pointed).
+
 ## 2026-10-17 — "Zero to Dangerous" grows: AWS book
 
 - New `/guides/aws.html`: the fifth book — moving a real homelab server to EC2 (instance anatomy, key pairs & security groups, cloud-init, Tailscale, lockdown & decommission). Six chapters drawn from an actual migration performed the same day.
