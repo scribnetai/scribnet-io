@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-18 — Prompts page: 1 new workflow prompt (14)
+
+- Published one approved prompt-forge draft: (14) Shell Command Explainer — a pasted bash, zsh, or PowerShell command is accounted for token by token, scanned for elevation, recursion, and overwrite dangers (present/absent), and given a run / check-first / do-not-run verdict tied to the scan; explanation only, never executes. Merged into the page builder and deployed.
+
 ## 2026-10-17 — "Zero to Dangerous" grows: Agentic Markdowns book
 
 - New `/guides/agentic-markdowns.html`: the sixth book — personas, skills, and memory as plain-text files that travel between AI tools. Six chapters: why Markdown won, the AGENTS.md and Agent Skills standards, anatomy of a persona, how agents learn, making them experts, and the working library (validator, bundle builder, changelog discipline). Public edition of the Agentic Markdown Handbook; sanitized per the series rules (assembler sanity scan clean).

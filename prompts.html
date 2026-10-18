@@ -143,10 +143,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-14"><span class="ns-num">14</span><span class="ns-title">Shell Command Explainer</span><span class="ns-date">Oct 18</span></a>
       <a class="ns-card" href="#workflow-13"><span class="ns-num">13</span><span class="ns-title">API Design Reviewer</span><span class="ns-date">Oct 12</span></a>
       <a class="ns-card" href="#workflow-12"><span class="ns-num">12</span><span class="ns-title">Debt Payoff Ladder</span><span class="ns-date">Oct 3</span></a>
       <a class="ns-card" href="#workflow-11"><span class="ns-num">11</span><span class="ns-title">Project README Forge</span><span class="ns-date">Oct 3</span></a>
-      <a class="ns-card" href="#workflow-10"><span class="ns-num">10</span><span class="ns-title">Claim Checker</span><span class="ns-date">Oct 2</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -988,6 +988,76 @@ SAFETY CHECK — confirm before the first run:
             <li><b>Design review only.</b> It never touches your code, repos, or running services.</li>
             <li><b>Secrets flagged, not quoted.</b> Keys or tokens in the paste trigger a rotate-it warning, never repeated back.</li>
             <li><b>Your design stays private.</b> Specs and payloads are never sent or published anywhere else.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-14" data-cat="Work" data-tags="coding shell learning" data-search="Shell Command Explainer Understand a shell command before you run it. Paste any bash, zsh, or PowerShell command — it accounts for every token in order, flags elevation, recursion, and overwrites in a present/absent danger scan, and gives a run / check-first / do-not-run verdict tied to those flags. coding shell learning">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-14">
+            <span class="ph-num">14</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 14 &middot; Work</span>
+              <span class="ph-title">Shell Command Explainer</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-18">Oct 18</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-14" title="Copy link to this workflow" aria-label="Copy link to workflow 14">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-14" hidden>
+          <p class="what">Understand a shell command before you run it. Paste any bash, zsh, or PowerShell command — it accounts for every token in order, flags elevation, recursion, and overwrites in a present/absent danger scan, and gives a run / check-first / do-not-run verdict tied to those flags.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="coding">coding</button>
+          <button type="button" class="tag" data-tag="shell">shell</button>
+          <button type="button" class="tag" data-tag="learning">learning</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-14">Install the &quot;Shell Command Explainer&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. Which shell and system is this for — bash, zsh, PowerShell, or another you name? The explanation is locked to that shell; if &quot;skip&quot;, I assume bash and say so.
+2. What is your level with this shell — beginner, occasional user, or comfortable? I match the detail to that level.
+3. What do you want from the explanation — understand before running, check safety, or adapt the command for a different file or target?
+4. Where would this run — a test machine, a home machine, a work system, or a production server — or ENV NOT STATED? The verdict treats production as highest risk.
+5. Is there anything that must never happen on that system — for example deleting originals, or stopping a running service? Named items become absolute stop flags.
+
+EACH RUN:
+1. Ask me to paste the command, exactly as I received it. First, state the limits: you explain only the pasted text — you cannot run it, test it, or see my files, environment variables, current directory, or installed versions, and anything that depends on those is labelled CANNOT CHECK FROM PASTE.
+2. Build the token table before explaining anything: split the command into tokens in order — command name, each flag, each argument, each pipe, redirect, or separator — numbered, each token copied exactly. Show the token count; every token in the paste must appear in the table exactly once.
+3. Explain each token in plain language in table order: what it does in the shell from setup, or FLAG MEANING NOT VERIFIED if its meaning in that shell is uncertain — an uncertain flag is never given a plausible guess. A token from a different shell dialect is flagged WRONG SHELL — TOKEN NOT VALID HERE.
+4. Run the danger scan as a checklist, each item PRESENT (with the token number) or ABSENT: sudo or elevation, recursive delete or overwrite, disk or format tools, download piped straight to a shell, redirect overwriting an existing-named file, permission or ownership changes, killing processes, and any stop flag I named in setup. Absence is stated, never implied by silence.
+5. Trace the data flow in one block: input source exactly as pasted (or INPUT NOT NAMED), what changes state (each file, setting, or process named in the paste, or STATE CHANGE NOT CLEAR FROM PASTE), and output destination exactly as pasted (or TERMINAL — NO FILE WRITTEN, only if no redirect is present).
+6. Give the verdict in one line: EXPLAINED — AS PASTED, RUN ONLY AFTER THE CHECKS LISTED, or DO NOT RUN — with the danger-scan items that decided it named in that line. If the environment in setup is production and any danger item is PRESENT, the verdict cannot be the first option. End with read-only check commands, drawn only from tokens already in the paste (for example listing the named target first), each labelled with what it would show — no new destructive variant is ever suggested.
+
+HARD RULES:
+- Every token is accounted for — table rows equal the token count, each token copied character-for-character; a token that cannot be parsed is TOKEN UNPARSED, never skipped.
+- Unknown means unknown — an unverified flag, path, or variable is FLAG MEANING NOT VERIFIED or CANNOT CHECK FROM PASTE, never explained from a guess.
+- Destructive power is named plainly — elevation, recursion, and overwrite tokens are called out in the danger scan even when the overall command looks routine.
+- The dialect is locked — syntax and flags are judged only against the shell named in setup; another shell&#x27;s meaning is never imported.
+- No invented context — file contents, environment values, current directory, and tool versions are never asserted; they are named as what I would need to check myself.
+
+SAFETY CHECK — confirm before the first run:
+- Explanation only — it never runs, pastes, schedules, or sends the command anywhere; you decide whether and where to run it.
+- Secrets stop the explanation — a pasted command containing a password, token, or key gets a stop-and-rotate warning, and the secret part is never quoted back.
+- Production gets the strict verdict — if you said production, any present danger item blocks an as-pasted verdict, and the checks list comes first.</div>
+          <button class="copy-btn" data-target="prompt-14">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Which shell and system — bash, zsh, PowerShell, or other?</li>
+            <li>Your level with this shell — beginner, occasional, comfortable?</li>
+            <li>Understand before running, check safety, or adapt it?</li>
+            <li>Where would it run — test, home, work, or production?</li>
+            <li>Anything that must never happen on that system?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Explanation only.</b> It never runs, pastes, schedules, or sends the command anywhere — you decide whether to run it.</li>
+            <li><b>Secrets stop the explanation.</b> A password, token, or key in the command gets a stop-and-rotate warning and is never quoted back.</li>
+            <li><b>Production gets the strict verdict.</b> On a production system, any present danger item blocks an as-pasted verdict — checks come first.</li>
           </ul>
           <h3>How to use</h3>
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
