@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-21 — Visual Lab demo 15 v1.1: line chart, last 7 days
+
+- Daily usage is now an SVG line/area chart (gradient stroke, hover dots with per-day totals, date labels) showing the last 7 days instead of the 28-day bar strip.
+- Trimmed the intro paragraph (dropped the GPU mention).
+
 ## 2026-10-21 — Visual Lab demo 15: real token data live
 
 - Sample data replaced with the actual Hermes usage ledger (from the private agentic-ai-markdowns repo): 1,898,461 lifetime tokens — 1,813,440 local (gpt-oss:20b on Ollama) vs 85,021 cloud (Gemini 3.1 Pro). The ledger's first banked day is 2026-10-21, so the daily chart grows from here.
