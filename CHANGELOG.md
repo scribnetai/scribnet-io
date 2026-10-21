@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-21 — Visual Lab demo 15 fix: render script repaired
+
+- Fixed a quoting bug in the demo-15 render script that silently killed the whole lab script block (nothing rendered below the static shell). All script blocks now pass a syntax check before deploy.
+- gpt-oss row now uses the Ollama logo (OpenAI's icon was removed from the icon set upstream); fetch path made absolute; Muse meter and share bars now start at 0 width instead of full width before data loads.
+
 ## 2026-10-21 — Visual Lab demo 15: lifetime token usage view
 
 - New lab demo: lifetime token burn across every model in the fleet — animated total, local vs cloud split bar, per-model rows with vendor logos and lane badges, 28-day activity bars — rendered from `usage-data.json`, which is generated from the Hermes usage-ledger CSV by `usage-csv-to-json.py`.

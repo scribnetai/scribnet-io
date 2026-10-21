@@ -8,7 +8,7 @@
     {
       "name": "gpt-oss:20b",
       "vendor": "OpenAI",
-      "icon": "openai",
+      "icon": "ollama",
       "runtime": "Ollama \u00b7 RTX 4080, at home",
       "lane": "local",
       "tokens": 2612480,

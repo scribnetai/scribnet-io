@@ -325,7 +325,7 @@
   .mtokens b { font-size: 1.15rem; }
   .mtokens span { display: block; color: var(--muted); font-size: .8rem; }
   .mbar { grid-column: 1 / -1; height: 6px; border-radius: 999px; background: rgba(255,255,255,.06); overflow: hidden; }
-  .mbar i { display: block; height: 100%; border-radius: 999px;
+  .mbar i { display: block; height: 100%; width: 0; border-radius: 999px;
     background: linear-gradient(90deg, #7c6cff, #4de1ff); }
   .usage-days { display: flex; align-items: flex-end; gap: 3px; height: 74px; margin-top: 1.3rem; }
   .usage-days i { flex: 1; min-width: 4px; border-radius: 3px 3px 0 0;
@@ -334,7 +334,7 @@
   .muse-card { margin-top: 1.3rem; border: 1px dashed rgba(255,255,255,.25); border-radius: 14px;
     padding: 1rem 1.1rem; display: grid; grid-template-columns: 2.6rem 1fr auto; gap: .9rem; align-items: center; }
   .muse-meter { grid-column: 1 / -1; height: 8px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; }
-  .muse-meter i { display: block; height: 100%; background: linear-gradient(90deg, #ff7ac6, #7c6cff); }
+  .muse-meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #ff7ac6, #7c6cff); }
   .usage-note { color: var(--muted); font-size: .82rem; margin-top: 1rem; }
   .sample-pill { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
     color: #ffd97a; border: 1px solid rgba(255,217,122,.5); background: rgba(255,217,122,.08);
@@ -638,7 +638,7 @@
     <div class="usage-days" id="usage-days" aria-hidden="true"></div>
     <p class="usage-days-label" id="usage-days-label"></p>
     <div class="muse-card" id="usage-muse" hidden>
-      <span class="mlogo"><img src="https://cdn.simpleicons.org/meta/white" alt="" onerror="this.parentElement.textContent='M'">M</span>
+      <span class="mlogo"><img src="https://cdn.simpleicons.org/meta/white" alt="" onerror="this.parentElement.textContent='M'"></span>
       <div>
         <div class="mname">Muse <span class="lane cloud">Allowance</span></div>
         <div class="mmeta">Meta &middot; this assistant (Muse Wonder) &middot; subscription, not metered tokens</div>
@@ -940,7 +940,7 @@ SAFETY CHECK — before the first run, confirm:
     var FALLBACK_USAGE = {
       sample: true, total_tokens: 3895005, local_tokens: 2612480, cloud_tokens: 1282525,
       models: [
-        { name: "gpt-oss:20b", vendor: "OpenAI", icon: "openai", runtime: "Ollama · RTX 4080, at home", lane: "local", tokens: 2612480, calls: 1204 },
+        { name: "gpt-oss:20b", vendor: "OpenAI", icon: "ollama", runtime: "Ollama · RTX 4080, at home", lane: "local", tokens: 2612480, calls: 1204 },
         { name: "gemini-3.1-pro-preview", vendor: "Google", icon: "googlegemini", runtime: "Gemini API · hard tasks", lane: "cloud", tokens: 784210, calls: 96 },
         { name: "gemini-3.8-flash", vendor: "Google", icon: "googlegemini", runtime: "Gemini API · fast lane", lane: "cloud", tokens: 498315, calls: 341 }
       ],
@@ -1010,7 +1010,7 @@ SAFETY CHECK — before the first run, confirm:
         var tk = document.createElement("div");
         tk.className = "mtokens";
         var pct = total ? (m.tokens / total * 100) : 0;
-        tk.innerHTML = "<b title="" + m.tokens.toLocaleString("en-US") + " tokens">" + fmtTok(m.tokens) + "</b><span>" +
+        tk.innerHTML = '<b title="' + m.tokens.toLocaleString("en-US") + ' tokens">' + fmtTok(m.tokens) + '</b><span>' +
           (m.calls ? m.calls.toLocaleString("en-US") + " calls · " : "") + pct.toFixed(1) + "%</span>";
         row.appendChild(tk);
         var bar = document.createElement("div");
@@ -1045,7 +1045,7 @@ SAFETY CHECK — before the first run, confirm:
       }
     }
     if (window.fetch) {
-      fetch("usage-data.json", { cache: "no-cache" })
+      fetch("/usage-data.json", { cache: "no-cache" })
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(renderUsage)
         .catch(function () { renderUsage(FALLBACK_USAGE); });
