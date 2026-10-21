@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-21 — Visual Lab demo 15: real token data live
+
+- Sample data replaced with the actual Hermes usage ledger (from the private agentic-ai-markdowns repo): 1,898,461 lifetime tokens — 1,813,440 local (gpt-oss:20b on Ollama) vs 85,021 cloud (Gemini 3.1 Pro). The ledger's first banked day is 2026-10-21, so the daily chart grows from here.
+
 ## 2026-10-21 — Visual Lab demo 15 fix: render script repaired
 
 - Fixed a quoting bug in the demo-15 render script that silently killed the whole lab script block (nothing rendered below the static shell). All script blocks now pass a syntax check before deploy.
