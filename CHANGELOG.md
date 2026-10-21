@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-21 — Visual Lab demo 15: lifetime token usage view
+
+- New lab demo: lifetime token burn across every model in the fleet — animated total, local vs cloud split bar, per-model rows with vendor logos and lane badges, 28-day activity bars — rendered from `usage-data.json`, which is generated from the Hermes usage-ledger CSV by `usage-csv-to-json.py`.
+- Muse rides along as an allowance card (subscription %, not metered tokens). Seeded with clearly-labeled sample data until the real ledger CSV is dropped in.
+
 ## 2026-10-18 — Prompts page: 1 new workflow prompt (14)
 
 - Published one approved prompt-forge draft: (14) Shell Command Explainer — a pasted bash, zsh, or PowerShell command is accounted for token by token, scanned for elevation, recursion, and overwrite dangers (present/absent), and given a run / check-first / do-not-run verdict tied to the scan; explanation only, never executes. Merged into the page builder and deployed.

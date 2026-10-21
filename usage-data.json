@@ -1,0 +1,156 @@
+{
+  "generated": "2026-10-21",
+  "sample": true,
+  "total_tokens": 3895005,
+  "local_tokens": 2612480,
+  "cloud_tokens": 1282525,
+  "models": [
+    {
+      "name": "gpt-oss:20b",
+      "vendor": "OpenAI",
+      "icon": "openai",
+      "runtime": "Ollama \u00b7 RTX 4080, at home",
+      "lane": "local",
+      "tokens": 2612480,
+      "calls": 1204
+    },
+    {
+      "name": "gemini-3.1-pro-preview",
+      "vendor": "Google",
+      "icon": "googlegemini",
+      "runtime": "Gemini API \u00b7 hard tasks",
+      "lane": "cloud",
+      "tokens": 784210,
+      "calls": 96
+    },
+    {
+      "name": "gemini-3.8-flash",
+      "vendor": "Google",
+      "icon": "googlegemini",
+      "runtime": "Gemini API \u00b7 fast lane",
+      "lane": "cloud",
+      "tokens": 498315,
+      "calls": 341
+    }
+  ],
+  "daily": [
+    {
+      "d": "2026-09-24",
+      "tokens": 34196
+    },
+    {
+      "d": "2026-09-25",
+      "tokens": 21917
+    },
+    {
+      "d": "2026-09-26",
+      "tokens": 36832
+    },
+    {
+      "d": "2026-09-27",
+      "tokens": 40610
+    },
+    {
+      "d": "2026-09-28",
+      "tokens": 75173
+    },
+    {
+      "d": "2026-09-29",
+      "tokens": 80994
+    },
+    {
+      "d": "2026-09-30",
+      "tokens": 105234
+    },
+    {
+      "d": "2026-10-01",
+      "tokens": 53828
+    },
+    {
+      "d": "2026-10-02",
+      "tokens": 87004
+    },
+    {
+      "d": "2026-10-03",
+      "tokens": 58535
+    },
+    {
+      "d": "2026-10-04",
+      "tokens": 81681
+    },
+    {
+      "d": "2026-10-05",
+      "tokens": 117844
+    },
+    {
+      "d": "2026-10-06",
+      "tokens": 71838
+    },
+    {
+      "d": "2026-10-07",
+      "tokens": 97008
+    },
+    {
+      "d": "2026-10-08",
+      "tokens": 159995
+    },
+    {
+      "d": "2026-10-09",
+      "tokens": 154899
+    },
+    {
+      "d": "2026-10-10",
+      "tokens": 117331
+    },
+    {
+      "d": "2026-10-11",
+      "tokens": 177906
+    },
+    {
+      "d": "2026-10-12",
+      "tokens": 220636
+    },
+    {
+      "d": "2026-10-13",
+      "tokens": 100317
+    },
+    {
+      "d": "2026-10-14",
+      "tokens": 240223
+    },
+    {
+      "d": "2026-10-15",
+      "tokens": 231275
+    },
+    {
+      "d": "2026-10-16",
+      "tokens": 174819
+    },
+    {
+      "d": "2026-10-17",
+      "tokens": 146316
+    },
+    {
+      "d": "2026-10-18",
+      "tokens": 310491
+    },
+    {
+      "d": "2026-10-19",
+      "tokens": 349850
+    },
+    {
+      "d": "2026-10-20",
+      "tokens": 268839
+    },
+    {
+      "d": "2026-10-21",
+      "tokens": 279414
+    }
+  ],
+  "muse": {
+    "plan": "Power",
+    "weekly_used_pct": 7,
+    "resets": "Oct 24, 11:56 PM ET",
+    "as_of": "Oct 21, 2026"
+  }
+}

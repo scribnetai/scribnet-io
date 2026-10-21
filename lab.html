@@ -295,6 +295,50 @@
   .faq details[open] summary::before { content: "2"; }
   .faq details[open] summary { border-bottom: 1px solid var(--border); }
   .faq details p { padding: .9rem 1.1rem; margin: 0; color: var(--muted); font-size: .9rem; }
+
+  /* 15 — lifetime token usage */
+  .usage-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1.2rem; }
+  .usage-total { font-size: 3rem; font-weight: 800; line-height: 1;
+    background: linear-gradient(120deg, #7c6cff, #4de1ff); -webkit-background-clip: text;
+    background-clip: text; color: transparent; }
+  .usage-sub { color: var(--muted); font-size: .95rem; }
+  .usage-split { display: flex; height: 14px; border-radius: 999px; overflow: hidden;
+    margin: 1.1rem 0 .5rem; border: 1px solid var(--border); }
+  .usage-split .loc { background: linear-gradient(90deg, #7c6cff, #9a8cff); }
+  .usage-split .cld { background: linear-gradient(90deg, #38b6ff, #4de1ff); }
+  .usage-split-labels { display: flex; justify-content: space-between; gap: 1rem;
+    color: var(--muted); font-size: .85rem; margin-bottom: .6rem; }
+  .usage-split-labels b { color: #f2f2f7; }
+  .mrow { display: grid; grid-template-columns: 2.6rem 1fr auto; gap: .9rem; align-items: center;
+    padding: .8rem 0; border-top: 1px solid var(--border); }
+  .mlogo { width: 2.6rem; height: 2.6rem; border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; background: rgba(255,255,255,.05); border: 1px solid var(--border);
+    font-weight: 800; font-size: 1.05rem; }
+  .mlogo img { width: 1.35rem; height: 1.35rem; display: block; }
+  .mname { font-weight: 700; display: flex; align-items: center; gap: .55rem; flex-wrap: wrap; }
+  .mmeta { color: var(--muted); font-size: .83rem; margin-top: .15rem; }
+  .lane { font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    padding: .18rem .55rem; border-radius: 999px; border: 1px solid var(--border); white-space: nowrap; }
+  .lane.local { color: #b7a8ff; border-color: rgba(124,108,255,.55); background: rgba(124,108,255,.12); }
+  .lane.cloud { color: #8fe3ff; border-color: rgba(77,225,255,.45); background: rgba(77,225,255,.08); }
+  .mtokens { text-align: right; }
+  .mtokens b { font-size: 1.15rem; }
+  .mtokens span { display: block; color: var(--muted); font-size: .8rem; }
+  .mbar { grid-column: 1 / -1; height: 6px; border-radius: 999px; background: rgba(255,255,255,.06); overflow: hidden; }
+  .mbar i { display: block; height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, #7c6cff, #4de1ff); }
+  .usage-days { display: flex; align-items: flex-end; gap: 3px; height: 74px; margin-top: 1.3rem; }
+  .usage-days i { flex: 1; min-width: 4px; border-radius: 3px 3px 0 0;
+    background: linear-gradient(180deg, #4de1ff, #7c6cff); opacity: .85; }
+  .usage-days-label { color: var(--muted); font-size: .8rem; margin-top: .45rem; }
+  .muse-card { margin-top: 1.3rem; border: 1px dashed rgba(255,255,255,.25); border-radius: 14px;
+    padding: 1rem 1.1rem; display: grid; grid-template-columns: 2.6rem 1fr auto; gap: .9rem; align-items: center; }
+  .muse-meter { grid-column: 1 / -1; height: 8px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; }
+  .muse-meter i { display: block; height: 100%; background: linear-gradient(90deg, #ff7ac6, #7c6cff); }
+  .usage-note { color: var(--muted); font-size: .82rem; margin-top: 1rem; }
+  .sample-pill { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    color: #ffd97a; border: 1px solid rgba(255,217,122,.5); background: rgba(255,217,122,.08);
+    padding: .2rem .6rem; border-radius: 999px; vertical-align: middle; }
 </style>
 
 </head>
@@ -305,7 +349,7 @@
   <p><span class="pill">Unlinked &middot; playground</span></p>
   <p class="eyebrow">Visual lab</p>
   <h1>Ideas, <span class="grad">live.</span></h1>
-  <p class="lede">Fourteen live demos below — five visual directions, plus nine borrowed patterns on trial. Poke at them, then tell me which ones to ship to the actual pages.</p>
+  <p class="lede">Fifteen live demos below — five visual directions, plus nine borrowed patterns on trial, and one data-driven homepage candidate.</p>
 
   <section class="lab-demo reveal">
     <h3>1. Site-wide cursor glow</h3>
@@ -576,6 +620,34 @@
       </div>
     </section>
   </div>
+
+  <p class="eyebrow" style="margin-top:3rem;">Fresh from the workbench</p>
+  <h2>Homepage candidates, <span class="grad">in the raw.</span></h2>
+  <p class="lede">New material being tried here first, fed by live data from the homelab.</p>
+
+  <section class="lab-demo reveal">
+    <h3>15. Lifetime token usage — every AI, one view</h3>
+    <p class="idea">Candidate for the homepage stats row: my lifetime token burn across every model I run — local on the RTX 4080 vs cloud APIs — rendered from <code>usage-data.json</code>, which is built from the Hermes usage-ledger CSV. Muse rides along below: it bills against a subscription allowance, not metered tokens, so it gets an allowance meter instead of a token count. <span class="sample-pill" id="usage-sample-pill" hidden>Sample data</span></p>
+    <div class="usage-head">
+      <span class="usage-total" id="usage-total">&mdash;</span>
+      <span class="usage-sub">lifetime tokens &middot; local + cloud</span>
+    </div>
+    <div class="usage-split"><div class="loc" id="usage-loc"></div><div class="cld" id="usage-cld"></div></div>
+    <div class="usage-split-labels"><span id="usage-loc-label"></span><span id="usage-cld-label"></span></div>
+    <div id="usage-models"></div>
+    <div class="usage-days" id="usage-days" aria-hidden="true"></div>
+    <p class="usage-days-label" id="usage-days-label"></p>
+    <div class="muse-card" id="usage-muse" hidden>
+      <span class="mlogo"><img src="https://cdn.simpleicons.org/meta/white" alt="" onerror="this.parentElement.textContent='M'">M</span>
+      <div>
+        <div class="mname">Muse <span class="lane cloud">Allowance</span></div>
+        <div class="mmeta">Meta &middot; this assistant (Muse Wonder) &middot; subscription, not metered tokens</div>
+      </div>
+      <div class="mtokens"><b id="usage-muse-pct">&mdash;</b><span id="usage-muse-meta">of weekly limit</span></div>
+      <div class="muse-meter"><i id="usage-muse-bar"></i></div>
+    </div>
+    <p class="usage-note">Token totals count input + output + cache reads/writes + reasoning — the same definition Hermes reports. Cache re-reads dominate the volume: a long context gets re-read every turn.</p>
+  </section>
 </main>
 
 <footer>
@@ -697,6 +769,24 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
     location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     close();
   });
+})();
+</script>
+
+<script>
+// Build log expander: the button label counts itself from the live tl-item
+// total (no hardcoded N); toggles the overflow entries.
+(function(){
+  var btn = document.getElementById('logToggle'), extra = document.getElementById('tlExtra');
+  if(!btn || !extra) return;
+  var total = document.querySelectorAll('.tl-item').length;
+  function render(open){
+    if(open){ extra.removeAttribute('hidden'); } else { extra.setAttribute('hidden',''); }
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.innerHTML = open ? 'Show less <span aria-hidden="true">&uarr;</span>'
+                        : 'Show all ' + total + ' <span aria-hidden="true">&darr;</span>';
+  }
+  render(false);
+  btn.addEventListener('click', function(){ render(btn.getAttribute('aria-expanded') !== 'true'); });
 })();
 </script>
 
@@ -843,6 +933,125 @@ SAFETY CHECK — before the first run, confirm:
       playBtn.setAttribute("aria-label", playing ? "Pause" : "Play");
       if (npStatus) npStatus.textContent = playing ? "Playing · live mock" : "Paused · 0:00";
     });
+  }
+  // 15 — lifetime token usage view (data: usage-data.json from the Hermes ledger)
+  var usageModels = document.getElementById("usage-models");
+  if (usageModels) {
+    var FALLBACK_USAGE = {
+      sample: true, total_tokens: 3895005, local_tokens: 2612480, cloud_tokens: 1282525,
+      models: [
+        { name: "gpt-oss:20b", vendor: "OpenAI", icon: "openai", runtime: "Ollama · RTX 4080, at home", lane: "local", tokens: 2612480, calls: 1204 },
+        { name: "gemini-3.1-pro-preview", vendor: "Google", icon: "googlegemini", runtime: "Gemini API · hard tasks", lane: "cloud", tokens: 784210, calls: 96 },
+        { name: "gemini-3.8-flash", vendor: "Google", icon: "googlegemini", runtime: "Gemini API · fast lane", lane: "cloud", tokens: 498315, calls: 341 }
+      ],
+      daily: [],
+      muse: { plan: "Power", weekly_used_pct: 7, resets: "Oct 24, 11:56 PM ET", as_of: "Oct 21, 2026" }
+    };
+    function fmtTok(n) {
+      if (n >= 1e6) return (n / 1e6).toFixed(2) + "M";
+      if (n >= 1e3) return (n / 1e3).toFixed(1) + "K";
+      return String(n);
+    }
+    function logoEl(icon, letter) {
+      var wrap = document.createElement("span");
+      wrap.className = "mlogo";
+      if (icon) {
+        var img = document.createElement("img");
+        img.src = "https://cdn.simpleicons.org/" + icon + "/white";
+        img.alt = "";
+        img.addEventListener("error", function () { wrap.textContent = letter; });
+        wrap.appendChild(img);
+      } else { wrap.textContent = letter; }
+      return wrap;
+    }
+    function renderUsage(d) {
+      var pill = document.getElementById("usage-sample-pill");
+      if (pill) pill.hidden = !d.sample;
+      var totalEl = document.getElementById("usage-total");
+      var total = d.total_tokens || 0;
+      totalEl.title = total.toLocaleString("en-US") + " tokens";
+      if (reduce || !total) {
+        totalEl.textContent = fmtTok(total);
+      } else {
+        var t0 = null;
+        function step(ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min((ts - t0) / 900, 1);
+          totalEl.textContent = fmtTok(Math.round(total * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      var locPct = total ? Math.round(d.local_tokens / total * 100) : 0;
+      document.getElementById("usage-loc").style.width = locPct + "%";
+      document.getElementById("usage-cld").style.width = (100 - locPct) + "%";
+      document.getElementById("usage-loc-label").innerHTML =
+        "<b>Local</b> · " + fmtTok(d.local_tokens) + " (" + locPct + "%)";
+      document.getElementById("usage-cld-label").innerHTML =
+        "<b>Cloud</b> · " + fmtTok(d.cloud_tokens) + " (" + (100 - locPct) + "%)";
+      usageModels.innerHTML = "";
+      (d.models || []).forEach(function (m) {
+        var row = document.createElement("div");
+        row.className = "mrow";
+        row.appendChild(logoEl(m.icon, (m.vendor || m.name || "?").charAt(0)));
+        var mid = document.createElement("div");
+        var nm = document.createElement("div");
+        nm.className = "mname";
+        nm.appendChild(document.createTextNode(m.name));
+        var lane = document.createElement("span");
+        lane.className = "lane " + (m.lane === "local" ? "local" : "cloud");
+        lane.textContent = m.lane === "local" ? "Local" : "Cloud";
+        nm.appendChild(lane);
+        var meta = document.createElement("div");
+        meta.className = "mmeta";
+        meta.textContent = [m.vendor, m.runtime].filter(Boolean).join(" · ");
+        mid.appendChild(nm); mid.appendChild(meta);
+        row.appendChild(mid);
+        var tk = document.createElement("div");
+        tk.className = "mtokens";
+        var pct = total ? (m.tokens / total * 100) : 0;
+        tk.innerHTML = "<b title="" + m.tokens.toLocaleString("en-US") + " tokens">" + fmtTok(m.tokens) + "</b><span>" +
+          (m.calls ? m.calls.toLocaleString("en-US") + " calls · " : "") + pct.toFixed(1) + "%</span>";
+        row.appendChild(tk);
+        var bar = document.createElement("div");
+        bar.className = "mbar";
+        var fill = document.createElement("i");
+        fill.style.width = pct + "%";
+        bar.appendChild(fill);
+        row.appendChild(bar);
+        usageModels.appendChild(row);
+      });
+      var daysBox = document.getElementById("usage-days");
+      var daysLabel = document.getElementById("usage-days-label");
+      var daily = d.daily || [];
+      if (daysBox && daily.length) {
+        var max = Math.max.apply(null, daily.map(function (x) { return x.tokens; })) || 1;
+        daysBox.innerHTML = "";
+        daily.forEach(function (x) {
+          var b = document.createElement("i");
+          b.style.height = Math.max(4, Math.round(x.tokens / max * 100)) + "%";
+          b.title = x.d + " · " + x.tokens.toLocaleString("en-US") + " tokens";
+          daysBox.appendChild(b);
+        });
+        if (daysLabel) daysLabel.textContent = "Daily tokens · last " + daily.length + " days";
+      } else if (daysLabel) { daysLabel.textContent = ""; }
+      var museCard = document.getElementById("usage-muse");
+      if (museCard && d.muse) {
+        museCard.hidden = false;
+        document.getElementById("usage-muse-pct").textContent = d.muse.weekly_used_pct + "%";
+        document.getElementById("usage-muse-meta").textContent =
+          "of weekly limit · resets " + d.muse.resets + " · " + d.muse.plan + " plan";
+        document.getElementById("usage-muse-bar").style.width = d.muse.weekly_used_pct + "%";
+      }
+    }
+    if (window.fetch) {
+      fetch("usage-data.json", { cache: "no-cache" })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(renderUsage)
+        .catch(function () { renderUsage(FALLBACK_USAGE); });
+    } else {
+      renderUsage(FALLBACK_USAGE);
+    }
   }
 })();
 </script>
