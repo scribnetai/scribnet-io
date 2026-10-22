@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-22 — Token usage data refresh (auto)
+
+- Updated usage-data.json to 2,225,497 total tokens (2,140,476 local / 85,021 cloud); Muse weekly usage 9% as of Oct 22, 2026.
+
 ## 2026-10-21 — Podcast page: server-rendered episode archive
 
 - Added an "Episode archive" section to podcast.html with plain HTML links to all 28 episode pages (previously reachable only via JS-rendered tiles or the sitemap — the gap behind Search Console's "Discovered – currently not indexed" queue). The daily episode-page builder now refreshes the marked archive block from the manifest on every run, so it stays current automatically.

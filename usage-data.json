@@ -1,8 +1,8 @@
 {
   "generated": "2026-10-21",
   "sample": false,
-  "total_tokens": 2139708,
-  "local_tokens": 2054687,
+  "total_tokens": 2225497,
+  "local_tokens": 2140476,
   "cloud_tokens": 85021,
   "models": [
     {
@@ -11,8 +11,8 @@
       "icon": "ollama",
       "runtime": "Ollama \u00b7 RTX 4080",
       "lane": "local",
-      "tokens": 2054687,
-      "calls": 90
+      "tokens": 2140476,
+      "calls": 96
     },
     {
       "name": "gemini-3.1-pro-preview",
@@ -27,14 +27,14 @@
   "daily": [
     {
       "d": "2026-10-21",
-      "tokens": 2139708
+      "tokens": 2225497
     }
   ],
   "muse": {
     "plan": "Power",
-    "weekly_used_pct": 8,
+    "weekly_used_pct": 9,
     "tokens_left": 459000000,
     "resets": "Oct 24, 11:56 PM ET",
-    "as_of": "Oct 21, 2026"
+    "as_of": "Oct 22, 2026"
   }
 }
