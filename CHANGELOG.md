@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-21 — Token usage view promoted to the homepage
+
+- The lifetime token usage panel (graduated from Visual Lab demo 15) now sits in the homepage hero, directly under the stats band: count-up total (2,139,708), local/cloud split, per-model rows with the Muse allowance row inline, and the 7-day line chart. Fed by /usage-data.json, which a new daily cron refreshes from the Hermes ledger.
+- Also: gpt-oss runtime label trimmed to "Ollama · RTX 4080" in the data and both pages.
+
 ## 2026-10-21 — Visual Lab demo 15: usage data refresh
 
 - Ledger re-banked this evening: lifetime total now 2,139,708 tokens (2,054,687 local / 85,021 cloud). gpt-oss:20b at 90 calls; the researcher profile's long sessions drove most of the +241K since the first publish.
