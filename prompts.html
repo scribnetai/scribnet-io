@@ -35,6 +35,47 @@
       border-radius: 2px; background: var(--cyan); animation: blink 1.1s steps(2, start) infinite; }
     @keyframes blink { to { visibility: hidden; } }
     @media (prefers-reduced-motion: reduce) { .aurora, .caret { display: none; } }
+    /* Lifetime token usage panel — data: /usage-data.json (Hermes ledger) */
+    .usage-panel { margin-top: 2.4rem; text-align: left; border: 1px solid rgba(255,255,255,.09);
+      background: rgba(255,255,255,.03); border-radius: 18px; padding: 1.5rem 1.6rem 1.3rem; }
+    .usage-panel .usage-title { font-size: 1.4rem; font-weight: 800; margin: 0 0 1rem; }
+    .usage-panel .usage-title .grad { background: linear-gradient(120deg, #7c6cff, #4de1ff);
+      -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .usage-panel .usage-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem 1.2rem; }
+    .usage-panel .usage-total { font-size: 3rem; font-weight: 800; line-height: 1;
+      background: linear-gradient(120deg, #7c6cff, #4de1ff); -webkit-background-clip: text;
+      background-clip: text; color: transparent; }
+    .usage-panel .usage-sub { color: var(--muted); font-size: .95rem; }
+    .usage-panel .usage-split { display: flex; height: 14px; border-radius: 999px; overflow: hidden;
+      margin: 1.1rem 0 .5rem; border: 1px solid rgba(255,255,255,.09); }
+    .usage-panel .usage-split .loc { background: linear-gradient(90deg, #7c6cff, #9a8cff); }
+    .usage-panel .usage-split .cld { background: linear-gradient(90deg, #38b6ff, #4de1ff); }
+    .usage-panel .usage-split-labels { display: flex; justify-content: space-between; gap: 1rem;
+      color: var(--muted); font-size: .85rem; margin-bottom: .6rem; }
+    .usage-panel .usage-split-labels b { color: #f2f2f7; }
+    .usage-panel .mrow { display: grid; grid-template-columns: 2.6rem 1fr auto; gap: .9rem; align-items: center;
+      padding: .8rem 0; border-top: 1px solid rgba(255,255,255,.09); }
+    .usage-panel .mlogo { width: 2.6rem; height: 2.6rem; border-radius: 12px; display: flex; align-items: center;
+      justify-content: center; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+      font-weight: 800; font-size: 1.05rem; }
+    .usage-panel .mlogo img { width: 1.35rem; height: 1.35rem; display: block; }
+    .usage-panel .mname { font-weight: 700; display: flex; align-items: center; gap: .55rem; flex-wrap: wrap; }
+    .usage-panel .mmeta { color: var(--muted); font-size: .83rem; margin-top: .15rem; }
+    .usage-panel .lane { font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      padding: .18rem .55rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); white-space: nowrap; }
+    .usage-panel .lane.local { color: #b7a8ff; border-color: rgba(124,108,255,.55); background: rgba(124,108,255,.12); }
+    .usage-panel .lane.cloud { color: #8fe3ff; border-color: rgba(77,225,255,.45); background: rgba(77,225,255,.08); }
+    .usage-panel .lane.sub { color: #ff9fd4; border-color: rgba(255,122,198,.45); background: rgba(255,122,198,.08); }
+    .usage-panel .mtokens { text-align: right; }
+    .usage-panel .mtokens b { font-size: 1.15rem; }
+    .usage-panel .mtokens span { display: block; color: var(--muted); font-size: .8rem; }
+    .usage-panel .mbar { grid-column: 1 / -1; height: 6px; border-radius: 999px; background: rgba(255,255,255,.06); overflow: hidden; }
+    .usage-panel .mbar i { display: block; height: 100%; width: 0; border-radius: 999px;
+      background: linear-gradient(90deg, #7c6cff, #4de1ff); }
+    .usage-panel .mbar.sub i { background: linear-gradient(90deg, #ff7ac6, #7c6cff); }
+    .usage-panel .usage-chart { margin-top: 1.3rem; }
+    .usage-panel .usage-chart svg { display: block; width: 100%; height: auto; }
+    .usage-panel .usage-days-label { color: var(--muted); font-size: .8rem; margin-top: .45rem; }
   </style>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ScribNet">
@@ -143,10 +184,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-15"><span class="ns-num">15</span><span class="ns-title">Houseplant Care Scheduler</span><span class="ns-date">Oct 21</span></a>
       <a class="ns-card" href="#workflow-14"><span class="ns-num">14</span><span class="ns-title">Shell Command Explainer</span><span class="ns-date">Oct 18</span></a>
       <a class="ns-card" href="#workflow-13"><span class="ns-num">13</span><span class="ns-title">API Design Reviewer</span><span class="ns-date">Oct 12</span></a>
       <a class="ns-card" href="#workflow-12"><span class="ns-num">12</span><span class="ns-title">Debt Payoff Ladder</span><span class="ns-date">Oct 3</span></a>
-      <a class="ns-card" href="#workflow-11"><span class="ns-num">11</span><span class="ns-title">Project README Forge</span><span class="ns-date">Oct 3</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -1063,6 +1104,75 @@ SAFETY CHECK — confirm before the first run:
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
         </div>
       </section>
+      <section class="prompt-pack reveal" id="workflow-15" data-cat="Life" data-tags="planning home plants" data-search="Houseplant Care Scheduler A watering schedule built only from the care tags you actually have. It shows the due-date maths per plant, schedules only on days you are home with any move labelled, and parks every plant with no pasted interval as UNSCHEDULED — INFO NEEDED instead of guessing from the species name. planning home plants">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-15">
+            <span class="ph-num">15</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 15 &middot; Life</span>
+              <span class="ph-title">Houseplant Care Scheduler</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-21">Oct 21</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-15" title="Copy link to this workflow" aria-label="Copy link to workflow 15">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-15" hidden>
+          <p class="what">A watering schedule built only from the care tags you actually have. It shows the due-date maths per plant, schedules only on days you are home with any move labelled, and parks every plant with no pasted interval as UNSCHEDULED — INFO NEEDED instead of guessing from the species name.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="planning">planning</button>
+          <button type="button" class="tag" data-tag="home">home</button>
+          <button type="button" class="tag" data-tag="plants">plants</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-15">Install the &quot;Houseplant Care Scheduler&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What date should I call today for the schedule maths? Give the date, or I use the date you paste with the plant list and say so.
+2. How long should the schedule run — the next 2 weeks, 4 weeks, or another span you name? If &quot;skip&quot;, I assume 4 weeks and say so.
+3. Which days are you actually home and able to water — every day, weekdays, weekends only, or named days? Care is only scheduled on those days.
+4. How did you record each plant&#x27;s care needs — the nursery tag, a label you wrote, or an app note? Paste it exactly as written; if a plant has no recorded care info, say NO INFO for that plant.
+5. Any plants that must never appear on a fertiliser or misting line — delicate, dormant, or newly repotted ones? Name them or say NONE.
+
+EACH RUN:
+1. Ask for the plant list pasted as one block per plant: the name as you call it, where it sits, the date it was last watered if you know it, and its care info pasted exactly — or NO INFO. First, state the limits: you work only from the paste — you cannot see the plants, feel the soil, or check light, and a care need that is not pasted is CARE NOT STATED, never supplied from general knowledge of the species.
+2. Inventory and reconcile: count the plant blocks and show the count. Every plant lands in exactly one group — SCHEDULED (a watering interval appears in its pasted care info), or UNSCHEDULED — INFO NEEDED (NO INFO, or no interval stated) — and the two group counts must sum to the pasted count or the schedule stops for a recount.
+3. Show the schedule maths for each scheduled plant: next due date equals last-watered date plus the interval in days from its pasted care info, displayed as arithmetic. If the last-watered date is DATE NOT STATED, the plant is due on the first able day from setup and labelled START DATE ASSUMED — LAST WATERED NOT STATED.
+4. Build the day-by-day schedule for the span from setup: a plant appears only on a due date that falls on one of your able days, or it moves to the next able day and the move is shown as DUE TUE — MOVED TO WED (NOT HOME). Each line names the plant, the room as pasted, and only actions that appear in its pasted care info — water, mist, feed, or rotate — each labelled with the pasted wording it came from.
+5. Close with the gaps block: every UNSCHEDULED — INFO NEEDED plant by name with the one missing fact that would schedule it (usually the interval), and every plant whose pasted care info contradicts itself — for example two different intervals — flagged CONFLICT IN PASTED INFO with both wordings quoted, scheduled on neither until you pick one.
+
+HARD RULES:
+- Care needs are pasted or CARE NOT STATED — a watering interval, light need, or fertiliser is never supplied from the plant&#x27;s species or common name.
+- Counts reconcile — scheduled plus unscheduled equals the pasted plant count, shown every run, or no schedule is given.
+- Date maths is shown, never just a date — due date equals last-watered plus interval, as displayed arithmetic for every scheduled plant.
+- Nothing is scheduled on a day you are away — a due date on a non-able day moves to the next able day with the move labelled, never silently dropped.
+- Conflicts block, never average — two pasted intervals for one plant are CONFLICT IN PASTED INFO; the workflow never splits the difference or picks the one it prefers.
+
+SAFETY CHECK — confirm before the first run:
+- Planning only — it never orders plants, feed, or supplies, sets reminders in any app, or touches any account; you do the watering yourself.
+- General information only — it organises the care info you pasted; it never diagnoses a sick plant, and a plant you describe as mouldy, infested, or collapsing gets a note to check a local nursery or extension service, not a treatment plan.
+- Your home stays private — plant locations and the days you are away stay in this chat and are never shared or published.</div>
+          <button class="copy-btn" data-target="prompt-15">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>What date counts as today for the maths?</li>
+            <li>Schedule span — 2 weeks, 4 weeks, or your own?</li>
+            <li>Which days are you home and able to water?</li>
+            <li>Care info per plant, pasted exactly — or NO INFO?</li>
+            <li>Any plants never to fertilise or mist?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Planning only.</b> It never orders supplies, sets reminders in any app, or touches any account — you do the watering.</li>
+            <li><b>General information only.</b> It organises pasted care info and never diagnoses a sick plant; mould or infestation gets a pointer to a local nursery, not a treatment plan.</li>
+            <li><b>Your home stays private.</b> Plant locations and the days you are away stay in this chat and are never shared.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
   </main>
   <footer>
     <p>© <span id="year"></span> ScribNet — scribnet.io</p>
@@ -1201,6 +1311,215 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
   }
   render(false);
   btn.addEventListener('click', function(){ render(btn.getAttribute('aria-expanded') !== 'true'); });
+})();
+</script>
+
+<script>
+// Lifetime token usage panel — data: /usage-data.json (Hermes usage ledger)
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// 15 — lifetime token usage view (data: usage-data.json from the Hermes ledger)
+  var usageModels = document.getElementById("usage-models");
+  if (usageModels) {
+    var FALLBACK_USAGE = {
+  "generated": "2026-10-21",
+  "sample": false,
+  "total_tokens": 2139708,
+  "local_tokens": 2054687,
+  "cloud_tokens": 85021,
+  "models": [
+    {
+      "name": "gpt-oss:20b",
+      "vendor": "OpenAI",
+      "icon": "ollama",
+      "runtime": "Ollama \u00b7 RTX 4080",
+      "lane": "local",
+      "tokens": 2054687,
+      "calls": 90
+    },
+    {
+      "name": "gemini-3.1-pro-preview",
+      "vendor": "Google",
+      "icon": "googlegemini",
+      "runtime": "Gemini API \u00b7 hard tasks",
+      "lane": "cloud",
+      "tokens": 85021,
+      "calls": 8
+    }
+  ],
+  "daily": [
+    {
+      "d": "2026-10-21",
+      "tokens": 2139708
+    }
+  ],
+  "muse": {
+    "plan": "Power",
+    "weekly_used_pct": 8,
+    "tokens_left": 459000000,
+    "resets": "Oct 24, 11:56 PM ET",
+    "as_of": "Oct 21, 2026"
+  }
+};
+    function fmtTok(n) {
+      if (n >= 1e6) return (n / 1e6).toFixed(2) + "M";
+      if (n >= 1e3) return (n / 1e3).toFixed(1) + "K";
+      return String(n);
+    }
+    function logoEl(icon, letter) {
+      var wrap = document.createElement("span");
+      wrap.className = "mlogo";
+      if (icon) {
+        var img = document.createElement("img");
+        img.src = "https://cdn.simpleicons.org/" + icon + "/white";
+        img.alt = "";
+        img.addEventListener("error", function () { wrap.textContent = letter; });
+        wrap.appendChild(img);
+      } else { wrap.textContent = letter; }
+      return wrap;
+    }
+    function renderUsage(d) {
+      var pill = document.getElementById("usage-sample-pill");
+      if (pill) pill.hidden = !d.sample;
+      var totalEl = document.getElementById("usage-total");
+      var total = d.total_tokens || 0;
+      totalEl.title = total.toLocaleString("en-US") + " tokens";
+      if (reduce || !total) {
+        totalEl.textContent = fmtTok(total);
+      } else {
+        var t0 = null;
+        function step(ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min((ts - t0) / 900, 1);
+          totalEl.textContent = fmtTok(Math.round(total * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      var locPct = total ? Math.round(d.local_tokens / total * 100) : 0;
+      document.getElementById("usage-loc").style.width = locPct + "%";
+      document.getElementById("usage-cld").style.width = (100 - locPct) + "%";
+      document.getElementById("usage-loc-label").innerHTML =
+        "<b>Local</b> · " + fmtTok(d.local_tokens) + " (" + locPct + "%)";
+      document.getElementById("usage-cld-label").innerHTML =
+        "<b>Cloud</b> · " + fmtTok(d.cloud_tokens) + " (" + (100 - locPct) + "%)";
+      usageModels.innerHTML = "";
+      (d.models || []).forEach(function (m) {
+        var row = document.createElement("div");
+        row.className = "mrow";
+        row.appendChild(logoEl(m.icon, (m.vendor || m.name || "?").charAt(0)));
+        var mid = document.createElement("div");
+        var nm = document.createElement("div");
+        nm.className = "mname";
+        nm.appendChild(document.createTextNode(m.name));
+        var lane = document.createElement("span");
+        lane.className = "lane " + (m.lane === "local" ? "local" : "cloud");
+        lane.textContent = m.lane === "local" ? "Local" : "Cloud";
+        nm.appendChild(lane);
+        var meta = document.createElement("div");
+        meta.className = "mmeta";
+        meta.textContent = [m.vendor, m.runtime].filter(Boolean).join(" · ");
+        mid.appendChild(nm); mid.appendChild(meta);
+        row.appendChild(mid);
+        var tk = document.createElement("div");
+        tk.className = "mtokens";
+        var pct = total ? (m.tokens / total * 100) : 0;
+        tk.innerHTML = '<b title="' + m.tokens.toLocaleString("en-US") + ' tokens">' + fmtTok(m.tokens) + '</b><span>' +
+          (m.calls ? m.calls.toLocaleString("en-US") + " calls · " : "") + pct.toFixed(1) + "%</span>";
+        row.appendChild(tk);
+        var bar = document.createElement("div");
+        bar.className = "mbar";
+        var fill = document.createElement("i");
+        fill.style.width = pct + "%";
+        bar.appendChild(fill);
+        row.appendChild(bar);
+        usageModels.appendChild(row);
+      });
+      var chartBox = document.getElementById("usage-chart");
+      var daysLabel = document.getElementById("usage-days-label");
+      var daily = (d.daily || []).slice(-7);
+      if (chartBox && daily.length) {
+        var W = 720, H = 96, PADX = 28, PT = 12, PB = 20;
+        var maxTok = Math.max.apply(null, daily.map(function (x) { return x.tokens; })) || 1;
+        var n = daily.length;
+        var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var pts = daily.map(function (x, i) {
+          var px = n === 1 ? W / 2 : PADX + (W - 2 * PADX) * i / (n - 1);
+          var py = PT + (H - PT - PB) * (1 - x.tokens / maxTok);
+          return { x: px, y: py, d: x.d, tokens: x.tokens };
+        });
+        var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Daily token usage, last ' + n + ' days">';
+        svg += '<defs><linearGradient id="uArea" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0" stop-color="#7c6cff" stop-opacity=".38"/>' +
+          '<stop offset="1" stop-color="#7c6cff" stop-opacity="0"/></linearGradient>' +
+          '<linearGradient id="uLine" x1="0" y1="0" x2="1" y2="0">' +
+          '<stop offset="0" stop-color="#7c6cff"/><stop offset="1" stop-color="#4de1ff"/></linearGradient></defs>';
+        if (n > 1) {
+          var base = H - PB;
+          var areaD = "M" + pts[0].x.toFixed(1) + "," + base;
+          pts.forEach(function (p) { areaD += " L" + p.x.toFixed(1) + "," + p.y.toFixed(1); });
+          areaD += " L" + pts[n - 1].x.toFixed(1) + "," + base + " Z";
+          svg += '<path d="' + areaD + '" fill="url(#uArea)"/>';
+          svg += '<polyline points="' + pts.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" ") +
+            '" fill="none" stroke="url(#uLine)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+        }
+        pts.forEach(function (p) {
+          var label = MONTHS[parseInt(p.d.slice(5, 7), 10) - 1] + " " + parseInt(p.d.slice(8, 10), 10);
+          svg += '<circle cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="3.5" fill="#0b0b14" stroke="#4de1ff" stroke-width="2">' +
+            "<title>" + p.d + " · " + p.tokens.toLocaleString("en-US") + " tokens</title></circle>";
+          svg += '<text x="' + p.x.toFixed(1) + '" y="' + (H - 5) + '" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.45)">' + label + "</text>";
+        });
+        svg += "</svg>";
+        chartBox.innerHTML = svg;
+        if (daysLabel) daysLabel.textContent = "Daily tokens · last " + n + (n === 1 ? " day" : " days");
+      } else if (daysLabel) { daysLabel.textContent = ""; }
+      if (d.muse) {
+        var mrow = document.createElement("div");
+        mrow.className = "mrow";
+        mrow.appendChild(logoEl("meta", "M"));
+        var mmid = document.createElement("div");
+        var mnm = document.createElement("div");
+        mnm.className = "mname";
+        mnm.appendChild(document.createTextNode("Muse"));
+        var mlane = document.createElement("span");
+        mlane.className = "lane sub";
+        mlane.textContent = "Allowance";
+        mnm.appendChild(mlane);
+        var mmeta = document.createElement("div");
+        mmeta.className = "mmeta";
+        mmeta.textContent = "Meta · this assistant (Muse Wonder) · subscription";
+        mmid.appendChild(mnm); mmid.appendChild(mmeta);
+        mrow.appendChild(mmid);
+        var mtk = document.createElement("div");
+        mtk.className = "mtokens";
+        if (d.muse.tokens_left && d.muse.weekly_used_pct) {
+          // Reverse-engineered allowance: left / (1 - used%) = weekly total.
+          var estTotal = d.muse.tokens_left / (1 - d.muse.weekly_used_pct / 100);
+          var estUsed = Math.round(estTotal - d.muse.tokens_left);
+          mtk.innerHTML = '<b title="≈' + estUsed.toLocaleString("en-US") + ' tokens (estimate)">≈' + fmtTok(estUsed) + "</b><span>" +
+            d.muse.weekly_used_pct + "% of weekly limit · ≈" + fmtTok(d.muse.tokens_left) + " left · resets " + d.muse.resets + "</span>";
+        } else {
+          mtk.innerHTML = "<b>" + d.muse.weekly_used_pct + "%</b><span>of weekly limit · resets " + d.muse.resets + " · " + d.muse.plan + " plan</span>";
+        }
+        mrow.appendChild(mtk);
+        var mbar = document.createElement("div");
+        mbar.className = "mbar sub";
+        var mfill = document.createElement("i");
+        mfill.style.width = d.muse.weekly_used_pct + "%";
+        mbar.appendChild(mfill);
+        mrow.appendChild(mbar);
+        usageModels.appendChild(mrow);
+      }
+    }
+    if (window.fetch) {
+      fetch("/usage-data.json", { cache: "no-cache" })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(renderUsage)
+        .catch(function () { renderUsage(FALLBACK_USAGE); });
+    } else {
+      renderUsage(FALLBACK_USAGE);
+    }
+  }
 })();
 </script>
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-21 — Prompts page: workflow 15, Houseplant Care Scheduler
+
+- The prompts page gains workflow #15 "Houseplant Care Scheduler" (Life): a watering schedule built only from the care info you paste — due-date maths shown per plant, care scheduled only on days you're home with any move labelled, and plants with no pasted interval parked as UNSCHEDULED — INFO NEEDED instead of guessing from the species name.
+
 ## 2026-10-21 — Muse row copy trim (homepage + lab)
 
 - Muse row meta now reads "Meta · this assistant (Muse Wonder) · subscription" (dropped ", not metered tokens"), and the right-side line drops the "of ≈498.91M" segment so it fits on one line in the hero: "8% of weekly limit · ≈459.00M left · resets Oct 24, 11:56 PM ET".
