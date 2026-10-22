@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-21 — Podcast page: server-rendered episode archive
+
+- Added an "Episode archive" section to podcast.html with plain HTML links to all 28 episode pages (previously reachable only via JS-rendered tiles or the sitemap — the gap behind Search Console's "Discovered – currently not indexed" queue). The daily episode-page builder now refreshes the marked archive block from the manifest on every run, so it stays current automatically.
+
 ## 2026-10-21 — Usage rows: app-style brand icon tiles (homepage + lab)
 
 - The model logo chips are now brand tiles in the fleet's app-icon style: Ollama as a white glossy tile with the black mark, Gemini on its blue→purple→red gradient, Meta on blue, each with an inset highlight and soft shadow — replacing the flat white glyphs.
