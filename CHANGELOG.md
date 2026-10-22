@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-21 — Visual Lab demo 15: usage data refresh
+
+- Ledger re-banked this evening: lifetime total now 2,139,708 tokens (2,054,687 local / 85,021 cloud). gpt-oss:20b at 90 calls; the researcher profile's long sessions drove most of the +241K since the first publish.
+
 ## 2026-10-21 — Visual Lab demo 15 v1.4: footnote removed
 
 - Dropped the methodology footnote under demo 15 (token-definition + estimate caveat text) at the owner's request. The Muse row keeps its ≈ and Allowance badge. Homepage placement decided (stats band under the hero) — promotion waits for his final edit round.
