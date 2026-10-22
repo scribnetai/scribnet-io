@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-21 — Visual Lab demo 15 v1.2: Muse token estimate
+
+- The Muse card now shows a token estimate reverse-engineered from the subscription dashboard (8% of weekly limit used, 459M tokens left → ≈499M weekly allowance, ≈40M used this week). Labeled as an estimate on the card and in the footnote — the allowance size isn't published, and the dashboard rounds both inputs.
+
 ## 2026-10-21 — Visual Lab demo 15 v1.1: line chart, last 7 days
 
 - Daily usage is now an SVG line/area chart (gradient stroke, hover dots with per-day totals, date labels) showing the last 7 days instead of the 28-day bar strip.

@@ -644,8 +644,9 @@
       </div>
       <div class="mtokens"><b id="usage-muse-pct">&mdash;</b><span id="usage-muse-meta">of weekly limit</span></div>
       <div class="muse-meter"><i id="usage-muse-bar"></i></div>
+      <p class="usage-note" id="usage-muse-cap" style="grid-column:1/-1;margin-top:0"></p>
     </div>
-    <p class="usage-note">Token totals count input + output + cache reads/writes + reasoning — the same definition Hermes reports. Cache re-reads dominate the volume: a long context gets re-read every turn.</p>
+    <p class="usage-note">Token totals count input + output + cache reads/writes + reasoning — the same definition Hermes reports. Cache re-reads dominate the volume: a long context gets re-read every turn. The Muse figure is an estimate reverse-engineered from the subscription dashboard (% of weekly limit used vs tokens left) — Meta doesn't publish the allowance size, so treat it as approximate.</p>
   </section>
 </main>
 
@@ -944,7 +945,7 @@ SAFETY CHECK — before the first run, confirm:
         { name: "gemini-3.8-flash", vendor: "Google", icon: "googlegemini", runtime: "Gemini API · fast lane", lane: "cloud", tokens: 498315, calls: 341 }
       ],
       daily: [],
-      muse: { plan: "Power", weekly_used_pct: 7, resets: "Oct 24, 11:56 PM ET", as_of: "Oct 21, 2026" }
+      muse: { plan: "Power", weekly_used_pct: 8, tokens_left: 459000000, resets: "Oct 24, 11:56 PM ET", as_of: "Oct 21, 2026" }
     };
     function fmtTok(n) {
       if (n >= 1e6) return (n / 1e6).toFixed(2) + "M";
@@ -1061,10 +1062,25 @@ SAFETY CHECK — before the first run, confirm:
       var museCard = document.getElementById("usage-muse");
       if (museCard && d.muse) {
         museCard.hidden = false;
-        document.getElementById("usage-muse-pct").textContent = d.muse.weekly_used_pct + "%";
-        document.getElementById("usage-muse-meta").textContent =
-          "of weekly limit · resets " + d.muse.resets + " · " + d.muse.plan + " plan";
+        var pctEl = document.getElementById("usage-muse-pct");
+        var metaEl = document.getElementById("usage-muse-meta");
+        var capEl = document.getElementById("usage-muse-cap");
         document.getElementById("usage-muse-bar").style.width = d.muse.weekly_used_pct + "%";
+        if (d.muse.tokens_left && d.muse.weekly_used_pct) {
+          // Reverse-engineered allowance: left / (1 - used%) = weekly total.
+          var estTotal = d.muse.tokens_left / (1 - d.muse.weekly_used_pct / 100);
+          var estUsed = Math.round(estTotal - d.muse.tokens_left);
+          pctEl.textContent = "≈" + fmtTok(estUsed);
+          pctEl.title = "≈" + estUsed.toLocaleString("en-US") + " tokens (estimate)";
+          metaEl.textContent = "est. tokens used this week";
+          if (capEl) capEl.textContent = d.muse.weekly_used_pct + "% of weekly limit · ≈" + fmtTok(d.muse.tokens_left) +
+            " left of ≈" + fmtTok(Math.round(estTotal)) + " weekly · resets " + d.muse.resets + " · " + d.muse.plan + " plan" +
+            (d.muse.as_of ? " · as of " + d.muse.as_of : "");
+        } else {
+          pctEl.textContent = d.muse.weekly_used_pct + "%";
+          metaEl.textContent = "of weekly limit · resets " + d.muse.resets + " · " + d.muse.plan + " plan";
+          if (capEl) capEl.textContent = "";
+        }
       }
     }
     if (window.fetch) {
