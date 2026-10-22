@@ -627,7 +627,7 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
         mnm.appendChild(mlane);
         var mmeta = document.createElement("div");
         mmeta.className = "mmeta";
-        mmeta.textContent = "Meta · this assistant (Muse Wonder) · subscription, not metered tokens";
+        mmeta.textContent = "Meta · this assistant (Muse Wonder) · subscription";
         mmid.appendChild(mnm); mmid.appendChild(mmeta);
         mrow.appendChild(mmid);
         var mtk = document.createElement("div");
@@ -637,8 +637,7 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
           var estTotal = d.muse.tokens_left / (1 - d.muse.weekly_used_pct / 100);
           var estUsed = Math.round(estTotal - d.muse.tokens_left);
           mtk.innerHTML = '<b title="≈' + estUsed.toLocaleString("en-US") + ' tokens (estimate)">≈' + fmtTok(estUsed) + "</b><span>" +
-            d.muse.weekly_used_pct + "% of weekly limit · ≈" + fmtTok(d.muse.tokens_left) + " left of ≈" + fmtTok(Math.round(estTotal)) +
-            " · resets " + d.muse.resets + "</span>";
+            d.muse.weekly_used_pct + "% of weekly limit · ≈" + fmtTok(d.muse.tokens_left) + " left · resets " + d.muse.resets + "</span>";
         } else {
           mtk.innerHTML = "<b>" + d.muse.weekly_used_pct + "%</b><span>of weekly limit · resets " + d.muse.resets + " · " + d.muse.plan + " plan</span>";
         }

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-21 — Muse row copy trim (homepage + lab)
+
+- Muse row meta now reads "Meta · this assistant (Muse Wonder) · subscription" (dropped ", not metered tokens"), and the right-side line drops the "of ≈498.91M" segment so it fits on one line in the hero: "8% of weekly limit · ≈459.00M left · resets Oct 24, 11:56 PM ET".
+
 ## 2026-10-21 — Homepage token panel: headline gradient fix
 
 - QA caught the panel headline's second sentence rendering plain white: the shared stylesheet only defines .grad inside h1 and footer. Added an explicit gradient rule for the panel title (and a matching bare .grad rule on the lab page, same latent issue).
