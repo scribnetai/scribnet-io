@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-21 — Usage rows: app-style brand icon tiles (homepage + lab)
+
+- The model logo chips are now brand tiles in the fleet's app-icon style: Ollama as a white glossy tile with the black mark, Gemini on its blue→purple→red gradient, Meta on blue, each with an inset highlight and soft shadow — replacing the flat white glyphs.
+- Build fix: the lab builder now strips the homepage's inline usage-panel assets from the parts it inherits, so the panel can't double-render in demo 15.
+
 ## 2026-10-21 — Prompts page: workflow 15, Houseplant Care Scheduler
 
 - The prompts page gains workflow #15 "Houseplant Care Scheduler" (Life): a watering schedule built only from the care info you paste — due-date maths shown per plant, care scheduled only on days you're home with any move labelled, and plants with no pasted interval parked as UNSCHEDULED — INFO NEEDED instead of guessing from the species name.

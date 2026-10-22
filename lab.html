@@ -35,6 +35,7 @@
       border-radius: 2px; background: var(--cyan); animation: blink 1.1s steps(2, start) infinite; }
     @keyframes blink { to { visibility: hidden; } }
     @media (prefers-reduced-motion: reduce) { .aurora, .caret { display: none; } }
+    
   </style>
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ScribNet">
@@ -318,6 +319,15 @@
     justify-content: center; background: rgba(255,255,255,.05); border: 1px solid var(--border);
     font-weight: 800; font-size: 1.05rem; }
   .mlogo img { width: 1.35rem; height: 1.35rem; display: block; }
+  .mlogo.b-ollama { background: linear-gradient(145deg, #ffffff, #d7d7de); border-color: rgba(255,255,255,.4); color: #111;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 2px 6px rgba(0,0,0,.35); }
+  .mlogo.b-googlegemini { background: linear-gradient(135deg, #4796e3, #9177c7 55%, #d96570); border-color: rgba(255,255,255,.25);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 6px rgba(0,0,0,.35); }
+  .mlogo.b-meta { background: linear-gradient(135deg, #0082fb, #0057d9); border-color: rgba(255,255,255,.25);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 6px rgba(0,0,0,.35); }
+  .mlogo.b-anthropic { background: linear-gradient(135deg, #e08a5f, #c15f3c); border-color: rgba(255,255,255,.25);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 2px 6px rgba(0,0,0,.35); }
+  .mlogo[class*="b-"] img { width: 1.5rem; height: 1.5rem; }
   .mname { font-weight: 700; display: flex; align-items: center; gap: .55rem; flex-wrap: wrap; }
   .mmeta { color: var(--muted); font-size: .83rem; margin-top: .15rem; }
   .lane { font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
@@ -781,6 +791,8 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
 
 
 
+
+
 <script>
 (function () {
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -943,10 +955,10 @@ SAFETY CHECK — before the first run, confirm:
     }
     function logoEl(icon, letter) {
       var wrap = document.createElement("span");
-      wrap.className = "mlogo";
+      wrap.className = "mlogo" + (icon ? " b-" + icon : "");
       if (icon) {
         var img = document.createElement("img");
-        img.src = "https://cdn.simpleicons.org/" + icon + "/white";
+        img.src = "https://cdn.simpleicons.org/" + icon + (icon === "ollama" ? "" : "/white");
         img.alt = "";
         img.addEventListener("error", function () { wrap.textContent = letter; });
         wrap.appendChild(img);
