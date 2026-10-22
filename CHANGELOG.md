@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-21 — Visual Lab demo 15 v1.3: Muse inline, new headline
+
+- Muse is now a row in the model list (Meta logo, pink Allowance badge, ≈39.9M estimate, allowance meter as its bar) instead of a separate dashed card below the chart.
+- Removed the intro paragraph; headline is now "Every AI I run. Every token I've burned."
+
 ## 2026-10-21 — Visual Lab demo 15 v1.2: Muse token estimate
 
 - The Muse card now shows a token estimate reverse-engineered from the subscription dashboard (8% of weekly limit used, 459M tokens left → ≈499M weekly allowance, ≈40M used this week). Labeled as an estimate on the card and in the footnote — the allowance size isn't published, and the dashboard rounds both inputs.

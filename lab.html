@@ -321,19 +321,17 @@
     padding: .18rem .55rem; border-radius: 999px; border: 1px solid var(--border); white-space: nowrap; }
   .lane.local { color: #b7a8ff; border-color: rgba(124,108,255,.55); background: rgba(124,108,255,.12); }
   .lane.cloud { color: #8fe3ff; border-color: rgba(77,225,255,.45); background: rgba(77,225,255,.08); }
+  .lane.sub { color: #ff9fd4; border-color: rgba(255,122,198,.45); background: rgba(255,122,198,.08); }
   .mtokens { text-align: right; }
   .mtokens b { font-size: 1.15rem; }
   .mtokens span { display: block; color: var(--muted); font-size: .8rem; }
   .mbar { grid-column: 1 / -1; height: 6px; border-radius: 999px; background: rgba(255,255,255,.06); overflow: hidden; }
   .mbar i { display: block; height: 100%; width: 0; border-radius: 999px;
     background: linear-gradient(90deg, #7c6cff, #4de1ff); }
+  .mbar.sub i { background: linear-gradient(90deg, #ff7ac6, #7c6cff); }
   .usage-chart { margin-top: 1.3rem; }
   .usage-chart svg { display: block; width: 100%; height: auto; }
   .usage-days-label { color: var(--muted); font-size: .8rem; margin-top: .45rem; }
-  .muse-card { margin-top: 1.3rem; border: 1px dashed rgba(255,255,255,.25); border-radius: 14px;
-    padding: 1rem 1.1rem; display: grid; grid-template-columns: 2.6rem 1fr auto; gap: .9rem; align-items: center; }
-  .muse-meter { grid-column: 1 / -1; height: 8px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; }
-  .muse-meter i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #ff7ac6, #7c6cff); }
   .usage-note { color: var(--muted); font-size: .82rem; margin-top: 1rem; }
   .sample-pill { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
     color: #ffd97a; border: 1px solid rgba(255,217,122,.5); background: rgba(255,217,122,.08);
@@ -625,8 +623,7 @@
   <p class="lede">New material being tried here first, fed by live data from the homelab.</p>
 
   <section class="lab-demo reveal">
-    <h3>15. Lifetime token usage — every AI, one view</h3>
-    <p class="idea">Candidate for the homepage stats row: my lifetime token burn across every model I run — local vs cloud — rendered from <code>usage-data.json</code>, which is built from the Hermes usage-ledger CSV. Muse rides along below: it bills against a subscription allowance, not metered tokens, so it gets an allowance meter instead of a token count. <span class="sample-pill" id="usage-sample-pill" hidden>Sample data</span></p>
+    <h3>15. Every AI I run. <span class="grad">Every token I&rsquo;ve burned.</span> <span class="sample-pill" id="usage-sample-pill" hidden>Sample data</span></h3>
     <div class="usage-head">
       <span class="usage-total" id="usage-total">&mdash;</span>
       <span class="usage-sub">lifetime tokens &middot; local + cloud</span>
@@ -636,16 +633,6 @@
     <div id="usage-models"></div>
     <div class="usage-chart" id="usage-chart"></div>
     <p class="usage-days-label" id="usage-days-label"></p>
-    <div class="muse-card" id="usage-muse" hidden>
-      <span class="mlogo"><img src="https://cdn.simpleicons.org/meta/white" alt="" onerror="this.parentElement.textContent='M'"></span>
-      <div>
-        <div class="mname">Muse <span class="lane cloud">Allowance</span></div>
-        <div class="mmeta">Meta &middot; this assistant (Muse Wonder) &middot; subscription, not metered tokens</div>
-      </div>
-      <div class="mtokens"><b id="usage-muse-pct">&mdash;</b><span id="usage-muse-meta">of weekly limit</span></div>
-      <div class="muse-meter"><i id="usage-muse-bar"></i></div>
-      <p class="usage-note" id="usage-muse-cap" style="grid-column:1/-1;margin-top:0"></p>
-    </div>
     <p class="usage-note">Token totals count input + output + cache reads/writes + reasoning — the same definition Hermes reports. Cache re-reads dominate the volume: a long context gets re-read every turn. The Muse figure is an estimate reverse-engineered from the subscription dashboard (% of weekly limit used vs tokens left) — Meta doesn't publish the allowance size, so treat it as approximate.</p>
   </section>
 </main>
@@ -1059,28 +1046,43 @@ SAFETY CHECK — before the first run, confirm:
         chartBox.innerHTML = svg;
         if (daysLabel) daysLabel.textContent = "Daily tokens · last " + n + (n === 1 ? " day" : " days");
       } else if (daysLabel) { daysLabel.textContent = ""; }
-      var museCard = document.getElementById("usage-muse");
-      if (museCard && d.muse) {
-        museCard.hidden = false;
-        var pctEl = document.getElementById("usage-muse-pct");
-        var metaEl = document.getElementById("usage-muse-meta");
-        var capEl = document.getElementById("usage-muse-cap");
-        document.getElementById("usage-muse-bar").style.width = d.muse.weekly_used_pct + "%";
+      if (d.muse) {
+        var mrow = document.createElement("div");
+        mrow.className = "mrow";
+        mrow.appendChild(logoEl("meta", "M"));
+        var mmid = document.createElement("div");
+        var mnm = document.createElement("div");
+        mnm.className = "mname";
+        mnm.appendChild(document.createTextNode("Muse"));
+        var mlane = document.createElement("span");
+        mlane.className = "lane sub";
+        mlane.textContent = "Allowance";
+        mnm.appendChild(mlane);
+        var mmeta = document.createElement("div");
+        mmeta.className = "mmeta";
+        mmeta.textContent = "Meta · this assistant (Muse Wonder) · subscription, not metered tokens";
+        mmid.appendChild(mnm); mmid.appendChild(mmeta);
+        mrow.appendChild(mmid);
+        var mtk = document.createElement("div");
+        mtk.className = "mtokens";
         if (d.muse.tokens_left && d.muse.weekly_used_pct) {
           // Reverse-engineered allowance: left / (1 - used%) = weekly total.
           var estTotal = d.muse.tokens_left / (1 - d.muse.weekly_used_pct / 100);
           var estUsed = Math.round(estTotal - d.muse.tokens_left);
-          pctEl.textContent = "≈" + fmtTok(estUsed);
-          pctEl.title = "≈" + estUsed.toLocaleString("en-US") + " tokens (estimate)";
-          metaEl.textContent = "est. tokens used this week";
-          if (capEl) capEl.textContent = d.muse.weekly_used_pct + "% of weekly limit · ≈" + fmtTok(d.muse.tokens_left) +
-            " left of ≈" + fmtTok(Math.round(estTotal)) + " weekly · resets " + d.muse.resets + " · " + d.muse.plan + " plan" +
-            (d.muse.as_of ? " · as of " + d.muse.as_of : "");
+          mtk.innerHTML = '<b title="≈' + estUsed.toLocaleString("en-US") + ' tokens (estimate)">≈' + fmtTok(estUsed) + "</b><span>" +
+            d.muse.weekly_used_pct + "% of weekly limit · ≈" + fmtTok(d.muse.tokens_left) + " left of ≈" + fmtTok(Math.round(estTotal)) +
+            " · resets " + d.muse.resets + "</span>";
         } else {
-          pctEl.textContent = d.muse.weekly_used_pct + "%";
-          metaEl.textContent = "of weekly limit · resets " + d.muse.resets + " · " + d.muse.plan + " plan";
-          if (capEl) capEl.textContent = "";
+          mtk.innerHTML = "<b>" + d.muse.weekly_used_pct + "%</b><span>of weekly limit · resets " + d.muse.resets + " · " + d.muse.plan + " plan</span>";
         }
+        mrow.appendChild(mtk);
+        var mbar = document.createElement("div");
+        mbar.className = "mbar sub";
+        var mfill = document.createElement("i");
+        mfill.style.width = d.muse.weekly_used_pct + "%";
+        mbar.appendChild(mfill);
+        mrow.appendChild(mbar);
+        usageModels.appendChild(mrow);
       }
     }
     if (window.fetch) {
