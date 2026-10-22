@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-21 — Visual Lab demo 15 v1.4: footnote removed
+
+- Dropped the methodology footnote under demo 15 (token-definition + estimate caveat text) at the owner's request. The Muse row keeps its ≈ and Allowance badge. Homepage placement decided (stats band under the hero) — promotion waits for his final edit round.
+
 ## 2026-10-21 — Visual Lab demo 15 v1.3: Muse inline, new headline
 
 - Muse is now a row in the model list (Meta logo, pink Allowance badge, ≈39.9M estimate, allowance meter as its bar) instead of a separate dashed card below the chart.
