@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-21 — Homepage token panel: headline gradient fix
+
+- QA caught the panel headline's second sentence rendering plain white: the shared stylesheet only defines .grad inside h1 and footer. Added an explicit gradient rule for the panel title (and a matching bare .grad rule on the lab page, same latent issue).
+
 ## 2026-10-21 — Token usage view promoted to the homepage
 
 - The lifetime token usage panel (graduated from Visual Lab demo 15) now sits in the homepage hero, directly under the stats band: count-up total (2,139,708), local/cloud split, per-model rows with the Muse allowance row inline, and the 7-day line chart. Fed by /usage-data.json, which a new daily cron refreshes from the Hermes ledger.
