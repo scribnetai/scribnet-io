@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-22 — Prompts page: workflow 16, Kubernetes Manifest Auditor
+
+- The prompts page gains workflow #16 "Kubernetes Manifest Auditor" (Homelab): an audit of a pasted Kubernetes manifest — every resource inventoried, a present/absent scan for privilege, exposure, and missing limits or probes with field paths quoted, Secret values flagged by presence only and never decoded, and anything only a live cluster could settle listed as CANNOT CHECK FROM PASTE.
+
 ## 2026-10-22 — Token usage data refresh (auto)
 
 - Updated usage-data.json to 2,225,497 total tokens (2,140,476 local / 85,021 cloud); Muse weekly usage 9% as of Oct 22, 2026.
