@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-23 — Prompts page: workflows 17 and 18, Terraform Plan Reviewer and Git Merge Conflict Decoder
+
+- The prompts page gains workflow #17 "Terraform Plan Reviewer" (Homelab): a read of a pasted terraform plan before anyone applies it — every resource inventoried by action with reconciled counts, destroys and replaces reviewed first by exact address, protected resources forcing an automatic DO NOT APPLY verdict, sensitive values flagged by address only and never quoted, and known-after-apply values labelled UNKNOWN AT APPLY.
+- The prompts page gains workflow #18 "Git Merge Conflict Decoder" (Work): a decode of a pasted conflicted file — every conflict block inventoried, both sides quoted character-for-character with a plain-language decode, each block classified by text only with the base version stated as BASE NOT PASTED, any hand-merged option labelled COMBINED — NEW CODE, UNTESTED, and malformed blocks stopped rather than guessed through.
+
 ## 2026-10-23 — Token usage data refresh (auto)
 
 - Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 10% as of Oct 23, 2026.

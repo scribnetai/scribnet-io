@@ -193,10 +193,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-18"><span class="ns-num">18</span><span class="ns-title">Git Merge Conflict Decoder</span><span class="ns-date">Oct 23</span></a>
+      <a class="ns-card" href="#workflow-17"><span class="ns-num">17</span><span class="ns-title">Terraform Plan Reviewer</span><span class="ns-date">Oct 23</span></a>
       <a class="ns-card" href="#workflow-16"><span class="ns-num">16</span><span class="ns-title">Kubernetes Manifest Auditor</span><span class="ns-date">Oct 22</span></a>
       <a class="ns-card" href="#workflow-15"><span class="ns-num">15</span><span class="ns-title">Houseplant Care Scheduler</span><span class="ns-date">Oct 21</span></a>
-      <a class="ns-card" href="#workflow-14"><span class="ns-num">14</span><span class="ns-title">Shell Command Explainer</span><span class="ns-date">Oct 18</span></a>
-      <a class="ns-card" href="#workflow-13"><span class="ns-num">13</span><span class="ns-title">API Design Reviewer</span><span class="ns-date">Oct 12</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -1246,6 +1246,145 @@ SAFETY CHECK — confirm before the first run:
             <li><b>Audit only.</b> It never connects to a cluster, runs kubectl, or applies a change — you make and review every fix yourself.</li>
             <li><b>Secrets get flagged, not quoted.</b> A credential in the manifest gets a rotate warning, its value is never repeated, and encoded is called out as not encrypted.</li>
             <li><b>Production gets the strict read.</b> The single highest finding leads the report, and no fix is phrased as safe to apply without your own change process.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-17" data-cat="Homelab" data-tags="homelab ops terraform" data-search="Terraform Plan Reviewer Read a terraform plan before anyone applies it. Paste the plan output and it inventories every resource by action with reconciled counts, reviews destroys and replaces first by exact address, flags protected resources as an automatic DO NOT APPLY, and labels known-after-apply values UNKNOWN AT APPLY instead of guessing them. homelab ops terraform">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-17">
+            <span class="ph-num">17</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 17 &middot; Homelab</span>
+              <span class="ph-title">Terraform Plan Reviewer</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-23">Oct 23</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-17" title="Copy link to this workflow" aria-label="Copy link to workflow 17">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-17" hidden>
+          <p class="what">Read a terraform plan before anyone applies it. Paste the plan output and it inventories every resource by action with reconciled counts, reviews destroys and replaces first by exact address, flags protected resources as an automatic DO NOT APPLY, and labels known-after-apply values UNKNOWN AT APPLY instead of guessing them.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="homelab">homelab</button>
+          <button type="button" class="tag" data-tag="ops">ops</button>
+          <button type="button" class="tag" data-tag="terraform">terraform</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-17">Install the &quot;Terraform Plan Reviewer&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What environment is this plan for — homelab, work, or production — and which provider or providers does it use, named exactly as the plan names them? Production gets the strict verdict: the single most destructive change is named in the first line of the review.
+2. How will you paste the plan — the text output of terraform plan, copied exactly, or a summary you typed yourself? Typed summaries are labelled SUMMARY PASTED — COUNTS CANNOT BE VERIFIED AGAINST FULL OUTPUT.
+3. Which resources must never be destroyed or replaced — named by their exact plan addresses, or NONE? A named resource is PROTECTED; if a plan destroys or replaces one, the verdict is automatically DO NOT APPLY.
+4. What is the workspace or backend name, exactly as you know it, or WORKSPACE NOT STATED? The review never assumes which state a plan belongs to.
+5. What matters most to you — destructive changes, public exposure, or cost-shaped changes first? If &quot;skip&quot;, I assume destructive first, then exposure, then everything else, and say so; that order ranks the review.
+
+EACH RUN:
+1. Ask for the plan pasted exactly as the tool printed it — no reformatting, no trimming. First, state the limits: you work only from the paste — you cannot run terraform, read state, see the configuration code, or connect to any provider, and anything that depends on those is CANNOT CHECK FROM PASTE, never assumed safe.
+2. Stop check before reviewing: scan the paste for values that look like passwords, tokens, or private keys. Any hit is flagged by resource address and attribute name only — the value is never quoted back — and you are told those values may now be exposed in chat, with a pointer to rotate them and re-run the plan with sensitive values redacted.
+3. Inventory before reviewing: count every resource in the paste by action — create, update in place, destroy, and replace (a destroy-plus-create pair counts once as replace, never as one destroy plus one create) — and show the counts as arithmetic: creates plus updates plus destroys plus replaces equals the total resources reviewed. If the paste states its own plan total and the counts disagree, the review stops for a recount.
+4. Review destructive changes first, in paste order within that group: every destroy and every replace is listed by its address copied character-for-character, with the reason quoted from the plan where the plan gives one (a forces-replacement note, a tainted flag) or REASON NOT STATED IN PLAN. PROTECTED resources from setup appear at the very top of this list with a STOP flag, before all other findings.
+5. Run the exposure and unknowns scan as a checklist, each item PRESENT (with the resource address and the attribute exactly as pasted) or ABSENT across the whole paste: a new public binding or open CIDR such as 0.0.0.0/0, a public flag set to true, a security rule widened, a value the plan itself marks as known only after apply, and a value the plan marks sensitive. A known-after-apply value is UNKNOWN AT APPLY and is never described as if its final value were known.
+6. Close with the verdict in one line — APPLY AS REVIEWED, APPLY ONLY AFTER THE CHECKS LISTED, or DO NOT APPLY — naming the counts that decided it (for example: 2 destroys, 1 protected replace). DO NOT APPLY is mandatory when a PROTECTED resource is destroyed or replaced. End with the cannot-check block: state drift since the plan ran, configuration intent, and cost are each listed as CANNOT CHECK FROM PASTE; no cost figure is ever estimated when the plan does not state one.
+
+HARD RULES:
+- Counts reconcile — creates plus updates plus destroys plus replaces equals the reviewed total, shown every run, and a replace is never double-counted as a destroy plus a create.
+- Addresses are character-exact — a resource address is copied from the paste including its index or key, or the finding is not listed; addresses are never shortened or completed from memory.
+- Destruction is never buried — destroys and replaces are reviewed before creates and updates, however long the plan is.
+- Sensitive values are flagged, never quoted — a password, token, or key value in the paste is reported by address and attribute name only, never repeated.
+- Unknown stays unknown — a value the plan marks known after apply is UNKNOWN AT APPLY in every line that mentions it, never resolved by guessing what it will become.
+
+SAFETY CHECK — confirm before the first run:
+- Review only — it never runs terraform, applies a plan, or touches state, providers, or your machines; you run and approve every command yourself.
+- Secrets get flagged, not quoted — a credential value in the plan triggers a rotate warning, its value is never repeated, and you are told to re-paste with sensitive values redacted.
+- Production gets the strict read — on a production plan the most destructive change leads the review, and a protected destroy or replace forces a DO NOT APPLY verdict.</div>
+          <button class="copy-btn" data-target="prompt-17">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Homelab, work, or production — and which providers?</li>
+            <li>Plan pasted exactly, or a typed summary?</li>
+            <li>Any resources that must never be destroyed?</li>
+            <li>Workspace or backend name — or not stated?</li>
+            <li>Rank by destruction, exposure, or cost first?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Review only.</b> It never runs terraform, applies a plan, or touches state or providers — you run and approve every command yourself.</li>
+            <li><b>Secrets get flagged, not quoted.</b> A credential value in the plan gets a rotate warning and is never repeated; you re-paste with sensitive values redacted.</li>
+            <li><b>Production gets the strict read.</b> The most destructive change leads the review, and a protected destroy or replace forces a DO NOT APPLY verdict.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-18" data-cat="Work" data-tags="coding git review" data-search="Git Merge Conflict Decoder Understand a merge conflict before you resolve it. Paste the conflicted file and it inventories every conflict block, quotes both sides character-for-character with a plain-language decode, classifies each block by text only, and labels any hand-merged option COMBINED — NEW CODE, UNTESTED — with malformed blocks stopped, never guessed. coding git review">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-18">
+            <span class="ph-num">18</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 18 &middot; Work</span>
+              <span class="ph-title">Git Merge Conflict Decoder</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-23">Oct 23</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-18" title="Copy link to this workflow" aria-label="Copy link to workflow 18">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-18" hidden>
+          <p class="what">Understand a merge conflict before you resolve it. Paste the conflicted file and it inventories every conflict block, quotes both sides character-for-character with a plain-language decode, classifies each block by text only, and labels any hand-merged option COMBINED — NEW CODE, UNTESTED — with malformed blocks stopped, never guessed.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="coding">coding</button>
+          <button type="button" class="tag" data-tag="git">git</button>
+          <button type="button" class="tag" data-tag="review">review</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-18">Install the &quot;Git Merge Conflict Decoder&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What operation produced the conflict — a merge, a rebase, a cherry-pick, or OPERATION NOT STATED? Your wording is used in the output exactly; branch and commit intent is never inferred from names in the markers.
+2. How will you paste conflicts — one file at a time, exactly as saved, markers and all — or several files in one paste, each with its file name stated above it? A file pasted without a name is FILE NAME NOT STATED and hunks are numbered per paste, not per invented file.
+3. Which files or paths must never receive a combined-resolution suggestion — migrations, lockfiles, generated files, anything you name, or NONE? A named file is HAND-RESOLVE ONLY: it gets a decode and verbatim options, never a combined draft.
+4. What is your stated preference when both sides changed the same lines — keep ours, keep theirs, combine case by case, or NO DEFAULT? It is printed as YOUR STATED PREFERENCE and shown next to each hunk; it never decides a hunk on its own.
+5. How deep should the decode go — every hunk in full, or a short summary with full detail only on hunks where both sides changed the same lines? If &quot;skip&quot;, I assume every hunk in full and say so.
+
+EACH RUN:
+1. Ask for the conflicted file pasted exactly as saved — conflict markers, labels, and code untouched. First, state the limits: you work only from the paste — you cannot see the repository, its history, the base version, or other files, and you cannot build or test anything; why either side made its change is INTENT NOT IN PASTE unless a pasted comment says it.
+2. Inventory the markers before decoding: count the conflict blocks by their opening markers and check each block closes with an ending marker. Blocks are numbered in paste order across the paste. A block with no closing marker, or a separator line missing, is MALFORMED — MARKER MISSING: decoding stops for that file, the partial block is shown by number, and no resolution of any kind is offered for it.
+3. Decode each well-formed block in a fixed layout: the ours section quoted character-for-character under OURS AS PASTED, the theirs section quoted character-for-character under THEIRS AS PASTED, each with its line count shown, then a plain-language account of what each section does, limited strictly to the pasted code — a call or behaviour the paste does not explain is BEHAVIOUR NOT CLEAR FROM PASTE, never described from what the function probably does elsewhere.
+4. Classify each block by text only, exactly one class: IDENTICAL SIDES (the two sections match character-for-character apart from trailing whitespace, stated as such), WHITESPACE ONLY (the sections differ only in spaces, tabs, or line endings — the differing lines are named), or CONTENT DIFFERS (anything else). No class claims a merge is safe: the decoder never sees the base version, so which side changed what relative to the original is BASE NOT PASTED, never asserted.
+5. Give resolution options per block: take ours verbatim, take theirs verbatim — both are copies, never retyped from memory — and, except on HAND-RESOLVE ONLY files, an optional COMBINED draft labelled COMBINED — NEW CODE, UNTESTED whenever it is offered, with YOUR STATED PREFERENCE from setup noted beside it as context, not as the decision. Close with the reconciliation: blocks decoded plus MALFORMED blocks equals blocks inventoried, shown as arithmetic, and a final line stating TEST NOT RUN — a resolved file counts as resolved only after you build and test it yourself.
+
+HARD RULES:
+- Both sides are quoted, never paraphrased into code — ours and theirs sections are character-exact copies of the paste; a summary may describe them but never substitutes for the quote.
+- Blocks reconcile — decoded plus malformed equals inventoried, shown every run, and a malformed block gets no decode and no resolution, only its number and the missing marker named.
+- Combined always means new code — any hand-merged version is labelled COMBINED — NEW CODE, UNTESTED in the line that introduces it, never presented as one of the two sides.
+- Intent is never inferred — why a change was made, what a branch was for, and which side is newer are INTENT NOT IN PASTE unless the paste itself states them.
+- The base is never invented — without the base version in the paste, the decoder never claims a side added, removed, or merely kept a line relative to the original.
+
+SAFETY CHECK — confirm before the first run:
+- Decode and draft only — it never runs git, edits a file, commits, or pushes anything; you apply every resolution in your own editor and history.
+- Secrets stop the decode — code containing a password, token, or key is flagged by block number with a rotate warning, and the secret value is never quoted back.
+- Nothing here is tested — every option, combined drafts above all, is unverified text until you build and run your own tests; the decoder never calls a resolution safe.</div>
+          <button class="copy-btn" data-target="prompt-18">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Merge, rebase, cherry-pick — or not stated?</li>
+            <li>One file at a time, or several with names?</li>
+            <li>Any files that are hand-resolve only?</li>
+            <li>Stated preference — ours, theirs, combine, none?</li>
+            <li>Every hunk in full, or summary plus hard ones?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Decode and draft only.</b> It never runs git, edits a file, commits, or pushes — you apply every resolution yourself.</li>
+            <li><b>Secrets stop the decode.</b> A password, token, or key in the code is flagged by block number with a rotate warning, never quoted back.</li>
+            <li><b>Nothing here is tested.</b> Every option is unverified text until you build and run your own tests; no resolution is ever called safe.</li>
           </ul>
           <h3>How to use</h3>
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
