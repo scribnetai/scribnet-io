@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-21",
+  "generated": "2026-10-22",
   "sample": false,
-  "total_tokens": 2225497,
+  "total_tokens": 2274269,
   "local_tokens": 2140476,
-  "cloud_tokens": 85021,
+  "cloud_tokens": 133793,
   "models": [
     {
       "name": "gpt-oss:20b",
@@ -22,19 +22,32 @@
       "lane": "cloud",
       "tokens": 85021,
       "calls": 8
+    },
+    {
+      "name": "gemini-3.8-flash",
+      "vendor": "Google",
+      "icon": "googlegemini",
+      "runtime": "Gemini API \u00b7 fast lane",
+      "lane": "cloud",
+      "tokens": 48772,
+      "calls": 2
     }
   ],
   "daily": [
     {
       "d": "2026-10-21",
       "tokens": 2225497
+    },
+    {
+      "d": "2026-10-22",
+      "tokens": 48772
     }
   ],
   "muse": {
     "plan": "Power",
-    "weekly_used_pct": 9,
+    "weekly_used_pct": 10,
     "tokens_left": 459000000,
     "resets": "Oct 24, 11:56 PM ET",
-    "as_of": "Oct 22, 2026"
+    "as_of": "Oct 23, 2026"
   }
 }
