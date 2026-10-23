@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-23 — Weekly shipped summary: build log updated
+
+- Compiled the week's material changelog entries (Oct 17–23) into the homepage build log (24 items at the cap): 11 new items — Statement Analyzer's Cleanup and Forecast tabs plus expanded imports, two new Zero to Dangerous books (AWS and Agentic Markdowns), the homepage token-usage panel and podcast episode archive, workflow prompts 14 and 16–18, and three Battlecards intel updates; dropped the 11 oldest to hold the 24-item cap. Routine SE Command Center morning briefings and auto token-usage refreshes excluded.
+
+
 ## 2026-10-23 — Prompts page: workflows 17 and 18, Terraform Plan Reviewer and Git Merge Conflict Decoder
 
 - The prompts page gains workflow #17 "Terraform Plan Reviewer" (Homelab): a read of a pasted terraform plan before anyone applies it — every resource inventoried by action with reconciled counts, destroys and replaces reviewed first by exact address, protected resources forcing an automatic DO NOT APPLY verdict, sensitive values flagged by address only and never quoted, and known-after-apply values labelled UNKNOWN AT APPLY.
