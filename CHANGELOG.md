@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-24 — Token usage data refresh (auto)
+
+- Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 15% as of Oct 24, 2026.
+
 ## 2026-10-23 — Weekly shipped summary: build log updated
 
 - Compiled the week's material changelog entries (Oct 17–23) into the homepage build log (24 items at the cap): 11 new items — Statement Analyzer's Cleanup and Forecast tabs plus expanded imports, two new Zero to Dangerous books (AWS and Agentic Markdowns), the homepage token-usage panel and podcast episode archive, workflow prompts 14 and 16–18, and three Battlecards intel updates; dropped the 11 oldest to hold the 24-item cap. Routine SE Command Center morning briefings and auto token-usage refreshes excluded.
