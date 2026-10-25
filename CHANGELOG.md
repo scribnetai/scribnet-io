@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-25 — Prompts page: workflows 19 and 20, Product Recall Checker and Project Kickoff Packet Builder
+
+- The prompts page gains workflow #19 "Product Recall Checker" (Life): pasted products matched character-for-character on brand plus model against named recall sources — a differing model is POSSIBLE MATCH, never upgraded; name-only checks (no model pasted) are labelled weaker everywhere; remedies are copied only from the matched notice; and no-match results are worded NO MATCH FOUND IN SOURCES CHECKED, never safe, clear, or unaffected.
+- The prompts page gains workflow #20 "Project Kickoff Packet Builder" (Work): pasted project facts inventoried before drafting — deliverables, dates, and amounts counted; milestone amounts summed as shown arithmetic against the pasted total with any mismatch flagged and both figures quoted, never adjusted; the draft is labelled WORKING PACKET — NOT A CONTRACT, and its open-questions list is built only from fields the paste did not state.
+
 ## 2026-10-25 — Token usage data refresh (auto)
 
 - Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 0% as of Oct 25, 2026.

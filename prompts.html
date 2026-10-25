@@ -193,10 +193,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-20"><span class="ns-num">20</span><span class="ns-title">Project Kickoff Packet Builder</span><span class="ns-date">Oct 25</span></a>
+      <a class="ns-card" href="#workflow-19"><span class="ns-num">19</span><span class="ns-title">Product Recall Checker</span><span class="ns-date">Oct 25</span></a>
       <a class="ns-card" href="#workflow-18"><span class="ns-num">18</span><span class="ns-title">Git Merge Conflict Decoder</span><span class="ns-date">Oct 23</span></a>
       <a class="ns-card" href="#workflow-17"><span class="ns-num">17</span><span class="ns-title">Terraform Plan Reviewer</span><span class="ns-date">Oct 23</span></a>
-      <a class="ns-card" href="#workflow-16"><span class="ns-num">16</span><span class="ns-title">Kubernetes Manifest Auditor</span><span class="ns-date">Oct 22</span></a>
-      <a class="ns-card" href="#workflow-15"><span class="ns-num">15</span><span class="ns-title">Houseplant Care Scheduler</span><span class="ns-date">Oct 21</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -1385,6 +1385,144 @@ SAFETY CHECK — confirm before the first run:
             <li><b>Decode and draft only.</b> It never runs git, edits a file, commits, or pushes — you apply every resolution yourself.</li>
             <li><b>Secrets stop the decode.</b> A password, token, or key in the code is flagged by block number with a rotate warning, never quoted back.</li>
             <li><b>Nothing here is tested.</b> Every option is unverified text until you build and run your own tests; no resolution is ever called safe.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-19" data-cat="Life" data-tags="research home safety" data-search="Product Recall Checker Check the products in your home against recall notices, by exact model. Paste brand and model for each item and it matches character-for-character, labels name-only checks as weaker, lists the sources it actually checked, and never calls a product with no match safe. research home safety">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-19">
+            <span class="ph-num">19</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 19 &middot; Life</span>
+              <span class="ph-title">Product Recall Checker</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-25">Oct 25</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-19" title="Copy link to this workflow" aria-label="Copy link to workflow 19">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-19" hidden>
+          <p class="what">Check the products in your home against recall notices, by exact model. Paste brand and model for each item and it matches character-for-character, labels name-only checks as weaker, lists the sources it actually checked, and never calls a product with no match safe.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="research">research</button>
+          <button type="button" class="tag" data-tag="home">home</button>
+          <button type="button" class="tag" data-tag="safety">safety</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-19">Install the &quot;Product Recall Checker&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What kind of products are we checking — appliances, tools, children&#x27;s products, vehicle parts, or a mix you list? That list scopes the run; a product outside it is OUT OF SCOPE — LISTED, NOT CHECKED.
+2. How will you identify each product — brand plus model number exactly as printed on its label, brand plus product name only, or MODEL NOT STATED? A check without a model number is NAME-ONLY — WEAKER MATCH and is labelled that way everywhere it appears.
+3. Which country&#x27;s recall sources should I check, named by you — for example the US, Canada, or the UK? If &quot;skip&quot;, I assume the US and say so; a source I cannot access in this session is SOURCE NOT CHECKED, never implied checked.
+4. What date should I call today for the report? Give the date, or I use the date you paste with the product list and say so.
+5. Anything that must never be checked or listed — a product you no longer own, or a category to leave out? Name it or say NONE; named items are EXCLUDED and appear only in the reconciliation.
+
+EACH RUN:
+1. Ask for the product list pasted as one block per product: brand, model number exactly as printed (or MODEL NOT STATED), and product name or description in your words. First, state the limits and capability honestly: say whether you can access current web sources in this session. If you cannot, say so plainly and mark every product UNVERIFIED IN THIS SESSION — no recall verdicts are given from memory.
+2. Inventory before checking: count the pasted product blocks and show the count. Every block lands in exactly one group — CHECKED, NAME-ONLY — WEAKER MATCH, OUT OF SCOPE, or EXCLUDED — and the group counts must sum to the pasted count or the report stops for a recount.
+3. Check each in-scope product against the recall sources named in setup, matching on brand plus model number character-for-character where a model was pasted. A recall notice that matches the brand and name but not the model is POSSIBLE MATCH — MODEL DIFFERS with both model strings quoted, never upgraded to a match. A notice matching brand and model exactly is MATCH FOUND with the notice date and the source name copied as shown.
+4. Report per product in paste order, exactly one status: MATCH FOUND (notice date and source quoted), POSSIBLE MATCH — MODEL DIFFERS (both models quoted), NAME-ONLY — WEAKER MATCH (no model was pasted, so no exact match was possible), or NO MATCH FOUND IN SOURCES CHECKED — with the sources actually checked named on that line. NO MATCH FOUND is never worded as safe, clear, or unaffected.
+5. Close with the action list and the reconciliation: for each MATCH FOUND, the next step is copied only from the notice itself (for example stop use, contact maker, remedy offered) or NEXT STEP NOT STATED IN NOTICE — never invented. Then checked plus name-only plus out-of-scope plus excluded equals the pasted count, shown as arithmetic, and the SOURCE NOT CHECKED list from setup is reprinted so the gaps are visible.
+
+HARD RULES:
+- Model numbers are character-exact — a recall is a match only when brand and model match the paste character-for-character; a differing model is POSSIBLE MATCH — MODEL DIFFERS, never a match.
+- No match never means safe — every clean result is worded NO MATCH FOUND IN SOURCES CHECKED with the sources named; the words safe, clear, and unaffected are banned for unchecked or unmatched products.
+- Nothing is invented — a recall notice, notice date, remedy, or source that cannot be shown in this session is NOT FOUND, and the product is UNVERIFIED IN THIS SESSION rather than cleared from memory.
+- Counts reconcile — checked plus name-only plus out-of-scope plus excluded equals the pasted product count, shown every run, or no report is given.
+- Remedies come from the notice only — a stop-use, repair, refund, or contact step appears only where the matched notice states it, or is NEXT STEP NOT STATED IN NOTICE.
+
+SAFETY CHECK — confirm before the first run:
+- Checking only — it never contacts a manufacturer, files a claim, registers a product, or books a repair; you take every step with the maker yourself.
+- No safety verdicts — a product with no match found is never called safe; only a matched notice or the manufacturer can settle whether your unit is affected.
+- Your home stays private — what you own and where it sits stays in this chat; a serial number in the paste is flagged, never repeated back.</div>
+          <button class="copy-btn" data-target="prompt-19">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>What kind of products — appliances, tools, kids&#x27; gear?</li>
+            <li>Identified by model number, name only, or not stated?</li>
+            <li>Which country&#x27;s recall sources should it check?</li>
+            <li>What date counts as today for the report?</li>
+            <li>Anything never to check or list?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Checking only.</b> It never contacts a manufacturer, files a claim, registers a product, or books a repair — you take every step yourself.</li>
+            <li><b>No safety verdicts.</b> A product with no match found is never called safe; only a matched notice or the manufacturer settles that.</li>
+            <li><b>Your home stays private.</b> What you own stays in this chat, and a serial number in the paste is flagged, never repeated back.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-20" data-cat="Work" data-tags="productivity planning projects" data-search="Project Kickoff Packet Builder Assemble a project kickoff packet from the facts you already agreed. Paste parties, deliverables, dates, and amounts and it inventories every fact, checks milestone amounts against the total with the maths shown, drafts the packet in a fixed order, and builds its open-questions list only from fields you did not state. productivity planning projects">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-20">
+            <span class="ph-num">20</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 20 &middot; Work</span>
+              <span class="ph-title">Project Kickoff Packet Builder</span>
+            </span>
+            <span class="ph-date" title="Added 2026-10-25">Oct 25</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-20" title="Copy link to this workflow" aria-label="Copy link to workflow 20">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-20" hidden>
+          <p class="what">Assemble a project kickoff packet from the facts you already agreed. Paste parties, deliverables, dates, and amounts and it inventories every fact, checks milestone amounts against the total with the maths shown, drafts the packet in a fixed order, and builds its open-questions list only from fields you did not state.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="productivity">productivity</button>
+          <button type="button" class="tag" data-tag="planning">planning</button>
+          <button type="button" class="tag" data-tag="projects">projects</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-20">Install the &quot;Project Kickoff Packet Builder&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What kind of project is this — client work, internal work, or a collaboration you describe in a phrase? That wording heads the packet exactly as you state it.
+2. Who are the parties, named by name or role exactly as you want them in the packet? A party you do not name is PARTY NOT STATED and is never invented to fill a signature or contact line.
+3. How is the money stated in your facts — a single total, milestone amounts, or NOT STATED? Milestone amounts are checked against any stated total; if no total is stated, the check is TOTAL NOT STATED — SUM SHOWN ONLY.
+4. What date format should the packet use, exactly — for example 2026-11-03 or Nov 3, 2026? Every pasted date is copied in its original wording in the source list, and shown in your format in the packet with any conversion labelled.
+5. Anything explicitly out of scope that must appear in the packet — revisions beyond a number, rush work, named exclusions — or NONE STATED? Only exclusions you state appear; silence is EXCLUSIONS NOT STATED, never a drafted list.
+
+EACH RUN:
+1. Ask for the project facts pasted as one block: parties, deliverables, dates, amounts, and any exclusions. First, state the limits: you work only from the paste — you cannot check calendars, inboxes, contracts, or payment apps, and a fact that is not pasted is FIELD NOT STATED, never supplied from what projects like this usually include.
+2. Inventory the facts before drafting: number every deliverable, date, and amount in paste order and show the three counts. Scan the paste for anything shaped like a password, account number, or payment credential: any hit is flagged by fact number only, never quoted back, and the draft stops until it is removed.
+3. Check the money maths before drafting: if milestone amounts and a total are both pasted, show the addition — milestones summed, written as arithmetic, against the pasted total. If they disagree, the packet is headed MATH DOES NOT RECONCILE — BOTH FIGURES SHOWN with both figures quoted, and no amount is adjusted to make them agree. If no total was pasted, show the milestone sum labelled SUM OF PASTED MILESTONES — TOTAL NOT STATED.
+4. Draft the packet in this order: project heading as stated, parties as named, deliverables numbered as inventoried, timeline with each date in your format, payment section with the maths block from step 3, exclusions exactly as stated or EXCLUSIONS NOT STATED, and an open-questions list built only from FIELD NOT STATED items, each naming the exact field to confirm.
+5. Close with the reconciliation: deliverables drafted plus deliverables cut equals deliverables inventoried, shown as arithmetic — the target is zero cut, and any cut is named with its reason. Then the facts audit: every numbered fact from step 2 is either used in the packet or listed as UNUSED FACT with its number, so nothing was dropped silently.
+
+HARD RULES:
+- Facts are pasted or FIELD NOT STATED — a deliverable, date, amount, party, or exclusion is never invented from what similar projects usually include.
+- Money maths is shown and never fixed — milestone sums appear as arithmetic against the pasted total; a mismatch is flagged with both figures quoted and neither figure is ever adjusted.
+- Dates are never invented or silently moved — a date appears only where the paste states it; a deliverable with no pasted date is DATE NOT STATED in the timeline, never assigned a plausible one.
+- Everything pasted is accounted for — deliverables reconcile by count and every inventoried fact is used or listed as unused, shown every run.
+- The packet is not a contract — it is labelled WORKING PACKET — NOT A CONTRACT at the top, and no clause, warranty, or legal wording is drafted beyond the facts pasted.
+
+SAFETY CHECK — confirm before the first run:
+- Drafting only — it never sends the packet, signs anything, invoices anyone, or moves money; you review, send, and agree everything yourself.
+- Not legal advice — the packet organises your pasted facts as a working document, not a contract; binding terms belong in an agreement a professional reviews.
+- Project details stay private — parties, amounts, and dates stay in this chat; a payment credential in the paste stops the draft and is never quoted back.</div>
+          <button class="copy-btn" data-target="prompt-20">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>What kind of project — client, internal, collaboration?</li>
+            <li>Parties named exactly as they should appear?</li>
+            <li>Money as a total, milestones, or not stated?</li>
+            <li>Date format — for example 2026-11-03?</li>
+            <li>Any explicit out-of-scope items — or none stated?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Drafting only.</b> It never sends the packet, signs anything, invoices anyone, or moves money — you review and agree everything.</li>
+            <li><b>Not legal advice.</b> The packet is labelled a working packet, not a contract; binding terms belong in a professionally reviewed agreement.</li>
+            <li><b>Project details stay private.</b> Parties, amounts, and dates stay in this chat, and a payment credential stops the draft, never quoted back.</li>
           </ul>
           <h3>How to use</h3>
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
