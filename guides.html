@@ -182,6 +182,29 @@
       </div>
       <p class="section-note" style="margin-top:2rem">More books land as I learn things the hard way. Spotted a mistake? Hit the Feedback button — I read everything.</p>
     </section>
+
+    <section id="field-guides">
+      <div class="launcher-hero" style="padding-top:1rem">
+        <div class="eyebrow">Field guides</div>
+        <h2 style="margin-bottom:0.4rem">Single-problem, <span class="grad">battle-tested</span></h2>
+        <p class="subtitle">Short standalone guides from live builds — one real failure, diagnosed to ground truth, with the fix and the proof.</p>
+      </div>
+      <div class="cards">
+        <article class="card reveal book-card" style="animation-delay:0ms">
+          <div class="card-top"><span class="status live">● Live</span><span class="card-kicker">Field guide</span></div>
+          <h3>Replica Scheduling Failure in Longhorn</h3>
+          <p>Volumes stuck Degraded on a small cluster? The bundled StorageClass hardcodes 3 replicas and overrides your global setting. Diagnosis, durable fix, proof gate.</p>
+          <ol class="book-chapters">
+              <li>The symptom</li>
+              <li>Why it happens: three layers</li>
+              <li>Your own StorageClass</li>
+              <li>Fix the volume you already have</li>
+              <li>Prove it before you trust it</li>
+          </ol>
+          <a class="card-link" href="/guides/longhorn-replica-trap.html">Read the guide →</a>
+        </article>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -202,7 +225,8 @@
     .launcher-hero { padding: 2.5rem 0 0.5rem; }
     .launcher-hero h1 { margin-bottom: 0.4rem; }
     #books { padding: 1.5rem 0 3rem; }
-    #books .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
+    #books .cards, #field-guides .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
+    #field-guides { padding: 0.5rem 0 3rem; }
     .book-card { display: flex; flex-direction: column; }
     .book-chapters { margin: 0.9rem 0 1.1rem; padding-left: 1.25rem; color: var(--muted);
       font-size: 0.86rem; line-height: 1.75; }
@@ -331,24 +355,6 @@ textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
     location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
     close();
   });
-})();
-</script>
-
-<script>
-// Build log expander: the button label counts itself from the live tl-item
-// total (no hardcoded N); toggles the overflow entries.
-(function(){
-  var btn = document.getElementById('logToggle'), extra = document.getElementById('tlExtra');
-  if(!btn || !extra) return;
-  var total = document.querySelectorAll('.tl-item').length;
-  function render(open){
-    if(open){ extra.removeAttribute('hidden'); } else { extra.setAttribute('hidden',''); }
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    btn.innerHTML = open ? 'Show less <span aria-hidden="true">&uarr;</span>'
-                        : 'Show all ' + total + ' <span aria-hidden="true">&darr;</span>';
-  }
-  render(false);
-  btn.addEventListener('click', function(){ render(btn.getAttribute('aria-expanded') !== 'true'); });
 })();
 </script>
 

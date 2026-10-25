@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-24 — Field guide: Replica Scheduling Failure in Longhorn
+
+- New standalone field guide `/guides/longhorn-replica-trap.html`: Longhorn's bundled StorageClass hardcodes `numberOfReplicas: "3"` and overrides the global default-replica-count — on a two-node cluster every volume is born Degraded with Replica Scheduling Failure. The two-minute diagnosis, the durable fix (author your own `longhorn-rep2` StorageClass and name it explicitly — never edit the bundled class), the existing-volume spec patch, and the write/kill/cordon proof gate. From the Oct 24 live k3s build; sanitized, assembler personal-info gate clean.
+- `guides.html` gains a Field guides section — new generator support in `build-guides-page.py` + `assemble-books.py`, which also now strip the homepage's inline usage-panel and build-log assets from transplanted heads/footers (the lab builder's strip rule, applied fleet-wide).
+
 ## 2026-10-24 — Token usage data refresh (auto)
 
 - Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 15% as of Oct 24, 2026.

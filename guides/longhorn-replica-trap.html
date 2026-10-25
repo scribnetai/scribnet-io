@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Replica Scheduling Failure in Longhorn — Field Guide · ScribNet</title>
+  <meta name="description" content="Longhorn volumes stuck Degraded with Replica Scheduling Failure? The bundled StorageClass hardcodes numberOfReplicas 3 and overrides your global setting. The two-minute diagnosis, the durable fix, and the proof gate — from a live two-node k3s build.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=prompts1">
+<!-- PWA: installable home-screen app -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#05070c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ScribNet">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2338bdf8'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='71' font-size='62' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>S</text></svg>">
+<!-- Analytics: Umami (cookieless, no consent banner) -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="025bed5c-dced-450a-a701-95f7cd065922"></script>
+  <style>
+    /* Demure animated aurora — three slow-drifting blurred blobs, very faint. */
+    .aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .aurora i { position: absolute; display: block; border-radius: 50%; filter: blur(90px); will-change: transform; }
+    .aurora .a1 { width: 640px; height: 640px; left: -180px; top: -200px; background: #7c6cff; opacity: .13; animation: drift1 30s ease-in-out infinite alternate; }
+    .aurora .a2 { width: 760px; height: 760px; right: -240px; top: -140px; background: #4de1ff; opacity: .08; animation: drift2 38s ease-in-out infinite alternate; }
+    .aurora .a3 { width: 580px; height: 580px; left: 32%; bottom: -280px; background: #7c6cff; opacity: .09; animation: drift3 46s ease-in-out infinite alternate; }
+    @keyframes drift1 { to { transform: translate(130px, 90px) scale(1.15); } }
+    @keyframes drift2 { to { transform: translate(-150px, 110px) scale(1.08); } }
+    @keyframes drift3 { to { transform: translate(100px, -80px) scale(1.18); } }
+    /* Typewriter caret for the rotating hero word. */
+    .caret { display: inline-block; width: 3px; height: 0.95em; margin-left: 3px; vertical-align: -0.1em;
+      border-radius: 2px; background: var(--cyan); animation: blink 1.1s steps(2, start) infinite; }
+    @keyframes blink { to { visibility: hidden; } }
+    @media (prefers-reduced-motion: reduce) { .aurora, .caret { display: none; } }
+  </style>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ScribNet">
+  <meta property="og:title" content="Replica Scheduling Failure in Longhorn — Field Guide">
+  <meta property="og:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
+  <meta property="og:url" content="https://scribnet.io/guides/longhorn-replica-trap.html">
+  <meta property="og:image" content="https://scribnet.io/og/og-apps.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Replica Scheduling Failure in Longhorn — Field Guide">
+  <meta name="twitter:description" content="ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.">
+  <meta name="twitter:image" content="https://scribnet.io/og/og-apps.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://scribnet.io/#org",
+        "name": "ScribNet",
+        "url": "https://scribnet.io/",
+        "description": "ScribNet: presales engineer by day, building with AI by night. SE Command Center, Daily Tech News podcast, AI band EP, and games.",
+        "sameAs": ["https://github.com/scribnetai"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://scribnet.io/#website",
+        "url": "https://scribnet.io/",
+        "name": "ScribNet",
+        "publisher": {"@id": "https://scribnet.io/#org"}
+      }
+    ]
+  }
+  </script>
+<link rel="canonical" href="https://scribnet.io/guides/longhorn-replica-trap.html">
+</head>
+<body>
+<div id="read-progress"></div>
+  <div class="chrome-top"><div class="chrome-inner">
+    <header class="topnav">
+      <a class="topnav-brand" href="/" aria-label="ScribNet home">
+        <span class="topnav-badge">S</span><span>scribnet.io</span>
+      </a>
+      <nav class="topnav-links" aria-label="Site">
+      <a href="/apps.html">Apps</a>
+      <a href="/podcast.html">Podcast</a>
+      <a href="/guides.html" aria-current="page">Guides</a>
+      <a href="/uses.html">Uses</a>
+      <a href="/homelab.html">Homelab</a>
+      </nav>
+    </header>
+  </div></div>
+  <main>
+<div class="guide-hero">
+  <div class="eyebrow">Field Guide</div>
+  <h1>Replica Scheduling Failure in Longhorn</h1>
+  <p class="subtitle">Your volumes are stuck Degraded because the bundled StorageClass overrides your replica count — here's the two-minute diagnosis and the durable fix.</p>
+  <div class="guide-meta"><span>Field guide</span><span>~6 min read</span><span>Intermediate</span></div>
+</div>
+
+<div class="callout"><strong>The short version:</strong> You set Longhorn's global <code>default-replica-count</code> to 2 because you have two nodes. Your volumes still come up Degraded, because the bundled <code>longhorn</code> StorageClass hardcodes <code>numberOfReplicas: "3"</code> — and StorageClass parameters outrank the global setting. Don't edit the bundled class (Longhorn regenerates it). Author your own class and name it explicitly. Tested on Longhorn v1.13.0, two-node k3s; the <code>"3"</code> was verified in that release's official deploy manifest, and the precedence mechanism is standard Longhorn behavior.</div>
+
+<nav class="toc" aria-label="Sections">
+  <div class="toc-title">Sections</div>
+  <ol>
+    <li><a href="#symptom">The symptom</a></li>
+    <li><a href="#why">Why it happens: three layers</a></li>
+    <li><a href="#fix-new">The fix for new volumes</a></li>
+    <li><a href="#fix-existing">Fix the volume you already have</a></li>
+    <li><a href="#prove">Prove it before you trust it</a></li>
+    <li><a href="#lesson">The lesson worth keeping</a></li>
+  </ol>
+</nav>
+
+<section class="chapter" id="symptom">
+  <div class="ch-num">The trap</div>
+  <h2>The symptom</h2>
+  <p>A fresh volume attaches and works. Reads and writes are fine. But the Longhorn UI shows the volume <strong>Degraded</strong>, with <strong>Replica Scheduling Failure</strong> — two of three replicas Running and in sync (RW), the third stopped and unschedulable. And it never heals: not in two minutes, not in two days. Nothing is broken. The volume is faithfully trying to satisfy a spec that asks for three replicas on two nodes, and replicas can't double up on a node.</p>
+  <p>That's what makes this trap expensive. It <em>looks</em> like a transient warm-up state, so you wait — then you debug networking, disk pressure, and node health. Everything except the replica count stamped on the volume at creation time.</p>
+  <p>Check what your volume actually asked for:</p>
+  <pre><code>kubectl -n longhorn-system get volumes.longhorn.io
+# ROBUSTNESS reads "degraded" for the affected volume
+
+kubectl get storageclass longhorn -o jsonpath='{.parameters.numberOfReplicas}'
+# prints: 3 — even though your global default says 2</code></pre>
+  <ul class="tldr">
+    <li>Degraded + Replica Scheduling Failure with healthy, in-sync replicas = suspect the count, not the cluster.</li>
+    <li>The volume's spec is the ground truth — read it before debugging anything else.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="why">
+  <div class="ch-num">The cause</div>
+  <h2>Why it happens: three layers</h2>
+  <p>The replica count for a new volume is decided by the first of these layers that speaks:</p>
+  <ol>
+    <li><strong>The volume's own spec</strong> — set at creation, wins over everything.</li>
+    <li><strong>The StorageClass parameter</strong> <code>numberOfReplicas</code>.</li>
+    <li><strong>The global setting</strong> <code>default-replica-count</code>.</li>
+  </ol>
+  <p>Most install guides set layer 3 and stop. But Longhorn's own deploy manifest ships a <code>longhorn-storageclass</code> template with layer 2 already filled in — <code>numberOfReplicas: "3"</code> — and that parameter silently overrides your global 2 for every volume created through the bundled class. On a cluster with three or more nodes you never notice. On two nodes (or one), every volume is born degraded.</p>
+  <ul class="tldr">
+    <li>Settings in layered systems don't merge — they override, in a specific order.</li>
+    <li>The layer you didn't look at is the one that wins.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="fix-new">
+  <div class="ch-num">The fix — new volumes</div>
+  <h2>The fix for new volumes: your own StorageClass</h2>
+  <div class="warn"><strong>Footgun:</strong> Do not edit the bundled <code>longhorn</code> class. Longhorn's driver-deployer regenerates it from its own template, so your edit quietly reverts and the trap re-arms itself.</div>
+  <p>Author your own class — identical to the bundled template except the name and the count — and reference it explicitly in your PVCs:</p>
+  <pre><code>kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: longhorn-rep2
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+reclaimPolicy: "Delete"
+volumeBindingMode: Immediate
+parameters:
+  numberOfReplicas: "2"
+  staleReplicaTimeout: "30"
+  fromBackup: ""
+  fsType: "ext4"
+  dataLocality: "disabled"
+  unmapMarkSnapChainRemoved: "ignored"
+  disableRevisionCounter: "true"
+  dataEngine: "v1"
+  backupTargetName: "default"</code></pre>
+  <p>Two deliberate choices in that file. First, <strong>no default-class annotation</strong> — this class is opt-in, so a workload gets replicated storage by naming <code>storageClassName: longhorn-rep2</code>, not by accident. (A Longhorn install also claims the cluster default-class flag for the bundled class, so PVCs that name no class at all still land on the 3-replica template until you change that too.) Second, <strong>everything else is copied verbatim</strong>. The point is to change exactly one variable — a hand-rolled class with "improved" parameters is a new experiment, not a fix.</p>
+  <ul class="tldr">
+    <li>Own class, explicit name in every PVC, one variable changed.</li>
+    <li>Never patch the bundled class — it regenerates.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="fix-existing">
+  <div class="ch-num">The fix — existing volumes</div>
+  <h2>Fix the volume you already have</h2>
+  <p>A StorageClass only stamps volumes at creation. Changing classes does nothing for a volume that already exists with 3 in its spec — it keeps asking for a third replica. Fix the volume itself:</p>
+  <pre><code>kubectl -n longhorn-system patch volumes.longhorn.io &lt;volume-name&gt; \
+  --type merge -p '{"spec":{"numberOfReplicas":2}}'</code></pre>
+  <p>Or in the Longhorn UI: volume → ⋮ menu → <strong>Update Replica Count</strong> → 2. Within moments the volume's robustness flips to <strong>healthy</strong>, and Longhorn sweeps the unschedulable third-replica object away on its own. In the build this guide came from, the two real replicas were RW and in sync the whole time — no data was ever at risk. Only the count was wrong.</p>
+  <div class="warn"><strong>Footgun (Windows operators):</strong> Run that patch from bash, not PowerShell 5.1. PowerShell strips inner double quotes from native-command arguments that contain no spaces, so the JSON arrives mangled (<code>invalid character 's' looking for beginning of object key string</code>). It failed twice that way in the original build, then worked first try from bash.</div>
+  <ul class="tldr">
+    <li>Existing volume? Patch its spec (or use Update Replica Count) — the class change alone won't heal it.</li>
+    <li>JSON patches go through bash. PowerShell 5.1 will eat the quotes.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="prove">
+  <div class="ch-num">The proof</div>
+  <h2>Prove it before you trust it</h2>
+  <p>A healthy-looking volume is a claim; a surviving file is evidence. Before a real workload lands on the new class, run three steps in a throwaway namespace:</p>
+  <ol>
+    <li>Create a PVC on your new StorageClass, mount it in a scratch pod, and write a timestamped file.</li>
+    <li>Delete the pod and recreate it. The file must come back untouched — compute is disposable, data persists.</li>
+    <li>Cordon the node the volume is attached to, recreate the pod again, and confirm it lands on the other node with the file — and its original timestamp — intact.</li>
+  </ol>
+  <p>In the original build, the proof file's timestamp came back character-identical after a pod kill and a forced cross-node move. That's when the storage layer stopped being "installed" and started being trusted.</p>
+  <ul class="tldr">
+    <li>Write, kill, cordon, re-read. Four verbs, one verdict.</li>
+    <li>Don't skip the cordon step — a move test with one healthy replica proves nothing.</li>
+  </ul>
+</section>
+
+<section class="chapter" id="lesson">
+  <div class="ch-num">The lesson</div>
+  <h2>The lesson worth keeping</h2>
+  <p>When a system insists on a number you never set, don't debug the machinery — find which layer stamped it. That holds well beyond Longhorn: defaults files under config files under flags under API specs, in that order, in almost every tool you run.</p>
+  <h3>The dangerous checklist</h3>
+  <ul class="tldr">
+    <li>Read a degraded volume's spec before touching the cluster.</li>
+    <li>Check any bundled StorageClass's parameters against your global settings.</li>
+    <li>Ship your own class with exactly one variable changed.</li>
+    <li>Patch existing volumes' specs — classes only stamp new ones.</li>
+    <li>Prove replication with a write, a pod kill, and a cordon before trusting it.</li>
+  </ul>
+  <p><em>From a live install record, Longhorn v1.13.0 on a two-node k3s cluster. Node names, volume IDs, and addresses from the original build are omitted; every command and parameter above is reproduced exactly.</em></p>
+</section>
+
+<nav class="book-nav">
+  <a class="book-prev" href="/guides.html"><span>&larr; All guides</span><strong>Guides index</strong></a>
+  <a class="book-next" href="/guides/kubernetes.html"><span>Next book &rarr;</span><strong>Kubernetes</strong></a>
+</nav>
+
+  </main>
+
+  <div class="chrome-bottom"><div class="chrome-inner">
+  <footer>
+    <p>© <span id="year"></span> ScribNet — scribnet.io</p>
+    <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>@scribnetai</span>
+    </a>
+    <a class="gh-link" href="https://instagram.com/scribnet.ai" target="_blank" rel="noopener" aria-label="ScribNet on Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <span>@scribnet.ai</span>
+    </a>
+    <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/guides.html">Guides</a><a href="/homelab.html">Homelab</a><a href="/guides.html">Guides</a><a href="/prompts.html">Prompts</a></nav>
+    <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
+  </footer>
+  </div></div>
+
+  <style>/* ============================================================
+   Zero to Dangerous — "Paper" reading theme
+   A warm, editorial book theme for the guides. Deliberately NOT
+   the site's dark neon system: this is meant to be read.
+   ============================================================ */
+
+:root {
+  --paper: #FAF7F0;
+  --paper-deep: #F2ECDD;
+  --paper-card: #FFFDF8;
+  --ink: #1C1712;
+  --ink-2: #4A4238;
+  --muted: #857A69;
+  --line: #E4DAC6;
+  --accent: #B0512C;
+  --accent-deep: #8A3D1F;
+  --accent-soft: #F7E8DB;
+  --tip-ink: #1E5B3C;
+  --tip-bg: #E9F3EB;
+  --tip-line: #2F7D52;
+  --warn-ink: #8A3D1F;
+  --warn-bg: #FAEEE1;
+  --warn-line: #B0512C;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); }
+::selection { background: #F0D6BC; }
+
+/* ---- reading progress ---- */
+#read-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent), #D98A4B);
+  z-index: 200;
+}
+
+/* ---- site chrome bands: header/footer match the site exactly ---- */
+.chrome-top { background: #05070c; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+.chrome-bottom { background: #05070c; border-top: 1px solid rgba(255, 255, 255, 0.08); margin-top: 4rem; }
+.chrome-inner { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+.chrome-top .topnav { margin-bottom: 0; padding: 1.1rem 0; }
+.chrome-bottom footer { margin-top: 0; border-top: none; padding-bottom: 2.5rem; }
+
+/* ---- title page hero ---- */
+.guide-hero { text-align: center; max-width: 44rem; margin: 0 auto; padding: 3.5rem 0 2.75rem; }
+.guide-hero .eyebrow {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);
+  display: flex; align-items: center; justify-content: center; gap: 1.1rem;
+}
+.guide-hero .eyebrow::before, .guide-hero .eyebrow::after {
+  content: ""; height: 1px; width: 3.5rem; background: var(--line);
+}
+.guide-hero h1 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(2.75rem, 7vw, 4.25rem);
+  letter-spacing: -0.02em; line-height: 1.04; color: var(--ink);
+  margin: 1.1rem 0 0.9rem;
+}
+.guide-hero .subtitle {
+  font-family: var(--serif); font-style: italic; font-size: 1.22rem;
+  line-height: 1.6; color: var(--ink-2); max-width: 36rem; margin: 0 auto;
+}
+.guide-meta { display: flex; gap: 0.55rem; justify-content: center; flex-wrap: wrap; margin-top: 1.6rem; }
+.guide-meta span {
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 600; color: var(--ink-2);
+  border: 1px solid var(--line); background: var(--paper-card);
+  border-radius: 999px; padding: 0.42rem 0.95rem;
+}
+
+/* ---- table of contents ---- */
+.toc {
+  max-width: 42rem; margin: 0 auto 3.5rem; background: var(--paper-card);
+  border: 1px solid var(--line); border-radius: 18px; padding: 1.75rem 2rem 1.5rem;
+  box-shadow: 0 18px 40px -28px rgba(90, 70, 40, 0.35);
+}
+.toc-title {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 0.9rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--line);
+}
+.toc ol { list-style: none; margin: 0; padding: 0; counter-reset: ch; }
+.toc li { counter-increment: ch; }
+.toc li a {
+  display: flex; align-items: baseline; gap: 0.9rem;
+  padding: 0.55rem 0.4rem; border-radius: 8px;
+  text-decoration: none; color: var(--ink);
+  font-family: var(--serif); font-size: 1.08rem; font-weight: 500;
+}
+.toc li a::before {
+  content: counter(ch, decimal-leading-zero);
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 800; color: var(--accent);
+  min-width: 1.6rem;
+}
+.toc li a::after {
+  content: ""; flex: 1; border-bottom: 1px dotted #D5C8AE; transform: translateY(-5px);
+  min-width: 1.5rem;
+}
+.toc li a:hover { color: var(--accent-deep); background: var(--accent-soft); }
+
+/* ---- chapters ---- */
+.chapter { max-width: 42rem; margin: 0 auto 4.5rem; scroll-margin-top: 1.5rem; }
+.ch-num {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 800;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent);
+  display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.8rem;
+}
+.ch-num::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+.chapter h2 {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  letter-spacing: -0.015em; line-height: 1.12; color: var(--ink);
+  margin: 0 0 1.3rem;
+}
+.chapter > h2 + p { font-size: 1.24rem; line-height: 1.7; color: var(--ink-2); }
+.chapter h3 {
+  font-family: var(--sans); font-size: 1.04rem; font-weight: 700;
+  letter-spacing: -0.01em; color: var(--ink); margin: 2.4rem 0 0.8rem;
+}
+.chapter p {
+  font-family: var(--serif); font-size: 1.12rem; line-height: 1.8;
+  color: var(--ink); margin: 0 0 1.15rem;
+}
+.chapter ul:not(.tldr), .chapter ol:not(.tldr) {
+  font-family: var(--serif); font-size: 1.08rem; line-height: 1.75;
+  color: var(--ink); margin: 0 0 1.3rem; padding-left: 1.4rem;
+}
+.chapter li { margin-bottom: 0.45rem; }
+.chapter li::marker { color: var(--accent); font-weight: 700; }
+.chapter a {
+  color: var(--accent-deep); text-decoration: underline;
+  text-decoration-color: #E4BFA1; text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+.chapter a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.chapter strong { font-weight: 600; }
+
+/* ---- code ---- */
+.chapter code {
+  font-family: var(--mono); font-size: 0.8em; color: var(--accent-deep);
+  background: var(--paper-deep); border: 1px solid var(--line);
+  border-radius: 6px; padding: 0.14em 0.45em; white-space: nowrap;
+}
+.chapter pre {
+  position: relative; background: #2A231A; border: 1px solid #3D3423;
+  border-radius: 14px; padding: 1.15rem 1.3rem; margin: 1.5rem 0;
+  overflow-x: auto; box-shadow: 0 16px 34px -24px rgba(40, 30, 15, 0.5);
+}
+.chapter pre code {
+  background: none; border: none; padding: 0; border-radius: 0;
+  color: #F0E7D3; font-size: 0.84rem; line-height: 1.7;
+  display: block; white-space: pre;
+}
+.copy-btn {
+  position: absolute; top: 0.65rem; right: 0.65rem;
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
+  color: #CFC3AB; background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 8px;
+  padding: 0.32rem 0.7rem; cursor: pointer; opacity: 0; transition: opacity 0.2s ease;
+}
+.chapter pre:hover .copy-btn, .copy-btn:focus-visible { opacity: 1; }
+.copy-btn:hover { color: #fff; background: rgba(255, 255, 255, 0.14); }
+@media (hover: none) { .copy-btn { opacity: 1; } }
+
+/* ---- callouts ---- */
+.callout, .warn {
+  border-radius: 12px; padding: 1.05rem 1.3rem 1.05rem 1.4rem; margin: 1.6rem 0;
+  font-family: var(--sans); font-size: 0.93rem; line-height: 1.66;
+  border: 1px solid; border-left-width: 4px;
+}
+.callout { background: var(--tip-bg); border-color: #CFE3D6; border-left-color: var(--tip-line); color: #274434; }
+.warn { background: var(--warn-bg); border-color: #F0D6B8; border-left-color: var(--warn-line); color: #5C3A20; }
+.callout strong, .warn strong {
+  display: block; font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.35rem;
+}
+.callout strong { color: var(--tip-ink); }
+.warn strong { color: var(--warn-ink); }
+.callout code, .warn code { background: rgba(255, 255, 255, 0.65); white-space: normal; }
+
+/* ---- takeaways + checklist ---- */
+.tldr {
+  list-style: none; margin: 1.8rem 0 0; padding: 1.3rem 1.5rem 1.3rem;
+  background: var(--paper-card); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: 0 12px 30px -24px rgba(90, 70, 40, 0.4);
+}
+.tldr::before {
+  content: "Key takeaways";
+  display: block; font-family: var(--sans); font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 0.85rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--line);
+}
+.tldr li {
+  position: relative; font-family: var(--sans); font-size: 0.94rem; line-height: 1.62;
+  color: var(--ink-2); padding-left: 1.9rem; margin-bottom: 0.55rem;
+}
+.tldr li:last-child { margin-bottom: 0; }
+.tldr li::before {
+  content: "✓"; position: absolute; left: 0.1rem; top: 0.02rem;
+  color: var(--tip-line); font-weight: 800;
+}
+/* the final "dangerous checklist" becomes interactive */
+.tldr.checklist::before { content: "The dangerous checklist — tap to check off"; }
+.tldr.checklist li { cursor: pointer; padding-left: 2.2rem; border-radius: 8px; }
+.tldr.checklist li::before {
+  content: ""; width: 1.05rem; height: 1.05rem; top: 0.22rem; left: 0.15rem;
+  border: 1.5px solid var(--muted); border-radius: 6px; background: #fff;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.tldr.checklist li.done { color: var(--muted); text-decoration: line-through; text-decoration-color: #C9BCA4; }
+.tldr.checklist li.done::before {
+  content: "✓"; background: var(--tip-line); border-color: var(--tip-line); color: #fff;
+  font-size: 0.72rem; font-weight: 800; line-height: 1.05rem; text-align: center;
+}
+
+/* ---- prev / next book nav ---- */
+.book-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 42rem; margin: 2.5rem auto 4rem; }
+.book-nav a {
+  display: block; background: var(--paper-card); border: 1px solid var(--line);
+  border-radius: 16px; padding: 1.25rem 1.4rem; text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.book-nav a:hover { transform: translateY(-3px); border-color: #D8C39E; box-shadow: 0 18px 38px -22px rgba(90, 70, 40, 0.45); }
+.book-nav span {
+  display: block; font-family: var(--sans); font-size: 0.68rem; font-weight: 800;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem;
+}
+.book-nav strong { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--ink); }
+.book-prev span::before { content: "← "; color: var(--accent); }
+.book-next { text-align: right; }
+.book-next span::after { content: " →"; color: var(--accent); }
+
+/* ---- responsive ---- */
+@media (max-width: 640px) {
+  .guide-hero { padding: 2.5rem 0 2rem; }
+  .guide-hero .eyebrow::before, .guide-hero .eyebrow::after { width: 2rem; }
+  .toc { padding: 1.3rem 1.35rem 1.1rem; margin-bottom: 2.75rem; }
+  .toc li a { font-size: 1rem; }
+  .chapter { margin-bottom: 3.5rem; }
+  .chapter p { font-size: 1.06rem; }
+  .chapter > h2 + p { font-size: 1.14rem; }
+  .chapter pre code { font-size: 0.8rem; }
+  .book-nav { grid-template-columns: 1fr; }
+  .book-next { text-align: left; }
+}
+@media (max-width: 560px) {
+  .topnav-links { flex-wrap: wrap; justify-content: flex-end; row-gap: 0.15rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+/* ---- print: it's a book, let it print like one ---- */
+@media print {
+  .topnav, #read-progress, footer, .book-nav, .snkf-btn, .copy-btn { display: none !important; }
+  body { background: #fff; }
+  .guide-hero { padding-top: 0; }
+  .chapter, .toc { max-width: 100%; box-shadow: none; }
+  .chapter pre { background: #f5f5f5; border-color: #ddd; box-shadow: none; }
+  .chapter pre code { color: #222; }
+}
+
+  </style>
+
+<!-- ScribNet feedback widget: floating button + dialog, sends via user's email client (mailto). Self-contained: no external deps, no reliance on page CSS. -->
+<style>
+.snkf-btn{position:fixed;right:22px;bottom:22px;z-index:9990;display:flex;align-items:center;gap:9px;
+  padding:12px 18px;border-radius:999px;cursor:pointer;font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:.2px;color:#fff;
+  background:rgba(20,26,46,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.16);box-shadow:0 8px 28px rgba(0,0,0,.45),0 0 0 1px rgba(124,92,255,.12);
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;min-height:46px}
+.snkf-btn:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.55);box-shadow:0 12px 32px rgba(0,0,0,.5),0 0 18px rgba(124,92,255,.35)}
+.snkf-btn:active{transform:translateY(0)}
+.snkf-btn svg{width:18px;height:18px;flex:none}
+.snkf-overlay{position:fixed;inset:0;z-index:9991;display:none;align-items:center;justify-content:center;
+  background:rgba(4,6,12,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:16px}
+.snkf-overlay.open{display:flex}
+.snkf-card{width:420px;max-width:100%;max-height:calc(100vh - 60px);overflow:auto;border-radius:20px;padding:26px 24px 22px;
+  background:rgba(20,26,46,.92);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 70px rgba(0,0,0,.6);
+  font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;color:#eef1f8;
+  animation:snkf-pop .22s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes snkf-pop{from{transform:scale(.94) translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.snkf-title{font-size:19px;font-weight:700;margin:0 0 4px}
+.snkf-sub{font-size:13.5px;color:#9aa4c0;margin:0 0 18px;line-height:1.5}
+.snkf-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#8b94b3;margin:0 0 8px}
+.snkf-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.snkf-chip{padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);
+  color:#cfd6ea;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s ease}
+.snkf-chip:hover{border-color:rgba(124,92,255,.6);color:#fff}
+.snkf-chip.sel{background:linear-gradient(135deg,#7c5cff,#38bdf8);border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(124,92,255,.4)}
+.snkf-field{width:100%;box-sizing:border-box;border-radius:12px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);color:#fff;font-family:inherit;font-size:14.5px;padding:11px 13px;margin-bottom:14px;outline:none;
+  transition:border-color .15s ease}
+.snkf-field::placeholder{color:#6b7490}
+.snkf-field:focus{border-color:#7c5cff;box-shadow:0 0 0 3px rgba(124,92,255,.25)}
+textarea.snkf-field{resize:vertical;min-height:110px;line-height:1.55}
+.snkf-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+.snkf-cancel{padding:11px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.16);background:transparent;
+  color:#cfd6ea;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.snkf-cancel:hover{background:rgba(255,255,255,.07)}
+.snkf-send{padding:11px 22px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#7c5cff,#38bdf8);color:#fff;font-family:inherit;font-size:14px;font-weight:700;
+  box-shadow:0 6px 20px rgba(124,92,255,.45);transition:transform .15s ease,box-shadow .15s ease}
+.snkf-send:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(124,92,255,.6)}
+.snkf-send:disabled{opacity:.45;cursor:default;transform:none}
+.snkf-note{font-size:12px;color:#6b7490;margin:14px 0 0;text-align:center}
+@media (max-width:480px){
+  .snkf-overlay{align-items:flex-end;padding:0}
+  .snkf-card{width:100%;border-radius:22px 22px 0 0;max-height:88vh}
+  .snkf-btn{right:16px;bottom:16px;padding:12px 16px}
+}
+</style>
+<button class="snkf-btn" id="snkfBtn" aria-label="Send feedback" aria-haspopup="dialog">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  <span>Feedback</span>
+</button>
+<div class="snkf-overlay" id="snkfOverlay" role="dialog" aria-modal="true" aria-labelledby="snkfTitle">
+  <div class="snkf-card">
+    <h2 class="snkf-title" id="snkfTitle">Send feedback</h2>
+    <p class="snkf-sub">Spotted a bug, have an idea, or just want to say hi? I read everything.</p>
+    <p class="snkf-label">What's this about?</p>
+    <div class="snkf-chips" id="snkfChips">
+      <button type="button" class="snkf-chip sel" data-topic="Bug">Bug</button>
+      <button type="button" class="snkf-chip" data-topic="Idea">Idea</button>
+      <button type="button" class="snkf-chip" data-topic="Question">Question</button>
+      <button type="button" class="snkf-chip" data-topic="Praise">Praise</button>
+    </div>
+    <p class="snkf-label">Your name <span style="text-transform:none;letter-spacing:0;opacity:.6">(optional)</span></p>
+    <input class="snkf-field" id="snkfName" type="text" maxlength="80" placeholder="Jane SE" autocomplete="name">
+    <p class="snkf-label">Message</p>
+    <textarea class="snkf-field" id="snkfMsg" maxlength="2000" placeholder="What's on your mind?"></textarea>
+    <div class="snkf-actions">
+      <button type="button" class="snkf-cancel" id="snkfCancel">Cancel</button>
+      <button type="button" class="snkf-send" id="snkfSend" disabled>Send via email</button>
+    </div>
+    <p class="snkf-note">Opens your email app with the message addressed to me.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var TO = "scribnet.ai@gmail.com";
+  var btn = document.getElementById("snkfBtn"),
+      overlay = document.getElementById("snkfOverlay"),
+      cancel = document.getElementById("snkfCancel"),
+      send = document.getElementById("snkfSend"),
+      nameEl = document.getElementById("snkfName"),
+      msgEl = document.getElementById("snkfMsg"),
+      chips = document.getElementById("snkfChips"),
+      topic = "Bug";
+  function open(){ overlay.classList.add("open"); setTimeout(function(){ msgEl.focus(); }, 60); }
+  function close(){ overlay.classList.remove("open"); btn.focus(); }
+  btn.addEventListener("click", open);
+  cancel.addEventListener("click", close);
+  overlay.addEventListener("click", function(e){ if (e.target === overlay) close(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && overlay.classList.contains("open")) close(); });
+  chips.addEventListener("click", function(e){
+    var c = e.target.closest(".snkf-chip"); if (!c) return;
+    chips.querySelectorAll(".snkf-chip").forEach(function(x){ x.classList.remove("sel"); });
+    c.classList.add("sel"); topic = c.getAttribute("data-topic");
+  });
+  msgEl.addEventListener("input", function(){ send.disabled = !msgEl.value.trim(); });
+  send.addEventListener("click", function(){
+    var msg = msgEl.value.trim(); if (!msg) return;
+    var subject = "[Feedback: " + topic + "] " + document.title;
+    var body = msg + "\n\n— " + (nameEl.value.trim() || "Anonymous") + "\nPage: " + location.href;
+    location.href = "mailto:" + TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    close();
+  });
+})();
+</script>
+
+
+<script>
+  var _yr = document.getElementById("year");
+  if (_yr) _yr.textContent = new Date().getFullYear();
+
+  /* Reading progress bar */
+  (function () {
+    var bar = document.getElementById("read-progress"), ticking = false;
+    function update() {
+      ticking = false;
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  })();
+
+  /* Copy buttons on code blocks */
+  document.querySelectorAll(".chapter pre").forEach(function (pre) {
+    var btn = document.createElement("button");
+    btn.className = "copy-btn"; btn.type = "button"; btn.textContent = "Copy";
+    btn.addEventListener("click", function () {
+      var code = pre.querySelector("code");
+      var text = code ? code.innerText : pre.innerText;
+      function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); }
+      function fallback() {
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* Interactive "dangerous checklist" — tap to check off, remembered per book */
+  (function () {
+    var store = null;
+    try { store = window.localStorage; } catch (e) {}
+    var key = "ztd-checklist:" + location.pathname;
+    document.querySelectorAll(".chapter h3").forEach(function (h) {
+      if (h.textContent.toLowerCase().indexOf("dangerous checklist") === -1) return;
+      var ul = h.nextElementSibling;
+      if (!ul || !ul.classList || !ul.classList.contains("tldr")) return;
+      ul.classList.add("checklist");
+      var saved = {};
+      try { saved = JSON.parse(store.getItem(key) || "{}"); } catch (e) {}
+      ul.querySelectorAll("li").forEach(function (li, i) {
+        if (saved[i]) li.classList.add("done");
+        li.addEventListener("click", function () {
+          li.classList.toggle("done");
+          if (!store) return;
+          var s = {};
+          ul.querySelectorAll("li").forEach(function (x, j) {
+            if (x.classList.contains("done")) s[j] = 1;
+          });
+          try { store.setItem(key, JSON.stringify(s)); } catch (e) {}
+        });
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
