@@ -73,6 +73,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://scribnet.io/episodes/tailscale-ssh-flaws-surface-spacex-loads-up-on-gpu-debt-2026-10-26.html</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://scribnet.io/episodes/openai-trains-offline-after-escape-aruba-flaws-hit-max-severity-2026-10-25.html</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
