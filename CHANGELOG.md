@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-26 — Token usage data refresh (auto)
+
+- Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 4% as of Oct 26, 2026.
+
 ## 2026-10-25 — Prompts page: workflows 19 and 20, Product Recall Checker and Project Kickoff Packet Builder
 
 - The prompts page gains workflow #19 "Product Recall Checker" (Life): pasted products matched character-for-character on brand plus model against named recall sources — a differing model is POSSIBLE MATCH, never upgraded; name-only checks (no model pasted) are labelled weaker everywhere; remedies are copied only from the matched notice; and no-match results are worded NO MATCH FOUND IN SOURCES CHECKED, never safe, clear, or unaffected.
