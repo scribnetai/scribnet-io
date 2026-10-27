@@ -44,10 +44,9 @@
     }
   ],
   "muse": {
-    "plan": "Power",
-    "weekly_used_pct": 4,
-    "tokens_left": 459000000,
-    "resets": "Oct 31, 11:56 PM ET",
-    "as_of": "Oct 26, 2026"
+    "plan": "Free",
+    "weekly_used_pct": 2,
+    "resets": "Nov 2, 11:32 PM ET",
+    "as_of": "Oct 27, 2026"
   }
 }

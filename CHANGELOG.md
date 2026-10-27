@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-27 — Token usage data refresh (auto)
+
+- Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 2% as of Oct 27, 2026 (free tier — Power subscription expired Oct 26, 2026).
+
 ## 2026-10-26 — Token usage data refresh (auto)
 
 - Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 4% as of Oct 26, 2026.
