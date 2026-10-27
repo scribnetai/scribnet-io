@@ -73,6 +73,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://scribnet.io/episodes/spacex-seals-forty-billion-gpu-lease-authenticator-flaw-patched-2026-10-27.html</loc>
+    <lastmod>2026-10-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://scribnet.io/episodes/tailscale-ssh-flaws-surface-spacex-loads-up-on-gpu-debt-2026-10-26.html</loc>
     <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
