@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-30 — Weekly build-log update
+
+- Compiled the week's material changelog entries (Oct 24–30) into the homepage build log (24 items at the cap): 5 new items — two new prompts-page workflows (Product Recall Checker, Project Kickoff Packet Builder), the Longhorn replica-trap field guide plus a Field guides section, and three Battlecards updates (Cohesity vs Rubrik pricing fix, two new feature rows, CrowdStrike vs Cortex XDR agentic endpoint security); dropped the 5 oldest to hold the 24-item cap. Routine SE Command Center morning briefings and auto token-usage refreshes excluded.
+
 ## 2026-10-30 — Token usage data refresh (auto)
 
 - Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 23% as of Oct 30, 2026 (free tier).
