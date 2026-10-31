@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-31 — Three new Prompt Forge workflows
+
+- Added workflows #21 Performance Review Self-Assessment Builder (Work), #22 Focus Day Planner (Work), and #23 Port Map Builder (Homelab) to the prompts page — 23 packs live. Drafts #151/#152/#155 from the Oct 31 forge batch, approved by number; #153 Local Business Review Summarizer and #154 Chord Progression Analyzer were not selected.
+
 ## 2026-10-31 — Token usage data refresh (auto)
 
 - Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 33% as of Oct 31, 2026 (free tier).
