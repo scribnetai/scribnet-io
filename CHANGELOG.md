@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-31 — Proxmox Backup Server field guide
+
+- New Field guide `/guides/proxmox-backup-server.html`: Proxmox Backup Server end to end — PBS as a small VM on a generic CPU baseline, the datastore on a whole passed-through drive, wiring a PVE cluster to it (including the API-token privilege-separation trap), datastore-owned prune/GC/verify, and a proof backup + proof restore to a scratch VM with its network disconnected. Written from the day's live three-node build, sanitized; the assembler's personal-info scan ran clean.
+- Guides index: added the Field guides card for the new guide.
+
 ## 2026-10-31 — Three new Prompt Forge workflows
 
 - Added workflows #21 Performance Review Self-Assessment Builder (Work), #22 Focus Day Planner (Work), and #23 Port Map Builder (Homelab) to the prompts page — 23 packs live. Drafts #151/#152/#155 from the Oct 31 forge batch, approved by number; #153 Local Business Review Summarizer and #154 Chord Progression Analyzer were not selected.
