@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-01 — Token usage data refresh (auto)
+
+- Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 52% as of Nov 1, 2026 (free tier).
+
 ## 2026-10-31 — Proxmox Backup Server field guide
 
 - New Field guide `/guides/proxmox-backup-server.html`: Proxmox Backup Server end to end — PBS as a small VM on a generic CPU baseline, the datastore on a whole passed-through drive, wiring a PVE cluster to it (including the API-token privilege-separation trap), datastore-owned prune/GC/verify, and a proof backup + proof restore to a scratch VM with its network disconnected. Written from the day's live three-node build, sanitized; the assembler's personal-info scan ran clean.
