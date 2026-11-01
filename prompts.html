@@ -193,10 +193,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-25"><span class="ns-num">25</span><span class="ns-title">Reading List Prioritizer</span><span class="ns-date">Nov 1</span></a>
+      <a class="ns-card" href="#workflow-24"><span class="ns-num">24</span><span class="ns-title">Birthday Party Planner</span><span class="ns-date">Nov 1</span></a>
       <a class="ns-card" href="#workflow-23"><span class="ns-num">23</span><span class="ns-title">Port Map Builder</span><span class="ns-date">Oct 31</span></a>
       <a class="ns-card" href="#workflow-22"><span class="ns-num">22</span><span class="ns-title">Focus Day Planner</span><span class="ns-date">Oct 31</span></a>
-      <a class="ns-card" href="#workflow-21"><span class="ns-num">21</span><span class="ns-title">Performance Review Self-Assessment Builder</span><span class="ns-date">Oct 31</span></a>
-      <a class="ns-card" href="#workflow-20"><span class="ns-num">20</span><span class="ns-title">Project Kickoff Packet Builder</span><span class="ns-date">Oct 25</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -1730,6 +1730,144 @@ SAFETY CHECK — confirm before the first run:
             <li><b>Plans only, never hands-on.</b> It builds a map from your paste; it never logs in, scans, or runs commands on your systems.</li>
             <li><b>Secrets stop the run.</b> A password, key, token, or public IP in the paste is flagged by line number with a redact warning and is never quoted back.</li>
             <li><b>Exposure flagged, not fixed.</b> Internet-reachable services get a REVIEW FIRST flag and a fix suggestion; nothing is closed or changed by this workflow.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-24" data-cat="Life" data-tags="planning events parties" data-search="Birthday Party Planner A party plan that admits what is not booked yet. Paste the date, venue, guest list, budget lines, and restrictions, and it builds a backwards timeline from the party date, shows budget maths on stated lines only, flags any menu or activity that conflicts with a pasted restriction — and never claims a booking is confirmed. planning events parties">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-24">
+            <span class="ph-num">24</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 24 &middot; Life</span>
+              <span class="ph-title">Birthday Party Planner</span>
+            </span>
+            <span class="ph-date" title="Added 2026-11-01">Nov 1</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-24" title="Copy link to this workflow" aria-label="Copy link to workflow 24">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-24" hidden>
+          <p class="what">A party plan that admits what is not booked yet. Paste the date, venue, guest list, budget lines, and restrictions, and it builds a backwards timeline from the party date, shows budget maths on stated lines only, flags any menu or activity that conflicts with a pasted restriction — and never claims a booking is confirmed.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="planning">planning</button>
+          <button type="button" class="tag" data-tag="events">events</button>
+          <button type="button" class="tag" data-tag="parties">parties</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-24">Install the &quot;Birthday Party Planner&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What are the fixed facts — a date, a venue, and a guest count you state, or FACTS NOT STATED? A fact not stated is never filled from a typical party; the plan marks it PLANNING GAP.
+2. What is the budget — a total you state, or BUDGET NOT STATED? If a budget is stated, every cost line is shown against it with the remaining amount as arithmetic; without one, costs are listed without a total verdict.
+3. What restrictions must the plan respect — allergies, dietary needs, venue rules, or NONE? A restriction not pasted is RESTRICTION NOT STATED, never assumed from a guest&#x27;s name or age.
+4. How far back should the timeline run — a start date you state, or a weeks figure? If &quot;skip&quot;, I assume 4 weeks before the party and say so; every timeline task shows its date or its weeks-before count.
+5. What output do you want — the timeline only, or the timeline plus a day-of run sheet? If &quot;skip&quot;, I assume the timeline plus a day-of run sheet and say so.
+
+EACH RUN:
+1. Ask for the party facts pasted exactly as you have them — date, venue, guest list with ages where known, budget lines, and restrictions, wording untouched. First, state the limits: you work only from the paste — you cannot check venue availability, verify a price, or know a guest&#x27;s needs, and anything needing those is NOT CHECKED FROM PASTE — a venue rule is never assumed and a price is never estimated from general knowledge.
+2. Stop check before planning: scan the paste for a password, a personal phone number, a home address, or a child&#x27;s full name and school you did not mean to share. Any hit is flagged by line number only, the value is never quoted back, and the run stops until it is redacted.
+3. Inventory before planning: number the guests in paste order and show the count, number the budget lines and show their sum as arithmetic, and list every restriction pasted. A guest without an age is AGE NOT STATED, never assigned an age band; a cost without a figure is COST NOT STATED, never priced.
+4. Build backwards from the party date: place tasks in date order from the setup start to the party day, each task with its date, its owner when pasted (OWNER NOT STATED otherwise), and the restriction it respects where one applies. The day-of run sheet orders the party day by clock time where times are pasted, and TIME NOT STATED where they are not.
+5. Close with the timeline, the day-of run sheet when requested, the reconciliation — guests planned for plus guests without an age band still equals pasted guests, shown as arithmetic — the budget maths (stated lines sum plus COST NOT STATED lines listed separately, remaining amount against the setup budget when one exists), and the gaps list of every FACT NOT STATED, COST NOT STATED, and RESTRICTION NOT STATED field. A plan is never presented as booked; bookings are yours to confirm.
+
+HARD RULES:
+- Guests are pasted or counted as gaps — a guest count, an age, or a restriction is never estimated from a name, a typical party, or a previous plan.
+- Costs are pasted or NOT STATED — a price is never estimated, rounded, or borrowed from a similar party; the budget maths show stated lines only.
+- Restrictions are pasted or NOT STATED — an allergy or dietary need is never inferred; a menu or activity that conflicts with a pasted restriction is flagged, never quietly swapped.
+- Timelines run backwards from the stated date — a task date is computed from the party date and the setup start, shown as arithmetic; a task without a computable date is listed undated, never placed by guess.
+- Nothing is booked — the plan names what to book and by when; it never claims a venue, vendor, or guest is confirmed.
+
+SAFETY CHECK — confirm before the first run:
+- Planning only — it never books a venue, orders anything, or contacts guests; you confirm every booking yourself.
+- No guest details repeated — children&#x27;s full names, schools, and addresses in the paste are flagged and redacted, never copied into the plan.
+- Your party stays private — guest lists, budgets, and plans stay in this chat and are never shared or published.</div>
+          <button class="copy-btn" data-target="prompt-24">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Fixed facts — date, venue, and guest count?</li>
+            <li>Budget — a total you state, or none?</li>
+            <li>Restrictions — allergies, dietary needs, venue rules?</li>
+            <li>Timeline start — a date, or a weeks figure?</li>
+            <li>Timeline only, or timeline plus a day-of run sheet?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Planning only.</b> It never books a venue, orders anything, or contacts guests — you confirm every booking yourself.</li>
+            <li><b>No guest details repeated.</b> Children's full names, schools, and addresses in the paste are flagged and redacted, never copied into the plan.</li>
+            <li><b>Party stays private.</b> Guest lists, budgets, and plans stay in this chat and are never shared or published.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-25" data-cat="Learn" data-tags="learning reading planning" data-search="Reading List Prioritizer A reading queue ranked on your scores, not a book&#x27;s reputation. Paste titles with your factor scores, and it sums each total as shown arithmetic, breaks ties by paste order and labels them, draws your capacity cut line — and leaves any item missing a score UNRANKED instead of guessing one. learning reading planning">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-25">
+            <span class="ph-num">25</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 25 &middot; Learn</span>
+              <span class="ph-title">Reading List Prioritizer</span>
+            </span>
+            <span class="ph-date" title="Added 2026-11-01">Nov 1</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-25" title="Copy link to this workflow" aria-label="Copy link to workflow 25">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-25" hidden>
+          <p class="what">A reading queue ranked on your scores, not a book's reputation. Paste titles with your factor scores, and it sums each total as shown arithmetic, breaks ties by paste order and labels them, draws your capacity cut line — and leaves any item missing a score UNRANKED instead of guessing one.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="learning">learning</button>
+          <button type="button" class="tag" data-tag="reading">reading</button>
+          <button type="button" class="tag" data-tag="planning">planning</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-25">Install the &quot;Reading List Prioritizer&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What is on the list — books, articles, papers, or a mix you describe? An item type not stated is TYPE NOT STATED, never assumed from the title.
+2. What scores an item — up to three factors you name (for example urgency, relevance, effort), or a set you describe? If &quot;skip&quot;, I assume urgency, relevance, and effort and say so; a factor score is stated by you or FACTOR NOT SCORED, never guessed from the title.
+3. What scale do the factors use — a range you state, or 1 TO 5? If &quot;skip&quot;, I assume 1 to 5 and say so; a score outside the stated range stops the run until it is fixed.
+4. What is your reading capacity — a books-per-month figure, or CAPACITY NOT STATED? With a stated capacity the queue shows a cut line after that many items; without one, the queue is ranked with no cut line.
+5. What output do you want — the ranked queue only, or the queue plus a &quot;read next&quot; pick with its reason? If &quot;skip&quot;, I assume the queue plus a &quot;read next&quot; pick and say so; the pick is the top-ranked item, never a second judgement.
+
+EACH RUN:
+1. Ask for the reading list pasted exactly as you have it — each item with its title, author where known, and your factor scores, wording untouched. First, state the limits: you work only from the paste — you cannot verify a book exists, check its contents, or know whether you will like it, and anything needing those is NOT CHECKED FROM PASTE — a title is ranked as pasted, never corrected or completed from general knowledge.
+2. Stop check before ranking: scan the paste for a password, a personal phone number, or a private note you did not mean to share. Any hit is flagged by line number only, the value is never quoted back, and the run stops until it is redacted.
+3. Inventory before ranking: number the items in paste order and show the count, then mark each item&#x27;s factor scores PRESENT with the pasted figures or FACTOR NOT SCORED. An item with any FACTOR NOT SCORED is UNRANKED — SCORES NEEDED, never given a guessed score or an average.
+4. Rank the scored items by total score as arithmetic (factor scores summed, shown per item), highest first, with ties broken by paste order and labelled TIE — PASTE ORDER. Apply the setup capacity cut line when one exists, naming the items above and below it. The &quot;read next&quot; pick, when requested, is the top-ranked item with its total and its pasted reason where one was given.
+5. Close with the ranked queue with totals shown, the capacity cut line when one exists, the UNRANKED items with their missing factors listed, the reconciliation — ranked items plus UNRANKED items equals pasted items, shown as arithmetic — and the statement that this queue ranks your stated scores, not the books&#x27; quality.
+
+HARD RULES:
+- Scores are pasted or NOT SCORED — a factor score is never guessed from a title, an author, or a book&#x27;s reputation.
+- Totals are shown arithmetic — every ranked item shows its factor scores summed to its total; a total without its addends is not delivered.
+- Ties are paste order, labelled — a tie is broken by paste order and labelled TIE — PASTE ORDER, never by a hidden preference.
+- UNRANKED items stay out of the queue — an item missing any factor score is listed separately and takes no rank, never an average or a zero.
+- No quality verdicts — the queue ranks your stated scores only; it never claims a book is good, important, or worth reading on its own merits.
+
+SAFETY CHECK — confirm before the first run:
+- Ranking only — it never buys, borrows, downloads, or opens anything; you choose what to actually read.
+- No invented books — titles and authors come from your paste or appear as NOT STATED; nothing is added, corrected, or completed.
+- Your list stays private — reading lists, scores, and queues stay in this chat and are never shared or published.</div>
+          <button class="copy-btn" data-target="prompt-25">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>List contents — books, articles, papers, or a mix?</li>
+            <li>Scoring factors — up to three you name?</li>
+            <li>Factor scale — a range you state, or 1 to 5?</li>
+            <li>Reading capacity — a books-per-month figure?</li>
+            <li>Ranked queue only, or queue plus a &quot;read next&quot; pick?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Ranking only.</b> It never buys, borrows, downloads, or opens anything — you choose what to actually read.</li>
+            <li><b>No invented books.</b> Titles and authors come from your paste or appear as NOT STATED; nothing is added, corrected, or completed.</li>
+            <li><b>List stays private.</b> Reading lists, scores, and queues stay in this chat and are never shared or published.</li>
           </ul>
           <h3>How to use</h3>
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>

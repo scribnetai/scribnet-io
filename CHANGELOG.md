@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-01 — Two new Prompt Forge workflows
+
+- Added workflow #24 Birthday Party Planner (Life) and #25 Reading List Prioritizer (Learn) to the prompts page — 25 packs live. Drafts #157/#160 from the Nov 1 forge batch, approved by number; #156 Cold Outreach Message Builder, #158 Freelance Invoice Builder, and #159 Decision Journal Entry Builder were not selected.
+
 ## 2026-11-01 — Token usage data refresh (auto)
 
 - Updated usage-data.json to 2,274,269 total tokens (2,140,476 local / 133,793 cloud); Muse weekly usage 52% as of Nov 1, 2026 (free tier).
