@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-22",
+  "generated": "2026-10-29",
   "sample": false,
-  "total_tokens": 2274269,
-  "local_tokens": 2140476,
-  "cloud_tokens": 133793,
+  "total_tokens": 7138224,
+  "local_tokens": 3700004,
+  "cloud_tokens": 3438220,
   "models": [
     {
       "name": "gpt-oss:20b",
@@ -11,8 +11,17 @@
       "icon": "ollama",
       "runtime": "Ollama \u00b7 RTX 4080",
       "lane": "local",
-      "tokens": 2140476,
-      "calls": 96
+      "tokens": 3700004,
+      "calls": 149
+    },
+    {
+      "name": "gemini-3.8-flash",
+      "vendor": "Google",
+      "icon": "googlegemini",
+      "runtime": "Gemini API \u00b7 fast lane",
+      "lane": "cloud",
+      "tokens": 3353199,
+      "calls": 86
     },
     {
       "name": "gemini-3.1-pro-preview",
@@ -22,30 +31,29 @@
       "lane": "cloud",
       "tokens": 85021,
       "calls": 8
-    },
-    {
-      "name": "gemini-3.8-flash",
-      "vendor": "Google",
-      "icon": "googlegemini",
-      "runtime": "Gemini API \u00b7 fast lane",
-      "lane": "cloud",
-      "tokens": 48772,
-      "calls": 2
     }
   ],
   "daily": [
     {
       "d": "2026-10-21",
-      "tokens": 2225497
+      "tokens": 3641755
     },
     {
       "d": "2026-10-22",
-      "tokens": 48772
+      "tokens": 2072476
+    },
+    {
+      "d": "2026-10-23",
+      "tokens": 143270
+    },
+    {
+      "d": "2026-10-29",
+      "tokens": 1280723
     }
   ],
   "muse": {
     "plan": "Free",
-    "weekly_used_pct": 52,
+    "weekly_used_pct": 66,
     "resets": "Nov 2, 11:32 PM ET",
     "as_of": "Nov 1, 2026"
   }
