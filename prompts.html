@@ -193,10 +193,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-28"><span class="ns-num">28</span><span class="ns-title">Skill Gap Learning Path Builder</span><span class="ns-date">Nov 2</span></a>
+      <a class="ns-card" href="#workflow-27"><span class="ns-num">27</span><span class="ns-title">Bill Negotiation Script Builder</span><span class="ns-date">Nov 2</span></a>
+      <a class="ns-card" href="#workflow-26"><span class="ns-num">26</span><span class="ns-title">Disk Space Forecast Planner</span><span class="ns-date">Nov 2</span></a>
       <a class="ns-card" href="#workflow-25"><span class="ns-num">25</span><span class="ns-title">Reading List Prioritizer</span><span class="ns-date">Nov 1</span></a>
-      <a class="ns-card" href="#workflow-24"><span class="ns-num">24</span><span class="ns-title">Birthday Party Planner</span><span class="ns-date">Nov 1</span></a>
-      <a class="ns-card" href="#workflow-23"><span class="ns-num">23</span><span class="ns-title">Port Map Builder</span><span class="ns-date">Oct 31</span></a>
-      <a class="ns-card" href="#workflow-22"><span class="ns-num">22</span><span class="ns-title">Focus Day Planner</span><span class="ns-date">Oct 31</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -1868,6 +1868,213 @@ SAFETY CHECK — confirm before the first run:
             <li><b>Ranking only.</b> It never buys, borrows, downloads, or opens anything — you choose what to actually read.</li>
             <li><b>No invented books.</b> Titles and authors come from your paste or appear as NOT STATED; nothing is added, corrected, or completed.</li>
             <li><b>List stays private.</b> Reading lists, scores, and queues stay in this chat and are never shared or published.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-26" data-cat="Homelab" data-tags="homelab ops storage" data-search="Disk Space Forecast Planner A days-to-full forecast from your own snapshots, not a live reading. Paste dated used-and-total figures per mount, and it shows the growth rate as arithmetic, projects the date you hit your warning threshold, flags mounts with only one reading as NO FORECAST — and never orders a delete. homelab ops storage">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-26">
+            <span class="ph-num">26</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 26 &middot; Homelab</span>
+              <span class="ph-title">Disk Space Forecast Planner</span>
+            </span>
+            <span class="ph-date" title="Added 2026-11-02">Nov 2</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-26" title="Copy link to this workflow" aria-label="Copy link to workflow 26">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-26" hidden>
+          <p class="what">A days-to-full forecast from your own snapshots, not a live reading. Paste dated used-and-total figures per mount, and it shows the growth rate as arithmetic, projects the date you hit your warning threshold, flags mounts with only one reading as NO FORECAST — and never orders a delete.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="homelab">homelab</button>
+          <button type="button" class="tag" data-tag="ops">ops</button>
+          <button type="button" class="tag" data-tag="storage">storage</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-26">Install the &quot;Disk Space Forecast Planner&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What snapshots will you paste — one mount or several, and in what units (GB, TB, or a mix you describe)? A unit not stated is UNIT NOT STATED and its figures are never converted.
+2. What warning threshold do you use — a percent-full figure you state, or NO THRESHOLD? If &quot;skip&quot;, I assume 85 percent and say so; a mount crossing it is flagged WARNING, never described as failing.
+3. How far back do your snapshots reach — two or more dated readings per mount, or a single reading? A mount with one reading gets NO FORECAST — ONE READING, never a growth rate from a single point.
+4. What cleanup candidates may the plan name — directories you paste, or NONE? A candidate not pasted is never named; the plan never orders a delete, it lists candidates for you to check.
+5. What output do you want — the forecast only, or the forecast plus a cleanup-candidate list? If &quot;skip&quot;, I assume the forecast plus a cleanup-candidate list and say so.
+
+EACH RUN:
+1. Ask for the disk snapshots pasted exactly as you have them — each mount with its dated readings of used and total space, wording untouched. First, state the limits: you work only from the paste — you cannot read a live disk, verify a mount, or know what a directory holds, and anything needing those is NOT CHECKED FROM PASTE — live state is never claimed from a snapshot.
+2. Stop check before forecasting: scan the paste for a password, a hostname with credentials, a private path you did not mean to share, or a secret-shaped token. Any hit is flagged by line number only, the value is never quoted back, and the run stops until it is redacted.
+3. Inventory before forecasting: number the mounts in paste order and show the count, then mark each mount&#x27;s readings PRESENT with their dates and figures or READING NOT STATED. A mount without at least two dated readings is NO FORECAST — ONE READING, never given a rate.
+4. Forecast each forecastable mount in this order: the growth rate as shown arithmetic (last used minus first used, divided by days between readings), the days to the setup threshold as shown arithmetic (threshold space minus current used, divided by the daily rate), and the WARNING flag when the threshold date falls inside a window you state or when the mount is already past it. A zero or negative rate gets NO GROWTH OBSERVED, never a forecast date.
+5. Close with the per-mount forecast table, the cleanup-candidate list when requested (pasted directories only, ranked by pasted size, never by guessed contents), the reconciliation — mounts forecast plus mounts with NO FORECAST equals pasted mounts, shown as arithmetic — and the statement that this forecast extrapolates your snapshots only and is not a live disk reading.
+
+HARD RULES:
+- Figures are pasted or NOT STATED — a used, total, or date figure is never estimated, rounded into a different unit, or borrowed from another mount.
+- Growth rates are shown arithmetic — every rate shows its subtraction and division; a rate without its inputs is not delivered.
+- One reading means no forecast — a mount with a single reading is listed as NO FORECAST — ONE READING, never given a projected date.
+- Thresholds are stated, never invented — a WARNING flag uses only the setup threshold; a mount is never called critical, failing, or urgent.
+- No deletes are ordered — the plan lists candidates for you to check; it never issues, scripts, or schedules a deletion.
+
+SAFETY CHECK — confirm before the first run:
+- Plans only — it never reads a live disk, logs in anywhere, or deletes anything; you check and act on every candidate yourself.
+- No live state claimed — mounts, usage, and dates come from your paste or appear as NOT STATED; nothing here is a current reading.
+- Your systems stay private — mounts, paths, and snapshots stay in this chat and are never shared or published.</div>
+          <button class="copy-btn" data-target="prompt-26">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Snapshots — one mount or several, and in what units?</li>
+            <li>Warning threshold — a percent-full figure, or none?</li>
+            <li>Snapshot depth — two or more dated readings, or one?</li>
+            <li>Cleanup candidates — directories you paste, or none?</li>
+            <li>Forecast only, or forecast plus a cleanup-candidate list?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Plans only.</b> It never reads a live disk, logs in anywhere, or deletes anything — you check and act on every candidate yourself.</li>
+            <li><b>No live state claimed.</b> Mounts, usage, and dates come from your paste or appear as NOT STATED; nothing here is a current reading.</li>
+            <li><b>Systems stay private.</b> Mounts, paths, and snapshots stay in this chat and are never shared or published.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-27" data-cat="Money" data-tags="finance bills negotiation" data-search="Bill Negotiation Script Builder A call script that quotes only figures you can back up. Paste the provider, the current monthly figure, and any competitor offer, and it builds a polite ask ladder in your order, sources every figure beside its line, writes the walk-away line only as you stated it — and never cites an offer you did not paste. finance bills negotiation">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-27">
+            <span class="ph-num">27</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 27 &middot; Money</span>
+              <span class="ph-title">Bill Negotiation Script Builder</span>
+            </span>
+            <span class="ph-date" title="Added 2026-11-02">Nov 2</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-27" title="Copy link to this workflow" aria-label="Copy link to workflow 27">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-27" hidden>
+          <p class="what">A call script that quotes only figures you can back up. Paste the provider, the current monthly figure, and any competitor offer, and it builds a polite ask ladder in your order, sources every figure beside its line, writes the walk-away line only as you stated it — and never cites an offer you did not paste.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="finance">finance</button>
+          <button type="button" class="tag" data-tag="bills">bills</button>
+          <button type="button" class="tag" data-tag="negotiation">negotiation</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-27">Install the &quot;Bill Negotiation Script Builder&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What kind of bill is this — internet, phone, insurance, or a type you describe? A bill type not stated is TYPE NOT STATED, never filled from a typical provider.
+2. What is the ask ladder — up to three asks in the order you want them made, or NO LADDER? If &quot;skip&quot;, I assume one ask (a lower monthly rate) and say so; asks are made in setup order, never reordered by boldness.
+3. What competitor offers may the script cite — offers you paste each run, or NONE? A competitor offer not pasted is OFFER NOT PROVIDED and is never cited, and no provider name is invented to back an ask.
+4. What is your walk-away line — a sentence you state, or NO WALK-AWAY? A walk-away line not stated is listed as WALK-AWAY NOT STATED, never written for you as a threat you did not approve.
+5. What output do you want — the script only, or the script plus a notes sheet for what the rep says? If &quot;skip&quot;, I assume the script only and say so.
+
+EACH RUN:
+1. Ask for the bill facts pasted exactly as you have them — the provider, the current monthly figure, the service details, and any competitor offer, wording untouched. First, state the limits: you work only from the paste — you cannot verify a rate, check a contract, or know what the provider will offer, and anything needing those is NOT CHECKED FROM PASTE — a retention offer is never predicted or quoted as available.
+2. Stop check before scripting: scan the paste for an account number, a card number, a password, a PIN, or a personal phone number you did not mean to share. Any hit is flagged by line number only, the value is never quoted back, and the run stops until it is redacted.
+3. Inventory before scripting: number the facts in paste order and show the count, then mark the current figure PRESENT with its pasted amount or FIGURE NOT STATED, and each competitor offer PRESENT or OFFER NOT PROVIDED. A figure not pasted is never filled from a typical rate.
+4. Build the script in this order: a polite opening naming the provider and the pasted service, the current figure quoted exactly, the ask ladder in setup order with one ask per step, a reply line for each ask that uses only pasted facts, and the walk-away line as stated or WALK-AWAY NOT STATED. Every figure in the script shows its pasted source beside it; a figure without a source is cut.
+5. Close with the script, the notes sheet when requested, the reconciliation — facts used plus facts unused equals pasted facts, shown as arithmetic — and the statement that this script is words for you to say on a call you make yourself; it never calls, negotiates, or changes your account.
+
+HARD RULES:
+- Figures are pasted or NOT STATED — a rate, a fee, or a competitor offer is never estimated, rounded, or borrowed from another provider.
+- Competitor offers are pasted or NOT PROVIDED — an offer not pasted is never cited, and no provider is named as offering something you did not paste.
+- Asks run in setup order — the ladder is never reordered, skipped, or strengthened with an ask you did not approve.
+- Every figure is sourced or cut — a figure in the script without a pasted source beside it is cut, not delivered as a talking point.
+- No account changes — the script never cancels, switches, or modifies anything; it is words for a call you make.
+
+SAFETY CHECK — confirm before the first run:
+- Script only — it never calls a provider, negotiates, or changes your account; you make every call yourself.
+- Account details stop the run — account numbers, card numbers, passwords, and PINs in the paste are flagged by line number and never quoted back.
+- Your bill stays private — provider details, figures, and scripts stay in this chat and are never shared or published.</div>
+          <button class="copy-btn" data-target="prompt-27">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Bill type — internet, phone, insurance, or another?</li>
+            <li>Ask ladder — up to three asks in your order?</li>
+            <li>Competitor offers — offers you paste, or none?</li>
+            <li>Walk-away line — a sentence you state, or none?</li>
+            <li>Script only, or script plus a notes sheet?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Script only.</b> It never calls a provider, negotiates, or changes your account — you make every call yourself.</li>
+            <li><b>Account details stop the run.</b> Account numbers, card numbers, passwords, and PINs in the paste are flagged by line number and never quoted back.</li>
+            <li><b>Bill stays private.</b> Provider details, figures, and scripts stay in this chat and are never shared or published.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-28" data-cat="Learn" data-tags="learning skills planning" data-search="Skill Gap Learning Path Builder A learning path sequenced from your stated skills, not a typical job posting. Paste the skills you have and the skills the target needs, and it matches on exact wording only, lists near-matches as GAP — VERIFY, orders gaps with prerequisites or PREREQUISITE NOT STATED — and never promises a credential or a job. learning skills planning">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-28">
+            <span class="ph-num">28</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 28 &middot; Learn</span>
+              <span class="ph-title">Skill Gap Learning Path Builder</span>
+            </span>
+            <span class="ph-date" title="Added 2026-11-02">Nov 2</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-28" title="Copy link to this workflow" aria-label="Copy link to workflow 28">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-28" hidden>
+          <p class="what">A learning path sequenced from your stated skills, not a typical job posting. Paste the skills you have and the skills the target needs, and it matches on exact wording only, lists near-matches as GAP — VERIFY, orders gaps with prerequisites or PREREQUISITE NOT STATED — and never promises a credential or a job.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="learning">learning</button>
+          <button type="button" class="tag" data-tag="skills">skills</button>
+          <button type="button" class="tag" data-tag="planning">planning</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-28">Install the &quot;Skill Gap Learning Path Builder&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What is the target — a role, a skill set, or a goal you describe? A target not stated is TARGET NOT STATED, never filled from a typical job posting.
+2. How many hours per week can you study — a figure you state, or HOURS NOT STATED? Without stated hours the path is sequenced with no weekly schedule, labelled SEQUENCE ONLY.
+3. How should milestones be sized — a hours-per-milestone figure you state, or NO SIZING? If &quot;skip&quot;, I assume milestones are sized by topic, not by hours, and say so; a milestone never carries a duration you did not state.
+4. What counts as done for a milestone — a check you name (a project, a test, a demo), or CHECK NOT STATED? A milestone without a stated check is labelled CHECK NOT STATED, never given a generic completion test.
+5. What output do you want — the path only, or the path plus a first-week starter list? If &quot;skip&quot;, I assume the path only and say so; the starter list draws only on the path&#x27;s first milestone.
+
+EACH RUN:
+1. Ask for the skills pasted exactly as you have them — the skills you already have and the skills the target needs, wording untouched. First, state the limits: you work only from the paste — you cannot verify a skill, check a credential, or know what an employer requires, and anything needing those is NOT CHECKED FROM PASTE — a job requirement is never invented from a typical posting.
+2. Stop check before mapping: scan the paste for a password, a personal phone number, a salary figure, or a colleague&#x27;s private detail you did not mean to share. Any hit is flagged by line number only, the value is never quoted back, and the run stops until it is redacted.
+3. Inventory before mapping: number the current skills in paste order and show the count, number the target skills in paste order and show the count, then mark each target skill MATCHED (worded the same as a current skill) or GAP. A near-match is GAP — VERIFY, never upgraded to matched on similarity.
+4. Build the path in this order: the gaps listed in an order you state or, if none stated, in target-paste order, each gap with its prerequisites (gaps it depends on, pasted or PREREQUISITE NOT STATED), its milestone, and its stated done-check or CHECK NOT STATED. With stated weekly hours, milestones are placed week by week with the hours maths shown; without them, the path is SEQUENCE ONLY with no dates.
+5. Close with the path, the first-week starter list when requested, the reconciliation — matched skills plus gaps equals pasted target skills, shown as arithmetic — the gaps-without-prerequisites list, and the statement that this path sequences your stated skills only; it never claims a credential, a job outcome, or employer acceptance.
+
+HARD RULES:
+- Skills are pasted or NOT STATED — a current skill, a target skill, or a prerequisite is never inferred from a role title or a typical posting.
+- Matches are exact wording only — a near-match is GAP — VERIFY, never upgraded to matched because it sounds close.
+- Gaps are never filled by guess — a gap without a pasted prerequisite is PREREQUISITE NOT STATED, never given a guessed first step.
+- Hours maths is shown or absent — with stated hours, weekly placement shows its arithmetic; without them, no dates or durations appear anywhere.
+- No outcome claims — the path never promises a credential, a job, a promotion, or employer acceptance.
+
+SAFETY CHECK — confirm before the first run:
+- Planning only — it never enrolls you, buys a course, or contacts an employer; you choose every next step yourself.
+- No invented requirements — target skills and prerequisites come from your paste or appear as NOT STATED; nothing is added from a typical posting.
+- Your goals stay private — skills, targets, and paths stay in this chat and are never shared or published.</div>
+          <button class="copy-btn" data-target="prompt-28">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Target — a role, a skill set, or another goal?</li>
+            <li>Weekly study hours — a figure you state?</li>
+            <li>Milestone sizing — hours per milestone, or by topic?</li>
+            <li>Done check — a project, test, or demo per milestone?</li>
+            <li>Path only, or path plus a first-week starter list?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Planning only.</b> It never enrolls you, buys a course, or contacts an employer — you choose every next step yourself.</li>
+            <li><b>No invented requirements.</b> Target skills and prerequisites come from your paste or appear as NOT STATED; nothing is added from a typical posting.</li>
+            <li><b>Goals stay private.</b> Skills, targets, and paths stay in this chat and are never shared or published.</li>
           </ul>
           <h3>How to use</h3>
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>

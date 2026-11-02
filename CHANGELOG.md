@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-02 — Three new Prompt Forge workflows
+
+- Added workflows #26 Disk Space Forecast Planner (Homelab), #27 Bill Negotiation Script Builder (Money), and #28 Skill Gap Learning Path Builder (Learn) to the prompts page — 28 packs live. Drafts #162/#164/#165 from the Nov 2 forge batch, approved by number; #161 YouTube Thumbnail Brief Builder and #163 Step Goal Ramp Planner were not selected.
+
 ## 2026-11-02 — Token usage data refresh (auto)
 
 - Updated usage-data.json to 7,138,224 total tokens (3,700,004 local / 3,438,220 cloud); Muse weekly usage 72% as of Nov 2, 2026 (free tier).
