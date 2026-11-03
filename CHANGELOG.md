@@ -1,4 +1,7 @@
 # Changelog
+## 2026-11-03 — Token usage data refresh (auto)
+
+- Token usage data refresh: 7,138,224 total tokens (3,700,004 local / 3,438,220 cloud); Muse weekly usage reset to 1% (resets Nov 9, 11:56 PM ET).
 
 ## 2026-11-02 — Three new Prompt Forge workflows
 
