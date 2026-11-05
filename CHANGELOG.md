@@ -1,4 +1,8 @@
 # Changelog
+## 2026-11-05 — Token usage data refresh (auto)
+
+- Token usage data refresh: 7,138,224 total tokens (3,700,004 local / 3,438,220 cloud); Muse weekly usage 20% as of Nov 5, 2026 (resets Nov 9, 11:56 PM ET).
+
 ## 2026-11-04 — Token usage data refresh (auto)
 
 - Token usage data refresh: 7,138,224 total tokens (3,700,004 local / 3,438,220 cloud); Muse weekly usage 12% as of Nov 4, 2026 (resets Nov 9, 11:56 PM ET).
