@@ -1,4 +1,8 @@
 # Changelog
+## 2026-11-06 — Weekly build log update
+
+- Added 9 entries to the homepage build log (Oct 31 – Nov 6): Prompt Forge workflows #21–#29, the Proxmox Backup Server field guide, and 4 Battlecards intel updates.
+
 ## 2026-11-06 — One new Prompt Forge workflow
 
 - Added workflow #29 Storage Pool Planner (Homelab) to the prompts page — 29 packs live. Draft #185 from the Nov 6 forge batch, approved by number; #181 College Cost Comparator, #182 Allergy-Safe Recipe Checker, #183 Networking Follow-Up Writer, and #184 Ear Training Drill Builder were not selected.
