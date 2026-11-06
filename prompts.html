@@ -193,10 +193,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-29"><span class="ns-num">29</span><span class="ns-title">Storage Pool Planner</span><span class="ns-date">Nov 6</span></a>
       <a class="ns-card" href="#workflow-28"><span class="ns-num">28</span><span class="ns-title">Skill Gap Learning Path Builder</span><span class="ns-date">Nov 2</span></a>
       <a class="ns-card" href="#workflow-27"><span class="ns-num">27</span><span class="ns-title">Bill Negotiation Script Builder</span><span class="ns-date">Nov 2</span></a>
       <a class="ns-card" href="#workflow-26"><span class="ns-num">26</span><span class="ns-title">Disk Space Forecast Planner</span><span class="ns-date">Nov 2</span></a>
-      <a class="ns-card" href="#workflow-25"><span class="ns-num">25</span><span class="ns-title">Reading List Prioritizer</span><span class="ns-date">Nov 1</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -2075,6 +2075,75 @@ SAFETY CHECK — confirm before the first run:
             <li><b>Planning only.</b> It never enrolls you, buys a course, or contacts an employer — you choose every next step yourself.</li>
             <li><b>No invented requirements.</b> Target skills and prerequisites come from your paste or appear as NOT STATED; nothing is added from a typical posting.</li>
             <li><b>Goals stay private.</b> Skills, targets, and paths stay in this chat and are never shared or published.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-29" data-cat="Homelab" data-tags="homelab ops storage" data-search="Storage Pool Planner RAID options from the drives you actually have. Paste each drive&#x27;s size and type, and it shows every RAID level&#x27;s usable capacity as shown arithmetic, how many drives each level can lose, rebuild notes per level, and a recommendation — levels that need more drives than you pasted are marked NOT POSSIBLE, never silently dropped. It never touches a drive. homelab ops storage">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-29">
+            <span class="ph-num">29</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 29 &middot; Homelab</span>
+              <span class="ph-title">Storage Pool Planner</span>
+            </span>
+            <span class="ph-date" title="Added 2026-11-06">Nov 6</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-29" title="Copy link to this workflow" aria-label="Copy link to workflow 29">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-29" hidden>
+          <p class="what">RAID options from the drives you actually have. Paste each drive's size and type, and it shows every RAID level's usable capacity as shown arithmetic, how many drives each level can lose, rebuild notes per level, and a recommendation — levels that need more drives than you pasted are marked NOT POSSIBLE, never silently dropped. It never touches a drive.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="homelab">homelab</button>
+          <button type="button" class="tag" data-tag="ops">ops</button>
+          <button type="button" class="tag" data-tag="storage">storage</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-29">Install the &quot;Storage Pool Planner&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What drives will you paste — each drive with size and type, or a subset of fields you name? A field not pasted is FIELD NOT STATED, never filled from a typical drive.
+2. What redundancy do you want — a RAID level you state, or COMPARE OPTIONS? If &quot;skip&quot;, I assume compare options and say so; the options are RAID 0, 1, 5, 6, and 10, each shown with its own maths.
+3. What usable capacity do you need — a size you state, or NO TARGET? If &quot;skip&quot;, I assume no target and say so; an option that misses a stated target is flagged MISSES TARGET, never trimmed to fit.
+4. What platform or filesystem — a platform you name, or NONE? If &quot;skip&quot;, I assume none and say so; the maths are generic RAID levels, never a platform-specific claim.
+5. What output do you want — the options only, or the options plus a recommendation? If &quot;skip&quot;, I assume the options plus a recommendation and say so; the recommendation names the level that meets the target with the fewest drives lost to redundancy, or NO OPTION MEETS TARGET.
+
+EACH RUN:
+1. Ask for the drives pasted exactly as you have them — each drive with its size and type, wording untouched. First, state the limits: you work only from the paste — you cannot check a live drive, read SMART data, or know a real capacity, and anything needing those is NOT CHECKED FROM PASTE — a drive&#x27;s health or real size is never filled from a typical drive.
+2. Stop check before planning: scan the paste for a serial number, a password, a token, or a credential you did not mean to share. Any hit is flagged by line number only, the value is never quoted back, and the run stops until it is redacted.
+3. Inventory before planning: number the drives in paste order and show the count, then mark each drive PRESENT with its pasted size or NOT STATED. A drive with a missing size is excluded from the maths by name, never given a typical size.
+4. Plan in this order: each RAID level&#x27;s usable capacity shown as arithmetic (smallest drive times the level&#x27;s usable-drive count, with both stated), the drives each level can lose shown as a count, the rebuild note per level (what a rebuild needs and what it risks, stated from the level, never from a drive&#x27;s health), and the target check against a stated target. A level needing more drives than pasted is marked NOT POSSIBLE with its reason, never silently dropped.
+5. Close with the options table, the recommendation when requested, the reconciliation — drives used in the maths plus drives excluded equals pasted drives, shown as arithmetic — and the statement that this is a sizing plan; it never formats, creates, resizes, or touches a drive or a pool.
+
+HARD RULES:
+- Sizes are pasted or NOT STATED — a drive size or type is never estimated from a typical drive.
+- Usable capacity shows its arithmetic — smallest drive times usable-drive count, with both figures stated; a capacity is never given as a single unexplained number.
+- Impossible levels are named — a level needing more drives than pasted is marked NOT POSSIBLE with its reason, never silently dropped.
+- Rebuild risk is stated per level — every level carries its rebuild note; a rebuild is never described as risk-free.
+- Nothing is formatted or created — the plan never formats, creates, resizes, or touches a drive or a pool; it returns a plan for you.
+
+SAFETY CHECK — confirm before the first run:
+- Plan only — it never formats, creates, resizes, or touches a drive or a pool; you run every storage change yourself.
+- Serials stop the run — serial numbers, passwords, and tokens in the paste are flagged by line number and never quoted back.
+- Your storage stays private — drives, sizes, and plans stay in this chat and are never shared or published.</div>
+          <button class="copy-btn" data-target="prompt-29">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Drives — each drive with size and type?</li>
+            <li>Redundancy — a RAID level you state, or compare options?</li>
+            <li>Usable capacity target — a size you state, or no target?</li>
+            <li>Platform or filesystem — a platform you name, or none?</li>
+            <li>Options only, or options plus a recommendation?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Plan only.</b> It never formats, creates, resizes, or touches a drive or a pool — you run every storage change yourself.</li>
+            <li><b>Serials stop the run.</b> Serial numbers, passwords, and tokens in the paste are flagged by line number and never quoted back.</li>
+            <li><b>Storage stays private.</b> Drives, sizes, and plans stay in this chat and are never shared or published.</li>
           </ul>
           <h3>How to use</h3>
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>

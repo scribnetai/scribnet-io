@@ -1,4 +1,8 @@
 # Changelog
+## 2026-11-06 — One new Prompt Forge workflow
+
+- Added workflow #29 Storage Pool Planner (Homelab) to the prompts page — 29 packs live. Draft #185 from the Nov 6 forge batch, approved by number; #181 College Cost Comparator, #182 Allergy-Safe Recipe Checker, #183 Networking Follow-Up Writer, and #184 Ear Training Drill Builder were not selected.
+
 ## 2026-11-06 — Token usage data refresh (auto)
 
 - Token usage data refresh: 7,138,224 total tokens (3,700,004 local / 3,438,220 cloud); Muse weekly usage 27% as of Nov 6, 2026 (resets Nov 9, 11:56 PM ET).
