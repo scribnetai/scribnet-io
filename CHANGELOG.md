@@ -1,3 +1,7 @@
+## 2026-11-13 — Two new Prompt Forge workflows
+
+- Added workflows #30 Home Renovation Budget Planner (Money) and #31 Research Paper Outline Builder (Learn) to the prompts page — 31 packs live. Drafts #218 and #219 from the Nov 13 forge batch, approved by number; #216 End-of-Day Shutdown Ritual, #217 Apology Message Builder, and #220 Gig Tech Rider Builder were not selected.
+
 ## Nov 13, 2026 — Token usage data refresh (auto)
 
 - Total 7,138,224 tokens (3,700,004 local / 3,438,220 cloud); Muse weekly usage 19% (was 13%).

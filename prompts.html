@@ -193,10 +193,10 @@
 
     <div class="new-strip" aria-label="New workflows">
       <span class="ns-label">New this week</span>
+      <a class="ns-card" href="#workflow-31"><span class="ns-num">31</span><span class="ns-title">Research Paper Outline Builder</span><span class="ns-date">Nov 13</span></a>
+      <a class="ns-card" href="#workflow-30"><span class="ns-num">30</span><span class="ns-title">Home Renovation Budget Planner</span><span class="ns-date">Nov 13</span></a>
       <a class="ns-card" href="#workflow-29"><span class="ns-num">29</span><span class="ns-title">Storage Pool Planner</span><span class="ns-date">Nov 6</span></a>
       <a class="ns-card" href="#workflow-28"><span class="ns-num">28</span><span class="ns-title">Skill Gap Learning Path Builder</span><span class="ns-date">Nov 2</span></a>
-      <a class="ns-card" href="#workflow-27"><span class="ns-num">27</span><span class="ns-title">Bill Negotiation Script Builder</span><span class="ns-date">Nov 2</span></a>
-      <a class="ns-card" href="#workflow-26"><span class="ns-num">26</span><span class="ns-title">Disk Space Forecast Planner</span><span class="ns-date">Nov 2</span></a>
     </div>
 
     <div class="prompt-filters">
@@ -2144,6 +2144,144 @@ SAFETY CHECK — confirm before the first run:
             <li><b>Plan only.</b> It never formats, creates, resizes, or touches a drive or a pool — you run every storage change yourself.</li>
             <li><b>Serials stop the run.</b> Serial numbers, passwords, and tokens in the paste are flagged by line number and never quoted back.</li>
             <li><b>Storage stays private.</b> Drives, sizes, and plans stay in this chat and are never shared or published.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-30" data-cat="Money" data-tags="finance home planning" data-search="Home Renovation Budget Planner Price the renovation before the first quote lands. Paste your scope and quotes and it builds the line-by-line budget — per-phase totals shown as addition, contingency only from a percentage you state, over-cap lines flagged and a cut list named. It budgets; you build. finance home planning">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-30">
+            <span class="ph-num">30</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 30 &middot; Money</span>
+              <span class="ph-title">Home Renovation Budget Planner</span>
+            </span>
+            <span class="ph-date" title="Added 2026-11-13">Nov 13</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-30" title="Copy link to this workflow" aria-label="Copy link to workflow 30">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-30" hidden>
+          <p class="what">Price the renovation before the first quote lands. Paste your scope and quotes and it builds the line-by-line budget — per-phase totals shown as addition, contingency only from a percentage you state, over-cap lines flagged and a cut list named. It budgets; you build.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="finance">finance</button>
+          <button type="button" class="tag" data-tag="home">home</button>
+          <button type="button" class="tag" data-tag="planning">planning</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-30">Install the &quot;Home Renovation Budget Planner&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What will you paste — the project scope, or scope plus quotes? If &quot;skip&quot;, I assume scope only and say so; a line with no pasted figure is listed FIGURE NOT STATED, never given a typical price.
+2. What budget — a total cap you state, or NO CAP? If &quot;skip&quot;, I assume no cap and say so; without a cap there is no OVER BUDGET flag, only the totals.
+3. What contingency — a percentage you state, or NO CONTINGENCY? If &quot;skip&quot;, I assume no contingency and say so; without one the total reads WITHOUT CONTINGENCY, never filled with a typical percentage.
+4. What phases — a list you name, or NO PHASES? If &quot;skip&quot;, I assume a single phase and say so; a phase you do not name is never planned for.
+5. What output do you want — the budget only, or the budget plus a cut list when over cap? If &quot;skip&quot;, I assume the budget plus a cut list when over cap and say so; the cut list, when shown, names pasted lines only with their saved amounts, never a typical saving.
+
+EACH RUN:
+1. Ask for the scope and quotes pasted exactly as you have them — wording untouched. First, state the limits: you work only from the paste — you cannot verify a price, know what a job should cost, or check whether a quote is current, and anything needing those is NOT CHECKED FROM PASTE — a price, a rate, or a term is never filled from a typical renovation.
+2. Stop check before budgeting: scan the paste for an account number, a password, an address, a bank detail, or a private detail you did not mean to share. Any hit is flagged by line number only, the value is never quoted back, and the run stops until it is redacted.
+3. Inventory before budgeting: number the pasted lines in paste order and show the count, then mark each line SCOPE with the work it states, QUOTE with the pasted figure beside it, or FIGURE NOT STATED with the missing figure named. A line with no pasted figure is never counted; it is listed NOT COUNTED, never given a typical price.
+4. Budget in this order: the per-phase totals shown as arithmetic (each pasted line figure stated and added, with the phase sum shown), the contingency when one was stated (the stated percentage applied to the stated subtotal, shown as multiplication), the grand total shown as arithmetic (phase totals plus contingency when stated), the cap check when a cap was stated (each phase total against the cap with OVER BUDGET flagged and the overage shown as subtraction), and the cut list when over cap (pasted lines named as cut candidates with their saved amounts shown, never cut silently, with the new total shown as subtraction).
+5. Close with the per-phase totals, the contingency when there is one, the grand total, the cap check when there is one, the cut list when there is one, the reconciliation — lines counted plus lines not counted equals lines pasted, shown as arithmetic — and the statement that this is a budget from your pasted figures; it never buys, books, or contacts a contractor, and it is not financial advice.
+
+HARD RULES:
+- Figures are pasted or NOT STATED — a price, a rate, or a term comes only from your paste; a typical renovation price is never filled in.
+- Every total shows its arithmetic — phase totals, contingency, grand total, overage, and cut savings are shown as addition, multiplication, or subtraction with each figure stated; a total is never given as a single unexplained number.
+- No contingency without a stated percentage — contingency is calculated only from a percentage you state; without one the total reads WITHOUT CONTINGENCY, never grown on a typical percentage.
+- No silent cuts — a line cut to meet the cap is named with its saved amount and the new total shown; a line is never dropped from the budget without a line saying so.
+- Nothing is bought or booked — the budget never buys, books, or contacts a contractor; you sign every contract yourself.
+
+SAFETY CHECK — confirm before the first run:
+- Plan only, not financial advice — it does the maths on your pasted figures; the spend-or-wait call stays with you.
+- Private details stop the run — account numbers, addresses, bank details, and passwords in the paste are flagged by line number and never quoted back.
+- Your figures stay private — scope, quotes, and the budget stay in this chat and are never shared or published.</div>
+          <button class="copy-btn" data-target="prompt-30">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Project scope only, or scope plus quotes?</li>
+            <li>Budget — a total cap you state, or no cap?</li>
+            <li>Contingency — a percentage you state, or no contingency?</li>
+            <li>Phases — a list you name, or no phases?</li>
+            <li>Budget only, or budget plus a cut list when over cap?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Plan only, not financial advice.</b> It does the maths on your pasted figures; the spend-or-wait call stays with you.</li>
+            <li><b>Private details stop the run.</b> Account numbers, addresses, bank details, and passwords in the paste are flagged by line number and never quoted back.</li>
+            <li><b>Figures stay private.</b> Scope, quotes, and the budget stay in this chat and are never shared or published.</li>
+          </ul>
+          <h3>How to use</h3>
+          <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
+        </div>
+      </section>
+      <section class="prompt-pack reveal" id="workflow-31" data-cat="Learn" data-tags="learning writing research" data-search="Research Paper Outline Builder From thesis to skeleton, without inventing a single source. Paste your thesis and sources and it builds the outline — every section traced to a claim you pasted, every claim tied to a source you supplied, gaps marked [SOURCE NEEDED]. It outlines; you write. learning writing research">
+        <div class="pack-head">
+          <button type="button" class="pack-toggle" aria-expanded="false" aria-controls="pack-body-31">
+            <span class="ph-num">31</span>
+            <span class="ph-text">
+              <span class="ph-eyebrow">Workflow 31 &middot; Learn</span>
+              <span class="ph-title">Research Paper Outline Builder</span>
+            </span>
+            <span class="ph-date" title="Added 2026-11-13">Nov 13</span>
+            <span class="ph-chev" aria-hidden="true">&#x25BE;</span>
+          </button>
+          <button type="button" class="ph-link" data-deep="workflow-31" title="Copy link to this workflow" aria-label="Copy link to workflow 31">&#x1F517;</button>
+        </div>
+        <div class="pack-body" id="pack-body-31" hidden>
+          <p class="what">From thesis to skeleton, without inventing a single source. Paste your thesis and sources and it builds the outline — every section traced to a claim you pasted, every claim tied to a source you supplied, gaps marked [SOURCE NEEDED]. It outlines; you write.</p>
+          <div class="tag-row" aria-label="Tags">
+          <button type="button" class="tag" data-tag="learning">learning</button>
+          <button type="button" class="tag" data-tag="writing">writing</button>
+          <button type="button" class="tag" data-tag="research">research</button>
+          </div>
+          <h3>The install prompt</h3>
+          <div class="prompt-block" id="prompt-31">Install the &quot;Research Paper Outline Builder&quot; workflow in this chat.
+
+SETUP — first run only. Ask me these one at a time (max 5 questions). If I answer &quot;skip&quot;, make a sensible assumption and tell me what you assumed:
+1. What will you paste — the thesis, or thesis plus sources? If &quot;skip&quot;, I assume the thesis only and say so; a claim with no pasted source is listed CLAIM NOT SOURCED, never given a typical citation.
+2. What length — a word or page target you state, or NO TARGET? If &quot;skip&quot;, I assume no target and say so; without one the sections carry no word budgets, never a typical length.
+3. What citation style — a style you name, or NO STYLE? If &quot;skip&quot;, I assume no style and say so; without one the citations read [STYLE NOT STATED], never a typical format.
+4. How many sections — a number you state, or NO NUMBER? If &quot;skip&quot;, I assume no number and say so; the sections are proposed from the thesis only, never a typical paper structure.
+5. What output do you want — the outline only, or the outline plus a source map? If &quot;skip&quot;, I assume the outline plus a source map and say so; the source map covers only sources you pasted, never a typical bibliography.
+
+EACH RUN:
+1. Ask for the thesis and sources pasted exactly as you have them — wording untouched. First, state the limits: you work only from the paste — you cannot verify a source, know whether a claim is true, or check whether a citation is real, and anything needing those is NOT CHECKED FROM PASTE — a title, an author, or a date is never filled from a typical paper.
+2. Stop check before outlining: scan the paste for a password, an account number, a private detail you did not mean to share, or a draft you do not want shared. Any hit is flagged by line number only, the value is never quoted back, and the run stops until it is redacted.
+3. Inventory before outlining: number the pasted items in paste order and show the count, then mark each item THESIS with the claim it states, CLAIM with the point it states, or SOURCE with the title and author it supplies. An item stating none of those is listed ITEM NOT USED, never forced into the outline.
+4. Outline in this order: the sections (each with its heading, its claims traced to numbered paste items, and its word budget when a target was stated, with the budgets summing to the target shown as addition), the source map when requested (each source beside the sections it supports, with a source supporting no section listed SOURCE NOT USED), and the gaps (each unsourced claim listed [SOURCE NEEDED] with the claim beside it, never filled with a typical citation).
+5. Close with the outline, the source map when requested, the gaps, the reconciliation — items used plus items not used equals items pasted, shown as arithmetic — and the statement that this is an outline from your pasted thesis and sources; it never writes the paper, never invents a source, and a claim it could not source is a line for you, not a line in the outline.
+
+HARD RULES:
+- Claims are pasted or NOT SOURCED — a thesis point, a claim, or a fact comes only from your paste with its item number beside it; a typical paper claim is never filled in.
+- No invented sources — a title, an author, or a date comes only from your paste; a source not in the paste is never cited, and a gap reads [SOURCE NEEDED], never a typical citation.
+- Word budgets reconcile — when a target was stated, the section budgets are shown as addition summing to the target; a budget is never given as a single unexplained number.
+- No section is silently dropped — a pasted claim with no section reads CLAIM UNPLACED with the claim beside it; a claim is never cut from the outline without a line saying so.
+- Nothing is written beyond the outline — the outline never drafts the paper, writes a paragraph, or submits anything; you write every word yourself.
+
+SAFETY CHECK — confirm before the first run:
+- Outline only — it builds the structure; it never writes the paper, invents a source, or submits anything, and you write every word yourself.
+- Private details stop the run — passwords, account numbers, and private details in the paste are flagged by line number and never quoted back.
+- Your work stays private — thesis, sources, and the outline stay in this chat and are never shared or published.</div>
+          <button class="copy-btn" data-target="prompt-31">Copy install prompt</button>
+          <p class="copy-note">Paste into any fresh assistant chat to install the workflow.</p>
+          <h3>First-run setup</h3>
+          <p class="copy-note">The prompt interviews you before the first run — up to five questions, one at a time. Say "skip" any time; it states its assumptions aloud.</p>
+          <ul class="safety-check">
+            <li>Thesis only, or thesis plus sources?</li>
+            <li>Length — a word or page target you state, or no target?</li>
+            <li>Citation style — a style you name, or no style?</li>
+            <li>Sections — a number you state, or no number?</li>
+            <li>Outline only, or outline plus a source map?</li>
+          </ul>
+          <h3>Safety check</h3>
+          <ul class="safety-check">
+            <li><b>Outline only.</b> It builds the structure; it never writes the paper, invents a source, or submits anything, and you write every word yourself.</li>
+            <li><b>Private details stop the run.</b> Passwords, account numbers, and private details in the paste are flagged by line number and never quoted back.</li>
+            <li><b>Work stays private.</b> Thesis, sources, and the outline stay in this chat and are never shared or published.</li>
           </ul>
           <h3>How to use</h3>
           <p class="howto">Copy the prompt and paste it into a fresh chat. Answer the setup interview — up to five questions, one at a time (say &quot;skip&quot; any time). Confirm the safety check, and the workflow is installed.</p>
