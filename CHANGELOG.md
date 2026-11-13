@@ -1,3 +1,7 @@
+## 2026-11-13 — Weekly build log update
+
+- Added 5 entries to the homepage build log (Nov 7 – Nov 13): Prompt Forge workflows #30–31 and 4 Battlecards intel updates.
+
 ## 2026-11-13 — Two new Prompt Forge workflows
 
 - Added workflows #30 Home Renovation Budget Planner (Money) and #31 Research Paper Outline Builder (Learn) to the prompts page — 31 packs live. Drafts #218 and #219 from the Nov 13 forge batch, approved by number; #216 End-of-Day Shutdown Ritual, #217 Apology Message Builder, and #220 Gig Tech Rider Builder were not selected.
