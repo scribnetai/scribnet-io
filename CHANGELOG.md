@@ -1,3 +1,7 @@
+## Nov 14, 2026 — Token usage data refresh (auto)
+
+- Total tokens now 7,138,224 (3,700,004 local / 3,438,220 cloud); Muse weekly usage 29% (was 19%, resets Nov 16, 11:56 PM ET).
+
 ## 2026-11-13 — Weekly build log update
 
 - Added 5 entries to the homepage build log (Nov 7 – Nov 13): Prompt Forge workflows #30–31 and 4 Battlecards intel updates.
