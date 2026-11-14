@@ -73,6 +73,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://scribnet.io/episodes/nvidias-self-financed-chip-sales-microsoft-365-outage-2026-11-14.html</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://scribnet.io/episodes/huang-resigns-from-nvidia-anthropic-ipo-book-fills-2026-11-13.html</loc>
     <lastmod>2026-11-13</lastmod>
     <changefreq>monthly</changefreq>
