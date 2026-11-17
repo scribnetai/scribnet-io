@@ -73,6 +73,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://scribnet.io/episodes/california-sues-openai-nvidia-earnings-night-arrives-2026-11-17.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://scribnet.io/episodes/nvidia-closes-the-checkbook-anthropic-ipo-week-begins-2026-11-16.html</loc>
     <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
