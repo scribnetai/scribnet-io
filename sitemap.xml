@@ -73,6 +73,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://scribnet.io/episodes/anthropic-goes-public-nginx-flaws-exposed-ai-fails-targeting-tests-2026-11-19.html</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://scribnet.io/episodes/nvidia-smashes-earnings-anthropic-ipo-prices-tonight-2026-11-18.html</loc>
     <lastmod>2026-11-18</lastmod>
     <changefreq>monthly</changefreq>
