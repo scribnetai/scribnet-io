@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anthropic IPO Pops, vCenter Zero-Day, Card Data Leak &mdash; Daily Tech News &middot; ScribNet</title>
+  <meta name="description" content="Anthropic closes its record-breaking first day up seventeen percent, a China-linked group exploited a critical VMware vCenter zero-day for months before the patch, and a third-party breach leaks Visa, Mastercard, and JPMorgan customer data — plus hands-on AI agents and Google&#x27;s orbital servers.">
+  <link rel="canonical" href="https://scribnet.io/episodes/anthropic-ipo-pops-vcenter-zero-day-card-data-leak-2026-11-20.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=nav2">
+<!-- PWA: installable home-screen app -->
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#05070c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ScribNet">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%237c5cff'/><stop offset='1' stop-color='%2338bdf8'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='71' font-size='62' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'>S</text></svg>">
+<!-- Analytics: Umami (cookieless, no consent banner) -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="025bed5c-dced-450a-a701-95f7cd065922"></script>
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ScribNet">
+  <meta property="og:title" content="Anthropic IPO Pops, vCenter Zero-Day, Card Data Leak &mdash; Daily Tech News">
+  <meta property="og:description" content="Anthropic closes its record-breaking first day up seventeen percent, a China-linked group exploited a critical VMware vCenter zero-day for months before the patch, and a third-party breach leaks Visa, Mastercard, and JPMorgan customer data — plus hands-on AI agents and Google&#x27;s orbital servers.">
+  <meta property="og:url" content="https://scribnet.io/episodes/anthropic-ipo-pops-vcenter-zero-day-card-data-leak-2026-11-20.html">
+  <meta property="og:image" content="https://scribnet.io/podcast-cover.webp">
+  <meta property="article:published_time" content="2026-11-20">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Anthropic IPO Pops, vCenter Zero-Day, Card Data Leak &mdash; Daily Tech News">
+  <meta name="twitter:description" content="Anthropic closes its record-breaking first day up seventeen percent, a China-linked group exploited a critical VMware vCenter zero-day for months before the patch, and a third-party breach leaks Visa, Mastercard, and JPMorgan customer data — plus hands-on AI agents and Google&#x27;s orbital servers.">
+  <meta name="twitter:image" content="https://scribnet.io/podcast-cover.webp">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name": "Anthropic IPO Pops, vCenter Zero-Day, Card Data Leak",
+  "description": "Anthropic closes its record-breaking first day up seventeen percent, a China-linked group exploited a critical VMware vCenter zero-day for months before the patch, and a third-party breach leaks Visa, Mastercard, and JPMorgan customer data \u2014 plus hands-on AI agents and Google's orbital servers.",
+  "datePublished": "2026-11-20",
+  "duration": "PT6M24S",
+  "url": "https://scribnet.io/episodes/anthropic-ipo-pops-vcenter-zero-day-card-data-leak-2026-11-20.html",
+  "associatedMedia": {
+    "@type": "MediaObject",
+    "contentUrl": "https://scribnet.io/audio/anthropic-ipo-pops-vcenter-zero-day-card-data-leak-2026-11-20.mp3",
+    "encodingFormat": "audio/mpeg"
+  },
+  "partOfSeries": {
+    "@type": "PodcastSeries",
+    "name": "Daily Tech News",
+    "url": "https://scribnet.io/podcast.html"
+  }
+}
+  </script>
+  <style>
+    .ep-hero { max-width: 860px; margin: 0 auto; padding: 3rem 1.25rem 0; }
+    .ep-hero .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.9rem; }
+    .ep-hero h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 1rem; }
+    .ep-hero .subtitle { color: var(--muted); font-size: 1.02rem; line-height: 1.6; }
+    .ep-player { max-width: 860px; margin: 2rem auto 0; padding: 0 1.25rem; }
+    .ep-player-card { display: flex; gap: 1.25rem; align-items: center;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px; padding: 1.25rem; }
+    .ep-player-card img { width: 96px; height: 96px; border-radius: 16px; flex: none; }
+    .ep-player-card audio { width: 100%; margin-top: 0.6rem; }
+    .ep-player-meta { font-size: 0.82rem; color: var(--muted); }
+    .ep-player-body { flex: 1; min-width: 0; }
+    .ep-section { max-width: 860px; margin: 2.5rem auto 0; padding: 0 1.25rem; }
+    .ep-section h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem;
+      letter-spacing: -0.01em; }
+    .ep-topics { list-style: none; padding: 0; display: grid; gap: 0.7rem; }
+    .ep-topics li { background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 12px;
+      padding: 0.8rem 1rem; font-size: 0.94rem; line-height: 1.55; }
+    .ep-transcript p { line-height: 1.75; margin-bottom: 1rem; font-size: 0.97rem;
+      color: #d7dce6; }
+    .ep-transcript .spk { font-weight: 700; }
+    .ep-transcript .spk.alex { color: #7c8cff; }
+    .ep-transcript .spk.jordan { color: #34d399; }
+    .ep-nav { max-width: 860px; margin: 3rem auto 0; padding: 0 1.25rem 3rem;
+      display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .ep-nav a { font-weight: 700; font-size: 0.92rem; }
+    .ep-nav .dim { color: var(--muted); font-weight: 400; }
+    @media (max-width: 560px) {
+      .ep-player-card { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="topnav">
+      <a class="topnav-brand" href="/" aria-label="ScribNet home">
+        <span class="topnav-badge">S</span><span>scribnet.io</span>
+      </a>
+      <nav class="topnav-links" aria-label="Site">
+      <a href="/apps.html">Apps</a>
+      <a href="/podcast.html" aria-current="page">Podcast</a>
+      <a href="/guides.html">Guides</a>
+      <a href="/prompts.html">Prompts</a>
+      <a href="/uses.html">Uses</a>
+      <a href="/homelab.html">Homelab</a>
+      </nav>
+    </header>
+    <div class="ep-hero">
+      <div class="eyebrow">Daily Tech News &mdash; November 20, 2026</div>
+      <h1>Anthropic IPO Pops, vCenter Zero-Day, Card Data Leak</h1>
+      <p class="subtitle">Anthropic closes its record-breaking first day up seventeen percent, a China-linked group exploited a critical VMware vCenter zero-day for months before the patch, and a third-party breach leaks Visa, Mastercard, and JPMorgan customer data — plus hands-on AI agents and Google&#x27;s orbital servers.</p>
+    </div>
+
+    <div class="ep-player">
+      <div class="ep-player-card">
+        <img src="/podcast-cover.webp" alt="Daily Tech News cover art">
+        <div class="ep-player-body">
+          <div class="ep-player-meta">November 20, 2026 &middot; 6:24 &middot; with Alex &amp; Jordan</div>
+          <audio controls preload="none" src="https://scribnet.io/audio/anthropic-ipo-pops-vcenter-zero-day-card-data-leak-2026-11-20.mp3"></audio>
+        </div>
+      </div>
+    </div>
+
+    <section class="ep-section" aria-label="In this episode">
+      <h2>In this episode</h2>
+      <ul class="ep-topics">
+<li>**Anthropic IPO first-day close (Nov 19)**: Closed at $97.17, up 17% from the $83 IPO price, after opening at $111.50 (+34%); $81.3B raise, the largest IPO on record; ~$1.5T fully diluted valuation; $26B private placement from Google, Nvidia, AMD, Broadcom, Micron, Microsoft, TSMC. Follow-up to the Nov 19 episode, which covered the debut itself — today is the close and what it means.</li>
+<li>**AMD short-seller report rattles chip stocks (Nov 19)**: Hunterbrook Media flags tens of billions in AMD commitments propping up AI demand — compute-capacity buybacks, data-center lease guarantees; Philadelphia semiconductor index down more than 2%. Fresh — not covered in prior episodes.</li>
+<li>**VMware vCenter zero-day exploited for months (disclosed Nov 19)**: CVE-2026-123890, CVSS 9.8, authentication bypass in the vCenter Directory Service; China-linked ARMORY CASTLE exploited it since early September via custom tool BONESAW, stealing the SAML signing key and creating SSO admin accounts; Broadcom emergency patch VMSA-2026-0009 for vCenter 9.1/9.0/8.0, no workaround; vSphere 7.0 confirmed affected, 6.5/6.7 presumed affected. Fresh — not covered in prior episodes.</li>
+<li>**Visa, Mastercard, JPMorgan customer data leaked via third-party breach (Nov 19)**: WSJ reports ransomware group n0n leaked data from thousands of customers; breach at an unnamed Asia-Pacific third-party provider, not the companies&#x27; own systems; card numbers not affected per Visa, limited benefits-program data per Mastercard, marketing data per JPMorgan. Fresh — not covered in prior episodes.</li>
+<li>**AI-assisted cyberattack on the European Commission**: Personnel systems disrupted, including staff payroll and medical reimbursements; CERT-EU had already warned about misuse of the AI tool involved. Fresh — not covered in prior episodes.</li>
+<li>**Agents go hands-on: Gemini for Mac, Apple&#x27;s own agent, Meta Muse privacy mix-up, orbital AI servers**: Google&#x27;s Gemini Mac agent operates apps and files; Apple reportedly building its own computer-controlling agent; Meta&#x27;s Muse reportedly surfacing private messages, reminders, and bank balances in the wrong conversations; Google picks Blue Origin to launch solar-powered Project Suncatcher AI server satellites, first launch Q1 2029. Fresh — new angle vs the Nov 13 episode&#x27;s Meta Connect coverage.</li>
+<li>**Quick hits**: MIT-led study estimates ~650 premature US deaths in 2023 from pollution by power plants feeding data centers; South Korea becomes the fourth country ever to export $1T of goods in a year on an AI chip boom; Microsoft–Intel deepen Azure silicon partnership (EMIB packaging, Diamond Rapids Xeon, CXL, QAT, TDX live migration).</li>
+      </ul>
+    </section>
+
+    <section class="ep-section ep-transcript" aria-label="Full transcript">
+      <h2>Full transcript</h2>
+<p><span class="spk alex">Alex:</span> Good morning, and welcome to Daily Tech News for Friday, November twentieth, twenty twenty-six. I&#x27;m Alex.</p>
+<p><span class="spk jordan">Jordan:</span> And I&#x27;m Jordan. Today we&#x27;ve got a market debut for the history books, a zero-day in the software that runs half the world&#x27;s data centers, and a breach that touched three of the biggest names in payments.</p>
+<p><span class="spk alex">Alex:</span> Let&#x27;s start with Anthropic. The company behind Claude closed its first day as a public company at ninety-seven dollars and seventeen cents a share, up seventeen percent from its eighty-three dollar I P O price.</p>
+<p><span class="spk jordan">Jordan:</span> And that close actually understates how wild the day was. Shares opened at a hundred and eleven dollars and fifty cents, more than thirty percent above the I P O price, before giving back about half the gain. The offering raised eighty-one point three billion dollars, the largest I P O on record, and it values Anthropic at roughly one and a half trillion dollars on a fully diluted basis.</p>
+<p><span class="spk alex">Alex:</span> The debut caps a week where Anthropic has basically been the center of the A I economy. Google, Nvidia, A M D, Broadcom, Micron, Microsoft, and T S M C all put in a combined twenty-six billion dollars in a private placement alongside the offering.</p>
+<p><span class="spk jordan">Jordan:</span> But the market mood wasn&#x27;t all celebration. On the same day, a short seller report from Hunterbrook Media dug into A M D&#x27;s books and flagged tens of billions of dollars in commitments the chipmaker has made to keep A I demand going, from buying back unsold compute capacity to guaranteeing data center leases. Chip stocks slid, with the Philadelphia semiconductor index down more than two percent.</p>
+<p><span class="spk alex">Alex:</span> So the read is, investors will pay almost anything for the model labs, but they are starting to ask hard questions about who is actually paying for all the chips and data centers underneath them.</p>
+<p><span class="spk jordan">Jordan:</span> Exactly. And that question is going to hang over every A I earnings report from here on out.</p>
+<p><span class="spk alex">Alex:</span> Now the security story, and if you run virtual infrastructure, this one is a drop everything patch.</p>
+<p><span class="spk jordan">Jordan:</span> Broadcom disclosed an emergency fix on Thursday for a critical flaw in VMware vCenter, tracked as C V E twenty twenty-six one two three eight nine zero, rated nine point eight out of ten. It is an authentication bypass in the directory service behind vCenter&#x27;s single sign-on, which means an attacker with network access can walk in as an administrator with no password at all.</p>
+<p><span class="spk alex">Alex:</span> And this wasn&#x27;t theoretical. Google&#x27;s threat intelligence team and Mandiant say a suspected China-linked espionage group they call Armory Castle had already been exploiting it as a zero-day since early September, more than two months before the patch.</p>
+<p><span class="spk jordan">Jordan:</span> The attack chain is a case study in how bad a vCenter compromise gets. The group got in through a separate zero-day in BeyondTrust remote support software, then used a custom tool called Bonesaw to copy vCenter&#x27;s directory database, steal the signing key vCenter uses to vouch for logins, and create a new administrator account. From there they could forge valid credentials at will, pull Active Directory databases straight off guest virtual machines, and plant backdoors for persistence.</p>
+<p><span class="spk alex">Alex:</span> The fixes are out for vCenter versions nine point one, nine point zero, and eight point zero. There is no workaround, so the patch is the only option. And Broadcom says older unsupported versions, including vSphere seven point zero, are confirmed or presumed affected, so even shops running end-of-life gear need a plan.</p>
+<p><span class="spk jordan">Jordan:</span> Patch first, then hunt. If anyone was in before the fix, the patch alone does not evict them.</p>
+<p><span class="spk alex">Alex:</span> Sticking with security, a ransomware group is claiming a breach that touched three of the biggest names in payments.</p>
+<p><span class="spk jordan">Jordan:</span> The Wall Street Journal reported Thursday that attackers leaked data from thousands of Visa, Mastercard, and J P Morgan Chase customers. All three companies say their own systems were not hit. The breach was at a third-party service provider in the Asia Pacific region, and the group calling itself n zero n is claiming responsibility.</p>
+<p><span class="spk alex">Alex:</span> Visa says payment data like card numbers was not affected, Mastercard says only a limited amount of information from a subset of cardholders in one benefits program was exposed, and J P Morgan says the attackers got marketing data, including names and email addresses. Nobody has named the provider that was actually breached.</p>
+<p><span class="spk jordan">Jordan:</span> It is the same pattern we keep seeing. The big names harden their own walls, and the attackers walk in through a vendor instead. And in Europe, the European Commission is still dealing with an A I-assisted cyberattack that knocked out personnel systems, including staff payroll and medical reimbursements. European officials had already warned about misuse of the A I tool involved.</p>
+<p><span class="spk alex">Alex:</span> Two different incidents, one lesson. The blast radius of a breach is decided by your weakest supplier, and increasingly by your weakest A I tool.</p>
+<p><span class="spk jordan">Jordan:</span> Let&#x27;s close with the agent wars, because the computers are getting hands-on.</p>
+<p><span class="spk alex">Alex:</span> Google launched a Gemini agent for the Mac that can actually operate your apps, organize your files, and fill in forms while you keep working. And Apple is reportedly building its own computer-controlling agent that can run applications, browse the web, and write code. The race is no longer who has the smartest chatbot. It is whose agent can do the work.</p>
+<p><span class="spk jordan">Jordan:</span> But there is a cautionary tale from Meta. Employees have reportedly run into Muse mixing up private conversations, with unfamiliar childcare messages, personal reminders, and even bank balances surfacing in the wrong chats. An agent that can reach into your apps is only as good as its ability to keep your stuff separate from everyone else&#x27;s.</p>
+<p><span class="spk alex">Alex:</span> And for the most ambitious agent infrastructure of all, Google has picked Blue Origin to launch its Project Suncatcher satellites, solar-powered A I servers in orbit, with the first launch planned for the first quarter of twenty twenty-nine.</p>
+<p><span class="spk jordan">Jordan:</span> Servers in space, agents on your desktop, and a trillion-dollar I P O in the same week. The future is arriving all at once, and it is not waiting for the security reviews to catch up.</p>
+<p><span class="spk alex">Alex:</span> A few quick hits before we go. A new M I T-led study estimates pollution from the power plants feeding American data centers caused about six hundred fifty premature deaths in twenty twenty-three. South Korea became only the fourth country ever to export a trillion dollars of goods in a year, riding an A I chip boom. And Microsoft and Intel announced a deeper silicon partnership for Azure, including new packaging tech for Microsoft&#x27;s own chips and next-generation Xeon processors.</p>
+<p><span class="spk jordan">Jordan:</span> That is your Friday. Anthropic proved the market will pay up for the model labs, VMware admins have a patch to apply before the weekend, and the agent era is moving from chat windows onto your desktop and into orbit.</p>
+<p><span class="spk alex">Alex:</span> We&#x27;ll be back tomorrow morning with the weekend&#x27;s news. Thanks for listening.</p>
+    </section>
+
+    <nav class="ep-nav" aria-label="More episodes">
+      <span><span class="dim">&larr; Newer: none</span></span>
+      <span><a href="/podcast.html">All episodes</a></span>
+      <span><a href="/episodes/anthropic-goes-public-nginx-flaws-exposed-ai-fails-targeting-tests-2026-11-19.html" rel="next">Older &rarr;: Anthropic Goes Public, Nginx Flaws Exposed, AI Fails Targeting Tests</a></span>
+    </nav>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="year"></span> ScribNet &mdash; scribnet.io</p>
+    <a class="gh-link" href="https://github.com/scribnetai" target="_blank" rel="noopener" aria-label="ScribNet on GitHub">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span>@scribnetai</span>
+    </a>
+    <a class="gh-link" href="https://instagram.com/scribnet.ai" target="_blank" rel="noopener" aria-label="ScribNet on Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <span>@scribnet.ai</span>
+    </a>
+    <nav class="foot-links"><a href="/apps.html">Apps</a><a href="/uses.html">Uses</a><a href="/homelab.html">Homelab</a><a href="/guides.html">Guides</a><a href="/prompts.html">Prompts</a></nav>
+    <p>Built by ScribNet + <span class="grad">Sparky</span>.</p>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
