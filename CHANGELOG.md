@@ -1,3 +1,7 @@
+## 2026-11-20 — Weekly build log update
+
+- Added 3 entries to the homepage build log (Nov 14 – Nov 20): SE Command Center briefings, a Battlecards DevOps protection row, and a Deal Pack licensed-cores fix.
+
 ## Nov 20, 2026 — Token usage data refresh (auto)
 
 - Token usage data refreshed: 7,138,224 total tokens (3,700,004 local / 3,438,220 cloud); Muse weekly usage now 18% (resets Nov 23, 11:56 PM ET).
