@@ -1,3 +1,7 @@
+## Nov 28, 2026 — Token usage data refresh (auto)
+
+Total 7,138,224 tokens (3,700,004 local / 3,438,220 cloud); Muse weekly usage now 23% (was 19%).
+
 ## 2026-11-27 — Weekly build log update
 
 - Added 2 entries to the homepage build log (Nov 21 – Nov 27): SE Command Center briefings and a Battlecards Zscaler-acquisition update.
